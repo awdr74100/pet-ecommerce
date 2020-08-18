@@ -1,0 +1,30 @@
+$gutter-width: 30px;
+$grid-sum: 12;
+$grid-breakpoints: (
+  '': false,
+  'md': 768px,
+  // 'lg': 992px,,
+);
+
+$spacies: (
+  '0': 0px,
+  '1': 5px,
+  '2': 10px,
+  '3': 15px,
+  '4': 30px,
+  "6": 60px,
+  'auto': auto,
+);
+
+$property: 'm', 'p';
+$sides: '', 't', 'b', 'l', 'r', 'x', 'y';
+
+$theme-colors: (
+  'primary': #4bb36e,
+  'secondary': #5a5a5a,
+  'white': #fff,
+  'danger': #e73c3c,
+  'success': #47ae74,
+  'warning': #f8b814,
+  'gray': #979797,
+);

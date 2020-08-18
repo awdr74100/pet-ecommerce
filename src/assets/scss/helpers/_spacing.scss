@@ -1,0 +1,88 @@
+@mixin generate($pro, $side, $spacValue) {
+  @if $side == '' {
+    @if $pro == 'm' {
+      margin: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding: $spacValue !important;
+    }
+  }
+  @if $side == 't' {
+    @if $pro == 'm' {
+      margin-top: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-top: $spacValue !important;
+    }
+  }
+  @if $side == 'b' {
+    @if $pro == 'm' {
+      margin-bottom: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-bottom: $spacValue !important;
+    }
+  }
+  @if $side == 'l' {
+    @if $pro == 'm' {
+      margin-left: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-left: $spacValue !important;
+    }
+  }
+  @if $side == 'r' {
+    @if $pro == 'm' {
+      margin-right: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-right: $spacValue !important;
+    }
+  }
+  @if $side == 'x' {
+    @if $pro == 'm' {
+      margin-left: $spacValue !important;
+      margin-right: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-left: $spacValue !important;
+      padding-right: $spacValue !important;
+    }
+  }
+  @if $side == 'y' {
+    @if $pro == 'm' {
+      margin-top: $spacValue !important;
+      margin-bottom: $spacValue !important;
+    }
+    @if $pro == 'p' {
+      padding-top: $spacValue !important;
+      padding-bottom: $spacValue !important;
+    }
+  }
+}
+
+@each $key, $value in $grid-breakpoints {
+  @if not $value {
+    @each $pro in $property {
+      @each $side in $sides {
+        @each $spacKey, $spacValue in $spacies {
+          .#{$pro}#{$side}-#{$spacKey} {
+            @include generate($pro, $side, $spacValue);
+          }
+        }
+      }
+    }
+  } @else {
+    @media screen and (min-width: $value) {
+      @each $pro in $property {
+        @each $side in $sides {
+          @each $spacKey, $spacValue in $spacies {
+            .#{$pro}#{$side}-#{$key}-#{$spacKey} {
+              @include generate($pro, $side, $spacValue);
+            }
+          }
+        }
+      }
+    }
+  }
+}

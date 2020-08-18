@@ -1,0 +1,29 @@
+.progress-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.582);
+  z-index: 2;
+
+  .progress {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    right: 0;
+    height: 4px;
+    width: 50%;
+    background-color: theme-color('primary');
+    animation: progress1 1s infinite linear;
+  }
+}
+
+@keyframes progress1 {
+  0% {
+    left: -50%;
+  }
+  100% {
+    left: 100%;
+  }
+}

@@ -1,0 +1,40 @@
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 4px 8px;
+  background-color: transparent;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.3s;
+
+  &--block {
+    width: 100%;
+  }
+}
+
+@each $key, $value in $theme-colors {
+  .btn--#{$key} {
+    color: #fff;
+    background-color: $value;
+    border: 1px solid $value;
+
+    &:hover {
+      opacity: 0.91;
+    }
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+  .btn--outline--#{$key} {
+    color: $value;
+    background-color: transparent;
+    border: 1px solid $value;
+
+    &:hover {
+      color: #fff;
+      background-color: $value;
+    }
+  }
+}

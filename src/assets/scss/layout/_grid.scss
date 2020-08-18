@@ -1,0 +1,73 @@
+.container {
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $gutter-width / 2;
+  padding-right: $gutter-width / 2;
+}
+
+.container-fluid {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $gutter-width / 2;
+  padding-right: $gutter-width / 2;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -($gutter-width / 2);
+  margin-right: -($gutter-width / 2);
+}
+
+.no-gutters {
+  margin-left: 0px;
+  margin-right: 0px;
+
+  > [class*='col-'] {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+%col {
+  position: relative;
+  width: 100%;
+  padding-left: $gutter-width / 2;
+  padding-right: $gutter-width / 2;
+}
+
+@each $key, $value in $grid-breakpoints {
+  @for $var from 1 through $grid-sum {
+    @if not $value {
+      .col-#{$var} {
+        @extend %col;
+      }
+    } @else {
+      .col-#{$key}-#{$var} {
+        @extend %col;
+      }
+    }
+  }
+}
+
+@each $key, $value in $grid-breakpoints {
+  @if not $value {
+    @for $var from 1 to $grid-sum {
+      .col-#{$var} {
+        max-width: 100% * ($var / $grid-sum);
+        flex: 0 0 (100% * ($var / $grid-sum));
+      }
+    }
+  } @else {
+    @media screen and (min-width: $value) {
+      @for $var from 1 to $grid-sum {
+        .col-#{$key}-#{$var} {
+          max-width: 100% * ($var / $grid-sum);
+          flex: 0 0 (100% * ($var / $grid-sum));
+        }
+      }
+    }
+  }
+}
