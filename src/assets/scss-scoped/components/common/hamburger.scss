@@ -1,0 +1,28 @@
+.hamburger {
+  span {
+    width: 22px;
+    display: block;
+
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      background-color: theme-color('secondary');
+      height: 2px;
+      transition: all 0.3s;
+    }
+    &::before {
+      margin-bottom: 10px;
+      box-shadow: 0 6px 0 theme-color('secondary');
+    }
+  }
+  .openSidebar & {
+    span::before {
+      box-shadow: 0 0 0 #fff;
+      transform: translateY(6px) rotate(45deg);
+    }
+    span:after {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  }
+}

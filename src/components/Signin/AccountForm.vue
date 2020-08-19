@@ -53,7 +53,7 @@
       <button class="btn btn--primary btn--block account-form__btn" @click.prevent="signin">
         登入
       </button>
-      <a href="#" class="forget mt-3" @click="toggleTab('reset')">忘記密碼？</a>
+      <a href="#" class="forget mt-3" @click.prevent="toggleTab('reset')">忘記密碼？</a>
     </form>
     <form @submit.prevent="signup" class="form mt-3" v-if="tab === 'signup'">
       <div class="account-form__section">
@@ -92,7 +92,7 @@
       </button>
     </form>
     <form @submit.prevent="reset" class="form mt-3" v-if="tab === 'reset'">
-      <p class="py-1">重新設定密碼</p>
+      <p class="py-1">發送密碼重置郵件</p>
       <div class="account-form__section mt-3 mb-3">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
         <input
@@ -103,7 +103,7 @@
         />
       </div>
       <button class="btn btn--primary btn--block account-form__btn" @click.prevent="reset">
-        下一步
+        發送
       </button>
     </form>
   </div>
@@ -131,6 +131,7 @@ export default {
       this.progressActive = true;
       setTimeout(() => {
         this.progressActive = false;
+        this.$router.push({ path: '/admin/products/all' });
       }, 2000);
     },
     signup() {

@@ -1,0 +1,65 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  .logo {
+    display: none;
+    margin: 9px 4px 15px 15px;
+    width: 32px;
+    height: 32px;
+    background-image: url('~@img/logo-s.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    @include desktop {
+      display: block;
+    }
+  }
+  &__menu {
+    cursor: pointer;
+    padding: 21px 10px 21px 15px;
+    display: block;
+    @include desktop {
+      display: none;
+    }
+  }
+  &__breadcrumb {
+    display: none;
+    @include desktop {
+      display: block;
+    }
+  }
+  &__account {
+    display: none;
+    align-items: center;
+    border-right: 1px solid rgb(199, 199, 199);
+    @include desktop {
+      display: flex;
+    }
+
+    .icon {
+      font-size: 26px;
+    }
+  }
+  &__btn {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: (56px - 17px) / 2;
+    transition: all 0.3s;
+    color: theme-color('secondary');
+
+    p {
+      display: none;
+      @include desktop {
+        display: inline;
+      }
+    }
+
+    &:hover {
+      background-color: theme-color('primary');
+      color: #fff;
+    }
+  }
+}

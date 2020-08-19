@@ -5,6 +5,8 @@ import {
   faLock,
   faUser,
   faArrowLeft,
+  faUserCircle,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faEye, faEyeSlash, faEnvelope, faLock, faUser, faArrowLeft);
+library.add(faEye, faEyeSlash, faEnvelope, faLock, faUser, faArrowLeft, faUserCircle, faSignOutAlt);

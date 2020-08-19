@@ -5,11 +5,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    openSidebar: true,
   },
   mutations: {
+    SIDEBARTOGGLE(state, status) {
+      state.openSidebar = status;
+    },
   },
-  actions: {
-  },
-  modules: {
-  },
+  modules: {},
 });

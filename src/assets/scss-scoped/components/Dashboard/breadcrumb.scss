@@ -1,0 +1,23 @@
+.breadcrumb {
+  display: flex;
+  font-size: 18px;
+  color: #999;
+
+  &__item {
+    display: flex;
+    align-items: center;
+
+    .arrow {
+      margin: 0px 14px 0px 10px;
+      border-bottom: 2px solid;
+      border-right: 2px solid;
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      transform: rotate(315deg);
+    }
+    &--active {
+      color: theme-color('primary');
+    }
+  }
+}
