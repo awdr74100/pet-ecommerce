@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    openSidebar: true,
+    openSidebar: !(window.innerWidth < 768),
   },
   mutations: {
     SIDEBARTOGGLE(state, status) {

@@ -19,6 +19,7 @@ import { mapState } from 'vuex';
 import Header from '@/components/Dashboard/Header.vue';
 
 export default {
+  name: 'Dashboard',
   components: {
     Header,
   },

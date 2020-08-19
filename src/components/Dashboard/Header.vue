@@ -1,17 +1,18 @@
 <template>
   <header class="header">
-    <div class="logo"></div>
     <div class="header__menu" @click="sidebarToggle">
       <Hamburger />
     </div>
-    <div class="header__breadcrumb mr-auto">
+    <div class="header__logo d-md-block d-none"></div>
+    <div class="d-md-block d-none">
       <Breadcrumb />
     </div>
-    <div class="header__account text-secondary pr-4">
-      <span class="icon mr-2"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
-      <p>root@gmail.com</p>
+    <div class="ml-auto text-secondary">
+      <span class="header__link mr-4"><font-awesome-icon :icon="['fas', 'user-cog']"/></span>
+      <span class="header__link ml-2 mr-4"><font-awesome-icon :icon="['far', 'bell']"/></span>
     </div>
-    <a href="#" class="header__btn ml-md-2 ml-auto">
+    <div class="header__line"></div>
+    <a href="#" class="header__btn ml-3">
       <p>登出</p>
       <span class="ml-2"><font-awesome-icon :icon="['fas', 'sign-out-alt']"/></span>
     </a>

@@ -5,3 +5,15 @@
 .d-flex {
   display: flex !important;
 }
+
+.d-md-block {
+  @include desktop() {
+    display: block !important;
+  }
+}
+
+.d-md-flex {
+  @include desktop() {
+    display: flex !important;
+  }
+}

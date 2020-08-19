@@ -3,63 +3,44 @@
   display: flex;
   align-items: center;
 
-  .logo {
-    display: none;
-    margin: 9px 4px 15px 15px;
+  &__menu {
+    cursor: pointer;
+    padding: 19.5px 15px;
+    display: block;
+  }
+  &__logo {
+    margin: 10px 10px 14px 0px;
     width: 32px;
     height: 32px;
     background-image: url('~@img/logo-s.png');
     background-repeat: no-repeat;
     background-position: center center;
     background-size: contain;
-    @include desktop {
-      display: block;
-    }
   }
-  &__menu {
+  &__link {
     cursor: pointer;
-    padding: 21px 10px 21px 15px;
-    display: block;
-    @include desktop {
-      display: none;
-    }
-  }
-  &__breadcrumb {
-    display: none;
-    @include desktop {
-      display: block;
-    }
-  }
-  &__account {
-    display: none;
-    align-items: center;
-    border-right: 1px solid rgb(199, 199, 199);
-    @include desktop {
-      display: flex;
-    }
+    transition: all 0.3s;
 
-    .icon {
-      font-size: 26px;
+    &:hover {
+      color: lighten(theme-color('secondary'), 10%);
     }
+  }
+  &__line {
+    width: 2px;
+    height: 24px;
+    background: rgb(219, 219, 219);
   }
   &__btn {
     text-decoration: none;
     display: flex;
+    font-size: 16px;
     align-items: center;
-    padding: (56px - 17px) / 2;
+    padding: 19.5px 15px;
     transition: all 0.3s;
     color: theme-color('secondary');
 
-    p {
-      display: none;
-      @include desktop {
-        display: inline;
-      }
-    }
-
     &:hover {
-      background-color: theme-color('primary');
-      color: #fff;
+      color: theme-color('primary');
     }
   }
 }

@@ -1,5 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEyeSlash, faBell } from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
   faLock,
@@ -7,6 +7,22 @@ import {
   faArrowLeft,
   faUserCircle,
   faSignOutAlt,
+  faAngleRight,
+  faUserCog,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faEye, faEyeSlash, faEnvelope, faLock, faUser, faArrowLeft, faUserCircle, faSignOutAlt);
+const icons = [
+  faEye,
+  faEyeSlash,
+  faEnvelope,
+  faLock,
+  faUser,
+  faArrowLeft,
+  faUserCircle,
+  faSignOutAlt,
+  faAngleRight,
+  faUserCog,
+  faBell,
+];
+
+library.add(...icons);
