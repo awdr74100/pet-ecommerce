@@ -24,7 +24,7 @@ export default {
         if (path === 'products') return '商品管理';
         if (path === 'coupons') return '優惠卷管理';
         if (path === 'orders') return '訂單管理';
-        if (list[1] === 'products' && path === 'all') return '全部訂單';
+        if (list[1] === 'products' && path === 'all') return '全部商品';
         if (list[1] === 'products' && path === 'listed') return '架上商品';
         if (list[1] === 'products' && path === 'soldout') return '已售完商品';
         if (list[1] === 'products' && path === 'unlisted') return '未上架商品';

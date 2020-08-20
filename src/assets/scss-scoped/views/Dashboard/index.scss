@@ -18,6 +18,7 @@
   transition: transform 0.3s;
   transform: translateX(-220px);
   z-index: 15;
+  overflow: auto;
   @include desktop() {
     top: 56px;
     z-index: 5;

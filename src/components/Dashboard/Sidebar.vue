@@ -1,13 +1,13 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar mb-6">
     <div class="logo d-md-none">毛孩<span class="highlight">百貨</span></div>
-    <ul class="p-3">
+    <ul class="p-3 pt-2">
       <li>
         <div class="tab-name py-1" @click="tabToggle('products')">
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'shopping-bag']" size="sm"/></span>
           <p class="text-l-1">商品管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('products') }">
-            <font-awesome-icon :icon="['fas', 'angle-up']" size="sm" />
+            <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
         <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('products') }">
@@ -60,7 +60,7 @@
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'receipt']" size="sm"/></span>
           <p class="text-l-2">優惠卷管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('coupons') }">
-            <font-awesome-icon :icon="['fas', 'angle-up']" size="sm" />
+            <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
         <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('coupons') }">
@@ -113,7 +113,7 @@
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'file-alt']" size="sm"/></span>
           <p class="text-l-2">訂單管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('orders') }">
-            <font-awesome-icon :icon="['fas', 'angle-up']" size="sm" />
+            <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
         <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('orders') }">

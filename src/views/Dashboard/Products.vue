@@ -1,21 +1,23 @@
 <template>
   <div class="container mt-3">
-    <p>123</p>
-    <p>{{ path }}</p>
+    <div class="row no-gutters bg-white box-shadow">
+      <DataTable />
+    </div>
   </div>
 </template>
 
 <script>
+import DataTable from '@/components/Dashboard/DataTable.vue';
+
 export default {
-  computed: {
-    path() {
-      const path = this.$route.mata;
-      console.log('re');
-      return path;
-    },
-  },
-  created() {
-    console.log('created');
+  components: {
+    DataTable,
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.box-shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
+}
+</style>

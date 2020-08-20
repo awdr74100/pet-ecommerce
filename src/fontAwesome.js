@@ -10,7 +10,7 @@ import {
   faAngleRight,
   faUserCog,
   faShoppingBag,
-  faAngleUp,
+  faAngleDown,
   faFileAlt,
   faReceipt,
 } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@ const icons = [
   faUserCog,
   faBell,
   faShoppingBag,
-  faAngleUp,
+  faAngleDown,
   faFileAlt,
   faReceipt,
 ];
