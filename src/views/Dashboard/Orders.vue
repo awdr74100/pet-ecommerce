@@ -1,5 +1,6 @@
 <template>
   <div>
-    <p>Orders</p>
+    <p>{{ $route.name }}</p>
+    <p>{{ $route.params.tab }}</p>
   </div>
 </template>

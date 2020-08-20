@@ -4,17 +4,24 @@
   width: 100%;
   box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
   z-index: 5;
+  @include desktop() {
+    z-index: 15;
+  }
 }
 
 .sidebar-layout {
   position: fixed;
-  top: 56px;
+  top: 0px;
   width: 220px;
   height: 100%;
   box-shadow: 4px 0 4px -4px rgba(74, 74, 78, 0.16);
   transition: transform 0.3s;
   transform: translateX(-220px);
   z-index: 15;
+  @include desktop() {
+    top: 56px;
+    z-index: 5;
+  }
 
   .openSidebar & {
     transform: translateX(0px);
@@ -27,8 +34,27 @@
   margin-top: 56px;
   margin-left: 0px;
   transition: all 0.3s;
+  @include desktop() {
+    .openSidebar & {
+      margin-left: 220px;
+    }
+  }
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.3s;
+  z-index: -10;
+  @include desktop {
+    display: none;
+  }
 
   .openSidebar & {
-    margin-left: 220px;
+    background-color: rgba(0, 0, 0, 0.705);
+    z-index: 10;
   }
 }

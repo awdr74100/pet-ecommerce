@@ -1,15 +1,19 @@
 <template>
   <div>
-    <p>Products</p>
-    {{ mode }}
+    <p>{{ $route.name }}</p>
+    <p>{{ $route.params.tab }}</p>
+    <p>{{ alert }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  created() {
+    console.log(123);
+  },
   computed: {
-    mode() {
-      return this.$route.params.mode;
+    alert() {
+      return this.$route.params.tab;
     },
   },
 };

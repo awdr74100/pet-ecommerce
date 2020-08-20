@@ -9,6 +9,10 @@ import {
   faSignOutAlt,
   faAngleRight,
   faUserCog,
+  faShoppingBag,
+  faAngleUp,
+  faFileAlt,
+  faReceipt,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -23,6 +27,10 @@ const icons = [
   faAngleRight,
   faUserCog,
   faBell,
+  faShoppingBag,
+  faAngleUp,
+  faFileAlt,
+  faReceipt,
 ];
 
 library.add(...icons);

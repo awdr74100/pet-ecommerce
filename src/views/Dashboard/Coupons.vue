@@ -1,5 +1,6 @@
 <template>
   <div>
-    <p>Coupons</p>
+    <p>{{ $route.name }}</p>
+    <p>{{ $route.params.tab }}</p>
   </div>
 </template>

@@ -1,17 +1,13 @@
 <template>
   <ul class="breadcrumb">
-    <li class="breadcrumb__item">
-      <p>首頁</p>
-      <span class="mx-2"><font-awesome-icon :icon="['fas', 'angle-right']"/></span>
-    </li>
     <li
       class="breadcrumb__item"
-      :class="{ 'breadcrumb__item--active': index === breadcrumbList.length - 1 }"
-      v-for="(item, index) in breadcrumbList"
+      :class="{ 'breadcrumb__item--active': index === pathList.length - 1 }"
+      v-for="(item, index) in pathList"
       :key="index"
     >
       <p>{{ item }}</p>
-      <span class="mx-2" :class="{ 'd-none': index === breadcrumbList.length - 1 }">
+      <span class="mx-2" :class="{ 'd-none': index === pathList.length - 1 }">
         <font-awesome-icon :icon="['fas', 'angle-right']" />
       </span>
     </li>
@@ -21,20 +17,25 @@
 <script>
 export default {
   computed: {
-    breadcrumbList() {
-      const toSplit = this.$route.path.split('/').slice(2, 4);
-      let category = '';
-      if (toSplit[0] === 'products') category = '商品';
-      if (toSplit[0] === 'coupons') category = '優惠卷';
-      if (toSplit[0] === 'orders') category = '訂單';
-      const chinesePath = toSplit.map((item) => {
-        if (item === 'products') return '商品管理';
-        if (item === 'coupons') return '優惠卷管理';
-        if (item === 'orders') return '訂單管理';
-        if (item === 'all') return `全部${category}`;
-        return '';
+    pathList() {
+      const list = this.$route.path.split('/').slice(1, 4);
+      return list.map((path) => {
+        if (path === 'admin') return '控制台';
+        if (path === 'products') return '商品管理';
+        if (path === 'coupons') return '優惠卷管理';
+        if (path === 'orders') return '訂單管理';
+        if (list[1] === 'products' && path === 'all') return '全部訂單';
+        if (list[1] === 'products' && path === 'listed') return '架上商品';
+        if (list[1] === 'products' && path === 'soldout') return '已售完商品';
+        if (list[1] === 'products' && path === 'unlisted') return '未上架商品';
+        if (list[1] === 'coupons' && path === 'all') return '全部優惠卷';
+        if (list[1] === 'coupons' && path === 'scheduled') return '已排定優惠卷';
+        if (list[1] === 'coupons' && path === 'underway') return '進行中優惠卷';
+        if (list[1] === 'coupons' && path === 'over') return '已結束優惠卷';
+        if (list[1] === 'orders' && path === 'all') return '全部訂單';
+        if (list[1] === 'orders' && path === 'unpaid') return '尚未結帳';
+        return 'undefined';
       });
-      return chinesePath;
     },
   },
 };
