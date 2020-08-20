@@ -1,20 +1,21 @@
 <template>
-  <div>
-    <p>{{ $route.name }}</p>
-    <p>{{ $route.params.tab }}</p>
-    <p>{{ alert }}</p>
+  <div class="container mt-3">
+    <p>123</p>
+    <p>{{ path }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  created() {
-    console.log(123);
-  },
   computed: {
-    alert() {
-      return this.$route.params.tab;
+    path() {
+      const path = this.$route.mata;
+      console.log('re');
+      return path;
     },
+  },
+  created() {
+    console.log('created');
   },
 };
 </script>

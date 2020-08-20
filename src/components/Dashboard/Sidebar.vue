@@ -1,5 +1,6 @@
 <template>
   <div class="sidebar">
+    <div class="logo d-md-none">毛孩<span class="highlight">百貨</span></div>
     <ul class="p-3">
       <li>
         <div class="tab-name py-1" @click="tabToggle('products')">

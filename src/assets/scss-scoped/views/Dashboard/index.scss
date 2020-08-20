@@ -34,6 +34,8 @@
   margin-top: 56px;
   margin-left: 0px;
   transition: all 0.3s;
+  min-height: calc(100vh - 56px);
+  background-color: lighten(theme-color('gray'), 36%);
   @include desktop() {
     .openSidebar & {
       margin-left: 220px;

@@ -17,3 +17,9 @@
     display: flex !important;
   }
 }
+
+.d-md-none {
+  @include desktop() {
+    display: none !important;
+  }
+}
