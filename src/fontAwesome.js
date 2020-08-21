@@ -1,5 +1,11 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faEye, faEyeSlash, faBell } from '@fortawesome/free-regular-svg-icons';
+import {
+  faEye,
+  faEyeSlash,
+  faBell,
+  faEdit,
+  faTrashAlt,
+} from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
   faLock,
@@ -31,6 +37,8 @@ const icons = [
   faAngleDown,
   faFileAlt,
   faReceipt,
+  faEdit,
+  faTrashAlt,
 ];
 
 library.add(...icons);

@@ -11,6 +11,15 @@
   &--block {
     width: 100%;
   }
+  &--transparent {
+    border: 1px solid lighten(theme-color('gray'), 30%);
+    background-color: transparent;
+    color: theme-color('secondary');
+
+    &:hover {
+      background-color: darken(#fff, 5%);
+    }
+  }
 }
 
 @each $key, $value in $theme-colors {
@@ -20,12 +29,15 @@
     border: 1px solid $value;
 
     &:hover {
-      opacity: 0.91;
+      background-color: darken($value, 5%);
     }
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
+    // &:hover {
+    //   opacity: 0.91;
+    // }
+    // &:disabled {
+    //   opacity: 0.7;
+    //   cursor: not-allowed;
+    // }
   }
   .btn--outline--#{$key} {
     color: $value;

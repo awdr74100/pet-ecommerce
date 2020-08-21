@@ -1,5 +1,5 @@
 <template>
-  <div class="account-form text-secondary p-4">
+  <div class="account-form text-secondary p-5">
     <ProgressBar :active="progressActive" />
     <span class="return" v-if="tab === 'reset'" @click="toggleTab('signin')">
       <font-awesome-icon :icon="['fas', 'arrow-left']" />

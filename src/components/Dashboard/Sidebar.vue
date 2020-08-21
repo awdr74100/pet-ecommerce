@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar mb-6">
     <div class="logo d-md-none">毛孩<span class="highlight">百貨</span></div>
-    <ul class="p-3 pt-2">
+    <ul class="p-4 pt-3">
       <li>
         <div class="tab-name py-1" @click="tabToggle('products')">
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'shopping-bag']" size="sm"/></span>

@@ -17,7 +17,8 @@
     align-items: center;
     width: 150px;
 
-    p {
+    p,
+    span {
       pointer-events: none;
     }
 
@@ -28,7 +29,7 @@
     .line {
       width: 1px;
       height: 14px;
-      background-color: lighten(theme-color('secondary'), 40%);
+      background-color: lighten(theme-color('secondary'), 30%);
     }
     .list {
       display: none;
@@ -58,7 +59,7 @@
   &__line {
     width: 8px;
     height: 1px;
-    background-color: lighten(theme-color('secondary'), 40%);
+    background-color: lighten(theme-color('secondary'), 30%);
   }
   &__label {
     width: 56px;
@@ -75,7 +76,7 @@
     transition: all 0.3s;
 
     &::placeholder {
-      color: theme-color('gray');
+      color: lighten(theme-color('gray'), 10%);
     }
     &:focus,
     &:hover {

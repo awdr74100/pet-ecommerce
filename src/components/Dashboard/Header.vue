@@ -8,8 +8,8 @@
       <Breadcrumb />
     </div>
     <div class="ml-auto text-secondary">
-      <span class="header__link mr-4"><font-awesome-icon :icon="['fas', 'user-cog']"/></span>
-      <span class="header__link ml-2 mr-4"><font-awesome-icon :icon="['far', 'bell']"/></span>
+      <span class="header__link mr-5"><font-awesome-icon :icon="['fas', 'user-cog']"/></span>
+      <span class="header__link ml-2 mr-5"><font-awesome-icon :icon="['far', 'bell']"/></span>
     </div>
     <div class="header__line"></div>
     <a href="#" class="header__btn ml-3">

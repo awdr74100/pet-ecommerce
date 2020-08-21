@@ -1,8 +1,8 @@
 <template>
   <div class="control-panel text-secondary">
-    <div class="row mb-3">
+    <div class="row">
       <div class="col-md-6">
-        <div class="control-panel__group mt-3">
+        <div class="control-panel__group">
           <div class="control-panel__select pl-3" @click="selectToggle">
             <p>{{ selectTarget }}</p>
             <span class="icon ml-auto mr-3" :class="{ rotate: selectActive }">
@@ -27,7 +27,7 @@
           <input class="control-panel__input pl-max" type="text" id="select" placeholder="請輸入" />
         </div>
         <div class="control-panel__group mt-3">
-          <label class="control-panel__label mr-3" for="productNum">商品數量</label>
+          <label class="control-panel__label mr-3" for="productNum">庫存數量</label>
           <input
             class="control-panel__input"
             type="number"
@@ -40,13 +40,13 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="control-panel__group mt-3">
+        <div class="control-panel__group mt-md-0 mt-3">
           <label class="control-panel__label mr-3" for="productCategory">類別</label>
           <input
             class="control-panel__input"
             type="text"
             id="productCategory"
-            placeholder="搜尋分類"
+            placeholder="選擇分類"
           />
         </div>
         <div class="control-panel__group mt-3 pr-6">
@@ -63,6 +63,10 @@
         </div>
       </div>
     </div>
+    <div class="row no-gutters mt-4">
+      <button class="btn btn--primary px-4 py-1">搜尋</button>
+      <button class="btn btn--transparent px-4 py-1 ml-3">重設</button>
+    </div>
   </div>
 </template>
 
@@ -76,6 +80,7 @@ export default {
   },
   methods: {
     selectToggle(e) {
+      console.log(e.target.tagName);
       if (e.target.tagName === 'DIV') {
         this.selectActive = !this.selectActive;
       }
