@@ -1,17 +1,17 @@
 <template>
   <div class="container mt-3">
     <div class="row no-gutters bg-white box-shadow">
-      <DataTable />
+      <ProductTable />
     </div>
   </div>
 </template>
 
 <script>
-import DataTable from '@/components/Dashboard/DataTable.vue';
+import ProductTable from '@/components/Dashboard/ProductTable.vue';
 
 export default {
   components: {
-    DataTable,
+    ProductTable,
   },
 };
 </script>

@@ -19,6 +19,7 @@ import {
   faAngleDown,
   faFileAlt,
   faReceipt,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -39,6 +40,7 @@ const icons = [
   faReceipt,
   faEdit,
   faTrashAlt,
+  faPlus,
 ];
 
 library.add(...icons);

@@ -71,25 +71,6 @@
     font-size: 14px;
     color: lighten(theme-color('secondary'), 10%);
   }
-  .checkbox {
-    position: relative;
-    border: 1px solid lighten(theme-color('secondary'), 50%);
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
-
-    &:checked::before {
-      content: '';
-      display: inline-block;
-      background-color: lighten(theme-color('primary'), 10%);
-      position: absolute;
-      top: 2px;
-      bottom: 2px;
-      left: 2px;
-      right: 2px;
-      border-radius: 3px;
-    }
-  }
   .hide-btn {
     cursor: pointer;
     top: 50%;
