@@ -32,6 +32,7 @@ export default {
         if (list[1] === 'coupons' && path === 'scheduled') return '已排定優惠卷';
         if (list[1] === 'coupons' && path === 'underway') return '進行中優惠卷';
         if (list[1] === 'coupons' && path === 'over') return '已結束優惠卷';
+        if (list[1] === 'coupons' && path === 'not_enabled') return '未啟用優惠卷';
         if (list[1] === 'orders' && path === 'all') return '全部訂單';
         if (list[1] === 'orders' && path === 'unpaid') return '尚未結帳';
         return 'undefined';

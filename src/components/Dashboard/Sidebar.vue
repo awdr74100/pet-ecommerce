@@ -106,6 +106,17 @@
               >已結束優惠卷</router-link
             >
           </li>
+          <li>
+            <router-link
+              class="list__link"
+              :class="{
+                'list__link--active': pathList[1] === 'coupons' && pathList[2] === 'not_enabled',
+              }"
+              to="/admin/coupons/not_enabled"
+              @click.native="sidebarToggle"
+              >未啟用優惠卷</router-link
+            >
+          </li>
         </ul>
       </li>
       <li class="mt-2">
