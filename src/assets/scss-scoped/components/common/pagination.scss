@@ -1,0 +1,36 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+
+  &__prev,
+  &__next {
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 4px;
+    transition: all 0.3s;
+
+    &--disabled {
+      color: lighten(theme-color('secondary'), 44%);
+      cursor: not-allowed;
+    }
+    &:not(.pagination__prev--disabled):hover {
+      color: lighten(theme-color('secondary'), 18%);
+    }
+  }
+  &__item {
+    cursor: pointer;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 0px 1px;
+    transition: all 0.3s;
+
+    &--active {
+      border-color: lighten(theme-color('gray'), 26%);
+    }
+    &:not(.pagination__item--active):hover {
+      border-color: lighten(theme-color('gray'), 30%);
+    }
+  }
+}

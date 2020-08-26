@@ -7,7 +7,7 @@
     align-items: center;
     width: 100%;
   }
-  &__select {
+  &__dropdown {
     cursor: pointer;
     position: absolute;
     z-index: 1;
@@ -24,7 +24,10 @@
 
     .icon {
       transition: all 0.3s;
-      font-size: 16px;
+
+      &--rotate {
+        transform: rotate(180deg);
+      }
     }
     .line {
       width: 1px;
@@ -36,7 +39,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      top: 40px;
+      top: 37px;
       background-color: #fff;
       box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.06);
       border-radius: 4px;
@@ -49,7 +52,7 @@
       transition: all 0.3s;
 
       &:hover {
-        background-color: rgb(245, 245, 245);
+        background-color: rgb(241, 241, 241);
       }
       &--active {
         color: theme-color('primary');
@@ -86,8 +89,5 @@
   }
   .pl-max {
     padding-left: 164px;
-  }
-  .rotate {
-    transform: rotate(180deg);
   }
 }

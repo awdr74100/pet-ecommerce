@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container mt-3 mb-6">
     <div class="row no-gutters bg-white box-shadow">
       <ProductTable />
     </div>

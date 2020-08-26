@@ -12,24 +12,80 @@
       </button>
     </div>
     <div class="p-4">
+      <!-- table -->
       <div class="table-responsive">
-        <!-- products table -->
         <table class="table text-secondary">
           <thead class="thead">
             <tr class="head">
-              <th style="min-width:40px"><input type="checkbox" class="checkbox m-0" /></th>
-              <th style="min-width:260px">商品名稱</th>
-              <th style="min-width:90px">原價</th>
-              <th style="min-width:90px">售價</th>
-              <th style="min-width:90px">已售出</th>
-              <th style="min-width:90px">庫存數量</th>
-              <th style="min-width:90px">商品狀態</th>
-              <th style="min-width:120px" class="text-center">操作</th>
+              <th style="min-width:40px" data-sort="false">
+                <input type="checkbox" class="checkbox m-0" />
+              </th>
+              <th style="min-width:260px" data-sort="false">商品名稱</th>
+              <th style="min-width:95px" @click="sortToggle('oPrice')">
+                <div class="d-flex align-items-center">
+                  <p>原價</p>
+                  <span
+                    class="sort"
+                    :class="{
+                      'sort--active': sortTarget === 'oPrice',
+                      'sort--rotate': sortMode === 'up' && sortTarget === 'oPrice',
+                    }"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-down']" />
+                  </span>
+                </div>
+              </th>
+              <th style="min-width:95px" @click="sortToggle('price')">
+                <div class="d-flex align-items-center">
+                  <p>售價</p>
+                  <span
+                    class="sort"
+                    :class="{
+                      'sort--active': sortTarget === 'price',
+                      'sort--rotate': sortMode === 'up' && sortTarget === 'price',
+                    }"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-down']" />
+                  </span>
+                </div>
+              </th>
+              <th style="min-width:95px" @click="sortToggle('sales')">
+                <div class="d-flex align-items-center">
+                  <p>已售出</p>
+                  <span
+                    class="sort"
+                    :class="{
+                      'sort--active': sortTarget === 'sales',
+                      'sort--rotate': sortMode === 'up' && sortTarget === 'sales',
+                    }"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-down']" />
+                  </span>
+                </div>
+              </th>
+              <th style="min-width:95px" @click="sortToggle('stock')">
+                <div class="d-flex align-items-center">
+                  <p>庫存數量</p>
+                  <span
+                    class="sort"
+                    :class="{
+                      'sort--active': sortTarget === 'stock',
+                      'sort--rotate': sortMode === 'up' && sortTarget === 'stock',
+                    }"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-down']" />
+                  </span>
+                </div>
+              </th>
+              <th style="min-width:90px" data-sort="false">商品狀態</th>
+              <th style="min-width:90px" class="text-center" data-sort="false">操作</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="index in 2" :key="index">
-              <td><input type="checkbox" class="checkbox m-0" /></td>
+            <tr v-for="index in 1" :key="index">
+              <td>
+                <input type="checkbox" class="checkbox m-0" />
+              </td>
               <td class="product">
                 <div class="product__img"></div>
                 <div class="ml-3">
@@ -48,16 +104,16 @@
               </td>
             </tr>
           </tbody>
-          <tfoot>
-            <tr class="foot">
-              <td colspan="8">
-                <div class="d-none justify-content-center">
-                  <!-- ... -->
-                </div>
-              </td>
-            </tr>
-          </tfoot>
         </table>
+      </div>
+      <!-- tfoot -->
+      <div class="tfoot d-flex align-items-center justify-content-end p-3">
+        <div>
+          <Dropdown @callRowToggle="rowToggle" />
+        </div>
+        <div class="ml-3">
+          <Pagination />
+        </div>
       </div>
     </div>
   </div>
@@ -65,10 +121,39 @@
 
 <script>
 import ControlPanel from '@/components/Dashboard/ControlPanel.vue';
+import Dropdown from '@/components/common/Dropdown.vue';
+import Pagination from '@/components/common/Pagination.vue';
 
 export default {
   components: {
     ControlPanel,
+    Dropdown,
+    Pagination,
+  },
+  data() {
+    return {
+      row: 8,
+      page: 1,
+      sortTarget: 'oPrice',
+      sortMode: 'down',
+      selectTarget: [],
+    };
+  },
+  methods: {
+    sortToggle(target) {
+      if (this.sortTarget === target) {
+        this.sortMode = this.sortMode === 'down' ? 'up' : 'down';
+      } else {
+        this.sortMode = 'down';
+        this.sortTarget = target;
+      }
+    },
+    rowToggle(row) {
+      this.row = row;
+    },
+    pageToggle(page) {
+      this.page = page;
+    },
   },
 };
 </script>

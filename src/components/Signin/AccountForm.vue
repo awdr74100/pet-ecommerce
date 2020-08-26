@@ -21,6 +21,7 @@
         立即註冊
       </li>
     </ul>
+    <!-- signin form -->
     <form @submit.prevent="signin" class="form mt-3" v-if="tab === 'signin'">
       <div class="account-form__section">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
@@ -55,6 +56,7 @@
       </button>
       <a href="#" class="forget mt-3" @click.prevent="toggleTab('reset')">忘記密碼？</a>
     </form>
+    <!-- signup form -->
     <form @submit.prevent="signup" class="form mt-3" v-if="tab === 'signup'">
       <div class="account-form__section">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
@@ -91,6 +93,7 @@
         註冊
       </button>
     </form>
+    <!-- reset form -->
     <form @submit.prevent="reset" class="form mt-3" v-if="tab === 'reset'">
       <p class="py-1">發送密碼重置郵件</p>
       <div class="account-form__section mt-3 mb-3">
