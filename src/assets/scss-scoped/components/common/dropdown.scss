@@ -23,11 +23,11 @@
   .list {
     display: none;
     position: absolute;
-    top: 41px;
+    top: 39px;
     left: 0;
     right: 0;
-    background-color: #fff;
     border-radius: 4px;
+    background-color: #fff;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.06);
 
     &--active {

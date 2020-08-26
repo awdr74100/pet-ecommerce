@@ -11,7 +11,6 @@
       color: #796e5d;
     }
   }
-
   .rotate {
     transform: rotate(180deg);
   }
@@ -25,9 +24,12 @@
     color: darken(theme-color('secondary'), 10%);
 
     .text-l-1 {
-      margin-left: 0.75px;
+      margin-left: -1px;
     }
     .text-l-2 {
+      margin-left: 0.75px;
+    }
+    .text-l-3 {
       margin-left: 2.5px;
     }
     span:first-child {

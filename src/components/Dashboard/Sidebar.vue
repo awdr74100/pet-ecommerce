@@ -5,7 +5,7 @@
       <li>
         <div class="tab-name py-1" @click="tabToggle('products')">
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'shopping-bag']" size="sm"/></span>
-          <p class="text-l-1">商品管理</p>
+          <p class="text-l-2">商品管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('products') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
@@ -57,8 +57,8 @@
       </li>
       <li class="mt-2">
         <div class="tab-name py-1" @click="tabToggle('coupons')">
-          <span class="mr-2"><font-awesome-icon :icon="['fas', 'receipt']" size="sm"/></span>
-          <p class="text-l-2">優惠卷管理</p>
+          <span class="mr-2"><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
+          <p class="text-l-1">優惠卷管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('coupons') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
@@ -122,7 +122,7 @@
       <li class="mt-2">
         <div class="tab-name py-1" @click="tabToggle('orders')">
           <span class="mr-2"><font-awesome-icon :icon="['fas', 'file-alt']" size="sm"/></span>
-          <p class="text-l-2">訂單管理</p>
+          <p class="text-l-3">訂單管理</p>
           <span class="ml-auto" :class="{ rotate: activeTab.includes('orders') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>

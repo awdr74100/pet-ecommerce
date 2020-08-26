@@ -16,12 +16,13 @@ import {
   faShoppingBag,
   faAngleDown,
   faFileAlt,
-  faReceipt,
+  faTag,
   faPlus,
   faArrowLeft,
   faAngleRight,
   faAngleLeft,
   faArrowDown,
+  faDollarSign,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -39,12 +40,13 @@ const icons = [
   faShoppingBag,
   faAngleDown,
   faFileAlt,
-  faReceipt,
+  faTag,
   faEdit,
   faTrashAlt,
   faPlus,
   faAngleLeft,
   faArrowDown,
+  faDollarSign,
 ];
 
 library.add(...icons);

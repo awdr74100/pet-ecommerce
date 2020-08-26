@@ -1,4 +1,4 @@
-.product-table {
+.coupon-table {
   width: 100%;
 
   .table-responsive {
@@ -48,31 +48,31 @@
       padding-left: 15px;
     }
   }
-  .product {
+  .line {
+    display: inline-block;
+    width: 1px;
+    height: 14px;
+    background-color: rgb(187, 187, 187);
+  }
+  .coupon {
     display: flex;
     align-items: center;
 
     &__img {
-      min-width: 56px;
       width: 56px;
       height: 56px;
-      background-image: url('https://storage.googleapis.com/vue-course-api.appspot.com/roya%2F1568791514933.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=TGF488iDvCsMy17SUA7vhDOIn5EvTwmr%2FoctEsWPDE3pGeGcGNOLmBXrVeEqrdOUKQ2C9hCeMFlEAyKq8qiLFd5qBYm2CCV%2FQLO93uVW7ooa8zp%2FfgH48QBGpTTaNNtEz%2Bin%2F%2F47G%2F%2Bw%2BVG8J%2Fw1FRKsvaN3IrKTmmiWdr9u%2FbN71EurWqh4eSV3S9KxJpn%2B0DMCOhYbkdddY3ecP4Rp%2FpuO5RTQfZ%2BSCC549RNlm%2FHdRxRKleWRsh7RqOa2cyqMY93bybNqze79xUvF4kSChZanfRl6rBDms4Lc9paVcqDsD4g6zTbnCwldVoSACZZABO1JiJWzu8KEl4hRpr1nPg%3D%3D');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(85, 199, 136);
+      color: #fff;
+    }
+    &__code {
+      color: darken(theme-color('secondary'), 20%);
     }
     &__title {
-      color: darken(theme-color('secondary'), 20%);
-      line-height: 1.3;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-    }
-    &__category {
       display: inline-block;
-      font-size: 12px;
+      // font-size: 12px;
       color: lighten(theme-color('secondary'), 20%);
     }
   }
@@ -83,6 +83,25 @@
 
     &:hover {
       color: darken(theme-color('secondary'), 20%);
+    }
+  }
+  .target {
+    display: inline-block;
+    font-size: 12px;
+    padding: 3px 6px;
+    margin-bottom: 6px;
+
+    &--scheduled {
+      color: rgb(238, 77, 45);
+      background-color: lighten(rgb(238, 77, 45), 40%);
+    }
+    &--underway {
+      color: theme-color('success');
+      background-color: lighten(theme-color('success'), 40%);
+    }
+    &--over {
+      color: theme-color('secondary');
+      background-color: lighten(theme-color('secondary'), 56%);
     }
   }
   .sort {

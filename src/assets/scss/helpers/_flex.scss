@@ -10,7 +10,11 @@
   align-items: center;
 }
 
-.flex-direction {
+.align-items-start {
+  align-items: flex-start;
+}
+
+.flex-column {
   flex-direction: column;
 }
 
