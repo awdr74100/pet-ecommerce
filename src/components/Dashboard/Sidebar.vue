@@ -141,11 +141,33 @@
             <router-link
               class="list__link"
               :class="{
-                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'unpaid',
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'underway',
               }"
-              to="/admin/orders/unpaid"
+              to="/admin/orders/underway"
               @click.native="sidebarToggle"
-              >尚未結帳</router-link
+              >進行中訂單</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              class="list__link"
+              :class="{
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'ispaid',
+              }"
+              to="/admin/orders/ispaid"
+              @click.native="sidebarToggle"
+              >已付款訂單</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              class="list__link"
+              :class="{
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'canceled',
+              }"
+              to="/admin/orders/canceled"
+              @click.native="sidebarToggle"
+              >已取消訂單</router-link
             >
           </li>
         </ul>

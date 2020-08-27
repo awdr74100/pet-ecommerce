@@ -3,6 +3,12 @@
     <div class="p-4">
       <OrderPanel />
     </div>
+    <div class="d-flex align-items-center px-4 pt-4 pb-1">
+      <p class="font-l text-secondary mr-auto ">2 訂單</p>
+    </div>
+    <div class="p-4">
+      <!-- ... -->
+    </div>
   </div>
 </template>
 

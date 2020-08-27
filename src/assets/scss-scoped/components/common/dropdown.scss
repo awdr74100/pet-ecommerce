@@ -36,7 +36,12 @@
   }
   .list__item {
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
 
+    .icon {
+      font-size: 12px;
+    }
     &:hover {
       background-color: rgb(241, 241, 241);
     }

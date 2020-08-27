@@ -1,10 +1,14 @@
 <template>
   <div class="account-form text-secondary p-5">
+    <!-- progress bar -->
     <ProgressBar :active="progressActive" />
+    <!-- return action (only reset form show) -->
     <span class="return" v-if="tab === 'reset'" @click="toggleTab('signin')">
       <font-awesome-icon :icon="['fas', 'arrow-left']" />
     </span>
+    <!-- logo -->
     <a href="#" class="logo mb-1"></a>
+    <!-- tabs -->
     <ul class="d-flex align-items-center mt-3 pb-1" v-if="tab !== 'reset'">
       <li
         class="account-form__tab py-1"

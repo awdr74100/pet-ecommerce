@@ -8,11 +8,11 @@
     cursor: pointer;
     padding: 10px 14px;
     border-radius: 4px;
-    transition: all 0.3s;
+    transition: color 0.3s;
 
     &--disabled {
       color: lighten(theme-color('secondary'), 44%);
-      cursor: not-allowed;
+      pointer-events: none;
     }
     &:not(.pagination__prev--disabled):hover {
       color: lighten(theme-color('secondary'), 18%);

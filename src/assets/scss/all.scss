@@ -17,5 +17,9 @@
 // layout
 @import './layout/grid';
 
+// components
 @import './components/button';
 @import './components/checkbox';
+
+// vendors
+@import './vendors/vue2-datepicker';

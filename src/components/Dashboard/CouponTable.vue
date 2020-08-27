@@ -1,15 +1,17 @@
 <template>
   <div class="coupon-table">
+    <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">共 2 張優惠卷</p>
+      <p class="font-l text-secondary mr-auto ">2 優惠卷</p>
       <button class="btn btn--primary btn--lg">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
         </p>
       </button>
     </div>
+    <!-- table -->
     <div class="p-4">
-      <!-- table (head, body) -->
+      <!-- (head, body) -->
       <div class="table-responsive">
         <table class="table text-secondary">
           <thead class="thead">
@@ -83,22 +85,24 @@
           </tbody>
         </table>
       </div>
-      <!-- table (tfoot) -->
+      <!-- (tfoot) -->
       <div class="tfoot d-flex align-items-center justify-content-end p-3">
+        <!-- dropdown component -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />
         </div>
+        <!-- pagination component -->
         <div class="ml-3">
-          <Pagination />
+          <Pagination :length="33" :row="row" @callPageToggle="pageToggle" />
         </div>
       </div>
     </div>
-    <!-- action -->
+    <!-- batch action -->
     <div class="p-4 pt-5">
       <div class="d-flex align-items-center text-secondary">
-        <div class="d-flex align-items-center ml-2">
+        <div class="align-items-center ml-2 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" />
-          <label for="selectAll" class="ml-3">選擇本頁全部優惠卷</label>
+          <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部優惠卷</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 張優惠卷</p>
@@ -121,11 +125,11 @@ export default {
   },
   data() {
     return {
-      row: 8,
+      row: 12,
       page: 1,
-      selectTarget: [],
-      sortTarget: 'percent',
       sortMode: 'down',
+      sortTarget: '',
+      selectTargets: [],
     };
   },
   methods: {

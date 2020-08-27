@@ -64,7 +64,12 @@
     top: 20px;
     left: 20px;
     font-size: 20px;
-    color: theme-color('primary');
+    transition: all 0.3s;
+    color: lighten(theme-color('primary'), 0%);
+
+    &:hover {
+      color: lighten(theme-color('primary'), 10%);
+    }
   }
   .checkbox-label {
     cursor: pointer;

@@ -49,7 +49,7 @@
             placeholder="選擇分類"
           />
         </div>
-        <div class="product-panel__group mt-3">
+        <div class="product-panel__group mt-3 pr-6">
           <label class="product-panel__label mr-3" for="productSoldout">已售出</label>
           <input
             class="product-panel__input"

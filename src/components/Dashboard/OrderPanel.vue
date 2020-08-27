@@ -1,7 +1,7 @@
 <template>
   <div class="order-panel text-secondary">
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-6">
         <div class="order-panel__group">
           <div class="order-panel__dropdown pl-3" @click="dropdownToggle">
             <p>{{ dropdownTarget }}</p>
@@ -27,21 +27,23 @@
           <input class="order-panel__input pl-max" type="text" placeholder="請輸入" />
         </div>
       </div>
-      <div class="col-md-7">
-        <!-- <div class="order-panel__group">
-          <label class="corder-panel__label mr-3" for="date_start">訂單成立時間 (單)</label>
-          <input class="order-panel__input" type="date" id="date_start" />
-          <div class="order-panel__line mx-2"></div>
-          <input type="date" class="order-panel__input" />
-        </div> -->
+      <div class="col-md-6">
+        <div class="order-panel__group mt-md-0 mt-3">
+          <p class="mr-3 white-nowrap">訂單成立時間 (單)</p>
+          <DatePicker />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import DatePicker from '@/components/common/DatePicker.vue';
 
 export default {
+  components: {
+    DatePicker,
+  },
   data() {
     return {
       dropdownActive: false,

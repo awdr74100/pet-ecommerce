@@ -1,0 +1,32 @@
+$primary-color: lighten(theme-color('primary'), 4%);
+$input-hover-border-color: darken(theme-color('gray'), 4%);
+$input-color: theme-color('secondary');
+
+.mx-table {
+  th,
+  td {
+    text-align: center;
+  }
+}
+
+.mx-datepicker-range {
+  width: 100% !important;
+  min-width: 200px;
+}
+
+.mx-input {
+  height: 32px !important;
+  box-shadow: none !important;
+  transition: all 0.3s;
+  border: 1px solid lighten(theme-color('gray'), 30%) !important;
+
+  &::placeholder {
+    color: lighten(theme-color('gray'), 10%) !important;
+  }
+  &:focus,
+  &:hover {
+    border-color: darken(theme-color('gray'), 4%) !important;
+  }
+}
+
+@import '~vue2-datepicker/scss/index.scss';

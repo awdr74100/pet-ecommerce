@@ -23,6 +23,7 @@ import {
   faAngleLeft,
   faArrowDown,
   faDollarSign,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -47,6 +48,7 @@ const icons = [
   faAngleLeft,
   faArrowDown,
   faDollarSign,
+  faCheck,
 ];
 
 library.add(...icons);

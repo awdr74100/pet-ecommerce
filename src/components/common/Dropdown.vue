@@ -6,13 +6,22 @@
     </span>
     <ul class="list py-1" :class="{ 'list--active': dropdownActive }">
       <li class="list__item px-3 py-1" :class="{ 'list__item--active': dropdownTarget === 12 }">
-        12
+        <p>12</p>
+        <span class="icon ml-2" v-if="dropdownTarget === 12">
+          <font-awesome-icon :icon="['fas', 'check']" size="sm" />
+        </span>
       </li>
       <li class="list__item px-3 py-1" :class="{ 'list__item--active': dropdownTarget === 24 }">
-        24
+        <p>24</p>
+        <span class="icon ml-2" v-if="dropdownTarget === 24">
+          <font-awesome-icon :icon="['fas', 'check']" size="sm" />
+        </span>
       </li>
       <li class="list__item px-3 py-1" :class="{ 'list__item--active': dropdownTarget === 36 }">
-        36
+        <p>36</p>
+        <span class="icon ml-2" v-if="dropdownTarget === 36">
+          <font-awesome-icon :icon="['fas', 'check']" size="sm" />
+        </span>
       </li>
     </ul>
   </div>
