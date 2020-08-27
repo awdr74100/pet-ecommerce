@@ -1,11 +1,11 @@
 <template>
   <div class="product-table">
     <div class="p-4">
-      <ControlPanel />
+      <ProductPanel />
     </div>
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
       <p class="font-l text-secondary mr-auto ">共 2 樣商品</p>
-      <button class="btn btn--primary px-3 py-1">
+      <button class="btn btn--primary btn--lg">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>新增商品
         </p>
@@ -17,11 +17,11 @@
         <table class="table text-secondary">
           <thead class="thead">
             <tr class="head">
-              <th style="min-width:40px" data-sort="false">
+              <th style="min-width:40px">
                 <input type="checkbox" class="checkbox m-0" />
               </th>
-              <th style="min-width:260px" data-sort="false">商品名稱</th>
-              <th style="min-width:95px" @click="sortToggle('oPrice')">
+              <th style="min-width:260px">商品名稱</th>
+              <th style="min-width:95px" data-sort="true" @click="sortToggle('oPrice')">
                 <div class="d-flex align-items-center">
                   <p>原價</p>
                   <span
@@ -35,7 +35,7 @@
                   </span>
                 </div>
               </th>
-              <th style="min-width:95px" @click="sortToggle('price')">
+              <th style="min-width:95px" data-sort="true" @click="sortToggle('price')">
                 <div class="d-flex align-items-center">
                   <p>售價</p>
                   <span
@@ -49,7 +49,7 @@
                   </span>
                 </div>
               </th>
-              <th style="min-width:95px" @click="sortToggle('stock')">
+              <th style="min-width:95px" data-sort="true" @click="sortToggle('stock')">
                 <div class="d-flex align-items-center">
                   <p>庫存量</p>
                   <span
@@ -63,7 +63,7 @@
                   </span>
                 </div>
               </th>
-              <th style="min-width:95px" @click="sortToggle('sales')">
+              <th style="min-width:95px" data-sort="true" @click="sortToggle('sales')">
                 <div class="d-flex align-items-center">
                   <p>已售出</p>
                   <span
@@ -77,8 +77,8 @@
                   </span>
                 </div>
               </th>
-              <th style="min-width:90px" data-sort="false">商品狀態</th>
-              <th style="min-width:90px" class="text-center" data-sort="false">操作</th>
+              <th style="min-width:90px">商品狀態</th>
+              <th style="min-width:90px" class="text-center">操作</th>
             </tr>
           </thead>
           <tbody>
@@ -127,8 +127,8 @@
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 個商品</p>
-          <button class="btn btn--danger px-3 py-1 mx-3">刪除</button>
-          <button class="btn btn--transparent px-3 py-1">下架</button>
+          <button class="btn btn--danger btn--md mx-3">刪除</button>
+          <button class="btn btn--transparent btn--md">下架</button>
         </div>
       </div>
     </div>
@@ -136,13 +136,13 @@
 </template>
 
 <script>
-import ControlPanel from '@/components/Dashboard/ControlPanel.vue';
+import ProductPanel from '@/components/Dashboard/ProductPanel.vue';
 import Dropdown from '@/components/common/Dropdown.vue';
 import Pagination from '@/components/common/Pagination.vue';
 
 export default {
   components: {
-    ControlPanel,
+    ProductPanel,
     Dropdown,
     Pagination,
   },

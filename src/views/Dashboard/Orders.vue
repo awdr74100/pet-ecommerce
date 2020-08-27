@@ -1,6 +1,17 @@
 <template>
-  <div>
-    <p>{{ $route.name }}</p>
-    <p>{{ $route.params.tab }}</p>
+  <div class="container mt-3 mb-6">
+    <div class="row no-gutters bg-white shadow-section">
+      <OrderTable />
+    </div>
   </div>
 </template>
+
+<script>
+import OrderTable from '@/components/Dashboard/OrderTable.vue';
+
+export default {
+  components: {
+    OrderTable,
+  },
+};
+</script>

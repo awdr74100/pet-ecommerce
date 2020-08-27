@@ -1,0 +1,92 @@
+.product-panel {
+  font-size: 14px;
+
+  &__group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  &__dropdown {
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    width: 150px;
+
+    p,
+    span {
+      pointer-events: none;
+    }
+    .icon {
+      transition: all 0.3s;
+
+      &--rotate {
+        transform: rotate(180deg);
+      }
+    }
+    .line {
+      width: 1px;
+      height: 14px;
+      background-color: lighten(theme-color('secondary'), 30%);
+    }
+    .list {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 35px;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.1), 0 8px 16px 0 rgba(0, 0, 0, 0.06);
+
+      &--active {
+        display: block;
+      }
+    }
+    .list__item {
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: rgb(241, 241, 241);
+      }
+      &--active {
+        color: theme-color('primary');
+      }
+    }
+  }
+  &__line {
+    width: 8px;
+    height: 1px;
+    background-color: lighten(theme-color('secondary'), 30%);
+  }
+  &__label {
+    width: 56px;
+    text-align: right;
+  }
+  &__input {
+    border: 1px solid lighten(theme-color('gray'), 30%);
+    font-size: 14px;
+    height: 32px;
+    flex: 1;
+    min-width: 0; // 取消 input 預設最小寬度
+    border-radius: 4px;
+    color: theme-color('secondary');
+    padding-left: 10px;
+    transition: all 0.3s;
+
+    &::placeholder {
+      color: lighten(theme-color('gray'), 10%);
+    }
+    &:focus,
+    &:hover {
+      border-color: darken(theme-color('gray'), 4%);
+    }
+  }
+  .pl-max {
+    padding-left: 164px;
+  }
+}

@@ -11,6 +11,12 @@
   &--block {
     width: 100%;
   }
+  &--md {
+    padding: 5px 15px;
+  }
+  &--lg {
+    padding: 8px 10px;
+  }
   &--transparent {
     border: 1px solid lighten(theme-color('gray'), 30%);
     background-color: transparent;
@@ -29,24 +35,17 @@
     border: 1px solid $value;
 
     &:hover {
-      background-color: darken($value, 5%);
+      background-color: darken($value, 8%);
     }
-    // &:hover {
-    //   opacity: 0.91;
-    // }
-    // &:disabled {
-    //   opacity: 0.7;
-    //   cursor: not-allowed;
-    // }
   }
-  .btn--outline--#{$key} {
-    color: $value;
-    background-color: transparent;
-    border: 1px solid $value;
+  // .btn--outline--#{$key} {
+  //   color: $value;
+  //   background-color: transparent;
+  //   border: 1px solid $value;
 
-    &:hover {
-      color: #fff;
-      background-color: $value;
-    }
-  }
+  //   &:hover {
+  //     color: #fff;
+  //     background-color: $value;
+  //   }
+  // }
 }

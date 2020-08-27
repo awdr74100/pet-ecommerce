@@ -2,7 +2,6 @@
   position: fixed;
   top: 0;
   width: 100%;
-  box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
   z-index: 5;
   @include desktop() {
     z-index: 15;
@@ -14,7 +13,6 @@
   top: 0px;
   width: 220px;
   height: 100%;
-  box-shadow: 4px 0 4px -4px rgba(74, 74, 78, 0.16);
   transition: transform 0.3s;
   transform: translateX(-220px);
   z-index: 15;

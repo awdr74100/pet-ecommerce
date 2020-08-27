@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid px-0" :class="{ openSidebar: openSidebar }">
-    <div class="header-layout bg-white">
+    <div class="header-layout bg-white shadow-header">
       <Header />
     </div>
     <div class="row no-gutters">
-      <div class="sidebar-layout bg-white">
+      <div class="sidebar-layout bg-white shadow-sidebar">
         <Sidebar />
       </div>
       <div class="main-layout">

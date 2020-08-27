@@ -2,7 +2,7 @@
   <div class="coupon-table">
     <div class="d-flex align-items-center p-4 pb-1">
       <p class="font-l text-secondary mr-auto ">共 2 張優惠卷</p>
-      <button class="btn btn--primary px-3 py-1">
+      <button class="btn btn--primary btn--lg">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
         </p>
@@ -14,36 +14,55 @@
         <table class="table text-secondary">
           <thead class="thead">
             <tr>
-              <td><input type="checkbox" class="checkbox m-0" /></td>
-              <td style="min-width:260px">
+              <th style="min-width:40px">
+                <input type="checkbox" class="checkbox m-0" />
+              </th>
+              <th style="min-width:250px">
                 <div class="d-flex align-items-center">
                   <p>優惠卷代碼</p>
                   <span class="line mx-1"></span>
                   <p>優惠卷名稱</p>
                 </div>
-              </td>
-              <td style="min-width:100px">折扣類型</td>
-              <td style="min-width:150px ">折扣額度 (百分比)</td>
-              <td style="min-width:90px">是否啟用</td>
-              <td style="min-width:205px">
+              </th>
+              <th style="min-width:100px">折扣類型</th>
+              <th style="min-width:160px" data-sort="true" @click="sortToggle('percent')">
+                <div class="d-flex align-items-center">
+                  <p>折扣額度 (百分比)</p>
+                  <span
+                    class="sort"
+                    :class="{
+                      'sort--active': sortTarget === 'percent',
+                      'sort--rotate': sortMode === 'up' && sortTarget === 'percent',
+                    }"
+                  >
+                    <font-awesome-icon :icon="['fas', 'arrow-down']" />
+                  </span>
+                </div>
+              </th>
+              <th style="min-width:90px">是否啟用</th>
+              <th style="min-width:205px">
                 <div class="d-flex align-items-center">
                   <p>狀態</p>
                   <span class="line mx-1"></span>
                   <p>期間</p>
                 </div>
-              </td>
-              <td style="min-width:90px" class="text-center">操作</td>
+              </th>
+              <th style="min-width:90px" class="text-center">操作</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><input type="checkbox" class="checkbox m-0" /></td>
+              <td>
+                <input type="checkbox" class="checkbox m-0" />
+              </td>
               <td class="coupon">
                 <div class="coupon__img">
                   <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
                 </div>
                 <div class="ml-3">
-                  <p class="coupon__code mb-1">ALC55DWD</p>
+                  <p class="coupon__code mb-1">
+                    ALC55DWD
+                  </p>
                   <span class="coupon__title">周年慶，全館商品 95 折</span>
                 </div>
               </td>
@@ -83,8 +102,8 @@
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 張優惠卷</p>
-          <button class="btn btn--danger px-3 py-1 mx-3">刪除</button>
-          <button class="btn btn--transparent px-3 py-1">禁用</button>
+          <button class="btn btn--danger btn--md mx-3">刪除</button>
+          <button class="btn btn--transparent btn--md">禁用</button>
         </div>
       </div>
     </div>
@@ -105,9 +124,19 @@ export default {
       row: 8,
       page: 1,
       selectTarget: [],
+      sortTarget: 'percent',
+      sortMode: 'down',
     };
   },
   methods: {
+    sortToggle(target) {
+      if (this.sortTarget === target) {
+        this.sortMode = this.sortMode === 'down' ? 'up' : 'down';
+      } else {
+        this.sortMode = 'down';
+        this.sortTarget = target;
+      }
+    },
     rowToggle(row) {
       this.row = row;
     },
