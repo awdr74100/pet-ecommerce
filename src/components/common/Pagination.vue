@@ -1,31 +1,35 @@
 <template>
-  <ul class="pagination text-secondary">
-    <li
-      class="pagination__prev"
-      :class="{ 'pagination__prev--disabled': page === 1 }"
-      @click="pageToggle(page - 1)"
-    >
-      <span>
-        <font-awesome-icon :icon="['fas', 'angle-left']" />
-      </span>
+  <ul class="pagination">
+    <li>
+      <button
+        class="btn pagination__prev"
+        :disabled="page === 1"
+        @click.prevent="pageToggle(page - 1)"
+      >
+        <span>
+          <font-awesome-icon :icon="['fas', 'angle-left']" />
+        </span>
+      </button>
     </li>
-    <li
-      class="pagination__item"
-      :class="{ 'pagination__item--active': page === item }"
-      v-for="(item, index) in pages"
-      :key="index"
-      @click="pageToggle(item)"
-    >
-      {{ item }}
+    <li v-for="(item, index) in pages" :key="index">
+      <button
+        class="btn pagination__item"
+        :class="{ 'pagination__item--active': item === page }"
+        @click.prevent="pageToggle(item)"
+      >
+        {{ item }}
+      </button>
     </li>
-    <li
-      class="pagination__next"
-      :class="{ 'pagination__next--disabled': page === pages || pages === 0 }"
-      @click="pageToggle(page + 1)"
-    >
-      <span>
-        <font-awesome-icon :icon="['fas', 'angle-right']" />
-      </span>
+    <li>
+      <button
+        class="btn pagination__next"
+        :disabled="page === pages || pages === 0"
+        @click.prevent="pageToggle(page + 1)"
+      >
+        <span>
+          <font-awesome-icon :icon="['fas', 'angle-right']" />
+        </span>
+      </button>
     </li>
   </ul>
 </template>
@@ -55,6 +59,7 @@ export default {
   watch: {
     row() {
       this.page = 1;
+      this.$emit('callPageToggle', 1);
     },
   },
 };

@@ -17,7 +17,7 @@
               :class="{ 'list__link--active': pathList[1] === 'products' && pathList[2] === 'all' }"
               to="/admin/products/all"
               @click.native="sidebarToggle"
-              >全部商品</router-link
+              >全部</router-link
             >
           </li>
           <li>
@@ -39,7 +39,7 @@
               }"
               to="/admin/products/soldout"
               @click.native="sidebarToggle"
-              >已售完商品</router-link
+              >已售完</router-link
             >
           </li>
           <li>
@@ -50,7 +50,7 @@
               }"
               to="/admin/products/unlisted"
               @click.native="sidebarToggle"
-              >未上架商品</router-link
+              >未上架</router-link
             >
           </li>
         </ul>
@@ -70,7 +70,7 @@
               :class="{ 'list__link--active': pathList[1] === 'coupons' && pathList[2] === 'all' }"
               to="/admin/coupons/all"
               @click.native="sidebarToggle"
-              >全部優惠卷</router-link
+              >全部</router-link
             >
           </li>
           <li>
@@ -81,7 +81,7 @@
               }"
               to="/admin/coupons/scheduled"
               @click.native="sidebarToggle"
-              >已排定優惠卷</router-link
+              >已排定</router-link
             >
           </li>
           <li>
@@ -92,7 +92,7 @@
               }"
               to="/admin/coupons/underway"
               @click.native="sidebarToggle"
-              >進行中優惠卷</router-link
+              >進行中</router-link
             >
           </li>
           <li>
@@ -103,7 +103,7 @@
               }"
               to="/admin/coupons/over"
               @click.native="sidebarToggle"
-              >已結束優惠卷</router-link
+              >已結束</router-link
             >
           </li>
           <li>
@@ -114,7 +114,7 @@
               }"
               to="/admin/coupons/not_enabled"
               @click.native="sidebarToggle"
-              >未啟用優惠卷</router-link
+              >未啟用</router-link
             >
           </li>
         </ul>
@@ -134,40 +134,62 @@
               :class="{ 'list__link--active': pathList[1] === 'orders' && pathList[2] === 'all' }"
               to="/admin/orders/all"
               @click.native="sidebarToggle"
-              >全部訂單</router-link
+              >全部</router-link
             >
           </li>
           <li>
             <router-link
               class="list__link"
               :class="{
-                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'underway',
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'unpaid',
               }"
-              to="/admin/orders/underway"
+              to="/admin/orders/unpaid"
               @click.native="sidebarToggle"
-              >進行中訂單</router-link
+              >尚未付款</router-link
             >
           </li>
           <li>
             <router-link
               class="list__link"
               :class="{
-                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'ispaid',
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'toship',
               }"
-              to="/admin/orders/ispaid"
+              to="/admin/orders/toship"
               @click.native="sidebarToggle"
-              >已付款訂單</router-link
+              >待出貨</router-link
             >
           </li>
           <li>
             <router-link
               class="list__link"
               :class="{
-                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'canceled',
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'shipping',
               }"
-              to="/admin/orders/canceled"
+              to="/admin/orders/shipping"
               @click.native="sidebarToggle"
-              >已取消訂單</router-link
+              >運送中</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              class="list__link"
+              :class="{
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'completed',
+              }"
+              to="/admin/orders/completed"
+              @click.native="sidebarToggle"
+              >已完成</router-link
+            >
+          </li>
+          <li>
+            <router-link
+              class="list__link"
+              :class="{
+                'list__link--active': pathList[1] === 'orders' && pathList[2] === 'cancelled',
+              }"
+              to="/admin/orders/cancelled"
+              @click.native="sidebarToggle"
+              >已取消</router-link
             >
           </li>
         </ul>

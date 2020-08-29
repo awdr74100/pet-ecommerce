@@ -1,3 +1,29 @@
-.order-table{
+.order-table {
   width: 100%;
+
+  .table-header {
+    width: 100%;
+    font-size: 14px;
+    border: 1px solid lighten(theme-color('gray'), 30%);
+    border-radius: 4px;
+    overflow-x: auto;
+
+    .list {
+      display: flex;
+      align-items: center;
+
+      &__item {
+        background-color: lighten(theme-color('gray'), 37%);
+        color: theme-color('gray');
+        flex: 1;
+        padding: 12px 15px;
+      }
+    }
+    .line {
+      display: inline-block;
+      width: 1px;
+      height: 14px;
+      background-color: rgb(187, 187, 187);
+    }
+  }
 }
