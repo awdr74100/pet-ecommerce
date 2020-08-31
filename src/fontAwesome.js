@@ -49,6 +49,7 @@ const icons = [
   faArrowDown,
   faDollarSign,
   faCheck,
+  faUserCircle,
 ];
 
 library.add(...icons);

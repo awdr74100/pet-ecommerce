@@ -2,7 +2,7 @@
   <div class="account-form text-secondary p-5">
     <!-- progress bar -->
     <ProgressBar :active="progressActive" />
-    <!-- return action (only reset form show) -->
+    <!-- return action (just reset form) -->
     <span class="return" v-if="tab === 'reset'" @click="toggleTab('signin')">
       <font-awesome-icon :icon="['fas', 'arrow-left']" />
     </span>
@@ -28,13 +28,13 @@
     <!-- signin form -->
     <form @submit.prevent="signin" class="form mt-3" v-if="tab === 'signin'">
       <div class="account-form__section">
-        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
+        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
         <input
           type="text"
           class="account-form__input text-secondary"
           autocomplete="on"
-          placeholder="Email"
-          v-model="account.email"
+          placeholder="使用者名稱/電子郵件"
+          v-model="account.usernameOrEmail"
         />
       </div>
       <div class="account-form__section mt-3">
@@ -43,7 +43,7 @@
           :type="showPassword ? 'text' : 'password'"
           class="account-form__input text-secondary"
           autocomplete="on"
-          placeholder="Password"
+          placeholder="密碼"
           v-model="account.password"
         />
         <span class="hide-btn" @click="showPassword = !showPassword">
@@ -63,12 +63,12 @@
     <!-- signup form -->
     <form @submit.prevent="signup" class="form mt-3" v-if="tab === 'signup'">
       <div class="account-form__section">
-        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
+        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
         <input
           type="text"
           class="account-form__input text-secondary"
-          placeholder="Email"
-          v-model="account.email"
+          placeholder="使用者名稱"
+          v-model="account.username"
         />
       </div>
       <div class="account-form__section mt-3 mb-3">
@@ -76,7 +76,7 @@
         <input
           :type="showPassword ? 'text' : 'password'"
           class="account-form__input text-secondary"
-          placeholder="Password"
+          placeholder="密碼"
           v-model="account.password"
         />
         <span class="hide-btn" @click="showPassword = !showPassword">
@@ -85,12 +85,12 @@
         </span>
       </div>
       <div class="account-form__section mt-3 mb-3">
-        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
+        <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
         <input
           type="text"
           class="account-form__input text-secondary"
-          placeholder="Nickname"
-          v-model="account.nickname"
+          placeholder="電子郵件"
+          v-model="account.email"
         />
       </div>
       <button class="btn btn--primary btn--block account-form__btn" @click.prevent="signup">
@@ -105,7 +105,7 @@
         <input
           type="text"
           class="account-form__input text-secondary"
-          placeholder="Email"
+          placeholder="電郵地址"
           v-model="account.email"
         />
       </div>

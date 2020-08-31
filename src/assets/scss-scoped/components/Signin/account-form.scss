@@ -52,6 +52,9 @@
     &:focus {
       border: 1px solid lighten(theme-color('primary'), 10%);
     }
+    &::placeholder {
+      color: lighten(theme-color('gray'), 10%);
+    }
   }
   &__btn {
     padding: 9.5px 0px;

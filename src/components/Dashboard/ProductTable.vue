@@ -19,7 +19,7 @@
       <div class="table-responsive">
         <table class="table text-secondary">
           <thead class="thead">
-            <tr class="head">
+            <tr>
               <th style="min-width:40px">
                 <input type="checkbox" class="checkbox m-0" />
               </th>
@@ -85,17 +85,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="index in 1" :key="index">
+            <tr v-for="index in 3" :key="index">
               <td>
                 <input type="checkbox" class="checkbox m-0" />
               </td>
-              <td class="product">
-                <div class="product__img"></div>
-                <div class="ml-3">
-                  <p class="product__title mb-1">
-                    ANIBIO 德國家醫寵物保健系統 -Darm-aktiv 整腸保健粉
-                  </p>
-                  <span class="product__category">寵物戶外用品</span>
+              <td>
+                <div class="product">
+                  <div class="product__img"></div>
+                  <div class="ml-3">
+                    <p class="product__title mb-1">
+                      ANIBIO 德國家醫寵物保健系統 -Darm-aktiv 整腸保健粉
+                    </p>
+                    <span class="product__category">寵物戶外用品</span>
+                  </div>
                 </div>
               </td>
               <td>$2,000</td>

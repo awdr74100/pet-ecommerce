@@ -53,19 +53,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="index in 3" :key="index">
               <td>
                 <input type="checkbox" class="checkbox m-0" />
               </td>
-              <td class="coupon">
-                <div class="coupon__img">
-                  <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
-                </div>
-                <div class="ml-3">
-                  <p class="coupon__code mb-1">
-                    ALC55DWD
-                  </p>
-                  <span class="coupon__title">周年慶，全館商品 95 折</span>
+              <td>
+                <div class="coupon">
+                  <div class="coupon__img">
+                    <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
+                  </div>
+                  <div class="ml-3">
+                    <p class="coupon__code mb-1">
+                      ALC55DWD
+                    </p>
+                    <span class="coupon__title">周年慶，全館商品 95 折</span>
+                  </div>
                 </div>
               </td>
               <td>賣場折扣卷</td>
