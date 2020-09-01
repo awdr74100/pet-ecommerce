@@ -18,8 +18,8 @@
               <th style="min-width:300px;width:100%">
                 商品
               </th>
-              <th style="min-width:120px;max-width:140px">買家應付金額</th>
-              <th style="min-width:120px;max-width:140px">運送方式</th>
+              <th style="min-width:120px;max-width:140px" class="text-center">運送方式</th>
+              <th style="min-width:120px;max-width:140px" class="text-center">買家應付金額</th>
               <th style="min-width:215px">買家資料</th>
               <th style="min-width:215px">
                 <div class="d-flex align-items-center">
@@ -33,18 +33,18 @@
         </table>
       </div>
       <!-- table list -->
-      <div class="table-responsive mt-3">
+      <div class="table-responsive mt-3" :class="{ 'table-responsive--active': true }">
         <table class="table text-secondary">
           <thead class="thead">
             <tr>
-              <th style="min-width:300px">
+              <th style="min-width:300px;width:100%">
                 <div class="d-flex align-items-center">
                   <span class="user-img"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
                   <p class="ml-2">Apenny7066</p>
                 </div>
               </th>
-              <th style="min-width:120px;max-width:140px"></th>
-              <th style="min-width:120px;max-width:140px"></th>
+              <th style="min-width:120px;max-width:140px" class="text-center"></th>
+              <th style="min-width:120px;max-width:140px" class="text-center"></th>
               <th style="min-width:430px" colspan="2">
                 <div class="d-flex align-items-center justify-content-end">
                   <span class="orderId">訂單編號</span>
@@ -54,26 +54,124 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr class="mb-6" v-for="index in 2" :key="index">
               <td>
                 <div class="product">
                   <div class="product__img"></div>
-                  <div class="ml-3">
-                    <p class="product__title mb-1">
-                      ANIBIO 德國家醫寵物保健系統 -Darm-aktiv 整腸保健粉
-                    </p>
-                    <span class="product__category">寵物戶外用品</span>
+                  <div class="product__content ml-3">
+                    <div>
+                      <p class="product__title mb-1">
+                        The North Face Resolve Insulated 鋪棉風衣外套The North Face Resolve
+                        Insulated 鋪棉風衣外套
+                      </p>
+                      <div class="d-flex align-items-end">
+                        <span class="mr-1">
+                          <font-awesome-icon :icon="['fas', 'tag']" size="sm" />
+                        </span>
+                        <p>3.6 折</p>
+                        <p class="ml-auto text-primary">
+                          $<span class="product__total">2,400</span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="product__qty ml-2">x2</div>
                   </div>
-                  <span class="ml-3">x1</span>
                 </div>
               </td>
-              <td>b</td>
-              <td>c</td>
-              <td style="min-width:215px">d</td>
-              <td style="min-width:215px">d</td>
+              <td class="text-center">
+                <template v-if="index === 1">
+                  <p>+$60</p>
+                  <p class="text-gray mt-1">黑貓宅急便</p>
+                </template>
+              </td>
+              <td class="text-center">
+                <template v-if="index === 1">
+                  <p>$3,500</p>
+                  <p class="text-gray mt-1">信用卡</p>
+                </template>
+              </td>
+              <td style="min-width:215px">
+                <template v-if="index === 1">
+                  <ul class="data">
+                    <li class="data__item">
+                      <p>購買人</p>
+                      <span>藍奕濡</span>
+                    </li>
+                    <li class="data__item mt-2">
+                      <p>收件地址</p>
+                      <span>台南市永康區中正南路592巷38弄14號</span>
+                    </li>
+                    <li class="data__item mt-2">
+                      <p>連絡電話</p>
+                      <span>0972791303</span>
+                    </li>
+                    <li class="data__item mt-2">
+                      <p>電子信箱</p>
+                      <span>4a6g0068@stust.edu.tw</span>
+                    </li>
+                    <li class="data__item mt-2">
+                      <p>備註</p>
+                      <span>請使用紙箱將其包裝</span>
+                    </li>
+                  </ul>
+                </template>
+              </td>
+              <td style="min-width:215px">
+                <template v-if="index === 1">
+                  <ul class="timeline ml-4">
+                    <li class="timeline__item">
+                      <p>新訂單</p>
+                      <span>2020-03-14 15:27</span>
+                    </li>
+                    <!-- <li class="timeline__item mt-2">
+                      <p>訂單已取消</p>
+                      <span>2020-03-19 01:36</span>
+                    </li> -->
+                    <li class="timeline__item mt-2">
+                      <p>買家已完成付款</p>
+                      <span>2020-03-19 01:36</span>
+                    </li>
+                    <li class="timeline__item mt-2">
+                      <div class="d-flex align-items-center">
+                        <p>完成出貨</p>
+                        <button class="btn btn--primary py-0 px-1 ml-2">ok</button>
+                      </div>
+                    </li>
+                    <li class="timeline__item mt-2">
+                      <p>賣家已完成出貨</p>
+                      <span>2020-03-19 01:36</span>
+                    </li>
+                    <li class="timeline__item mt-2">
+                      <p>商品以送達</p>
+                      <span>2020-03-19 01:36</span>
+                    </li>
+                    <li class="timeline__item timeline__item--active mt-2">
+                      <p>訂單已完成</p>
+                      <span>2020-03-19 01:36</span>
+                    </li>
+                  </ul>
+                </template>
+              </td>
+            </tr>
+            <!-- fill -->
+            <tr>
+              <td>
+                <div style="height:56px"></div>
+              </td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <!-- table footer -->
+      <div class="table-footer d-flex align-items-center justify-content-end px-3 py-2 mt-3">
+        <!-- dropdown component -->
+        <div>
+          <Dropdown @callRowToggle="rowToggle" />
+        </div>
+        <!-- pagination component -->
+        <div class="ml-3">
+          <Pagination :length="33" :row="row" @callPageToggle="pageToggle" />
+        </div>
       </div>
     </div>
   </div>
@@ -81,10 +179,28 @@
 
 <script>
 import OrderPanel from '@/components/Dashboard/OrderPanel.vue';
+import Dropdown from '@/components/common/Dropdown.vue';
+import Pagination from '@/components/common/Pagination.vue';
 
 export default {
   components: {
     OrderPanel,
+    Dropdown,
+    Pagination,
+  },
+  data() {
+    return {
+      row: 12,
+      page: 1,
+    };
+  },
+  methods: {
+    rowToggle(row) {
+      this.row = row;
+    },
+    pageToggle(page) {
+      this.page = page;
+    },
   },
 };
 </script>

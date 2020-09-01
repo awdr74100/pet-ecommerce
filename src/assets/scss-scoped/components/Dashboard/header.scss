@@ -3,10 +3,9 @@
   display: flex;
   align-items: center;
 
-  &__menu {
+  &__toggle {
     cursor: pointer;
-    padding: 19.5px 15px;
-    display: block;
+    padding: 21px 15px 21px 20px;
   }
   &__logo {
     margin: 10px 10px 14px 0px;

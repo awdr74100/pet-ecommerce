@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <div class="header__menu" @click="sidebarToggle">
+    <div class="header__toggle" @click="sidebarToggle">
       <Hamburger />
     </div>
     <div class="header__logo d-md-block d-none"></div>

@@ -1,44 +1,31 @@
 .sidebar {
   color: theme-color('secondary');
 
-  .logo {
-    color: #a0d26e;
-    font-weight: 800;
-    padding: 19.5px 0px 19.5px 15px;
-    box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
-
-    .highlight {
-      color: #796e5d;
-    }
+  &__toggle {
+    cursor: pointer;
+    padding: 21px 15px 21px 20px;
+    box-shadow: 0 1px 4px 0 rgba(97, 97, 97, 0.12);
   }
-  .rotate {
-    transform: rotate(180deg);
-  }
-  .tab-name {
+  .tab {
     cursor: pointer;
     font-size: 16px;
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
     transition: all 0.3s;
-    color: darken(theme-color('secondary'), 10%);
 
-    .text-l-1 {
-      margin-left: -1px;
-    }
-    .text-l-2 {
-      margin-left: 0.75px;
-    }
-    .text-l-3 {
-      margin-left: 2.5px;
-    }
-    span:first-child {
-      margin-top: -1px;
-    }
-    span:last-child {
+    .arrow {
       transition: all 0.3s;
+
+      &--rotate {
+        transform: rotate(180deg);
+      }
     }
-    &:hover span:last-child {
+    .icon {
+      text-align: center;
+      width: 16px;
+      margin-bottom: 2px;
+    }
+    &:hover .arrow {
       color: theme-color('primary');
     }
   }
@@ -51,9 +38,9 @@
     &__link {
       display: inline-block;
       width: 100%;
-      padding: 7px 8px;
+      padding: 6px (20px + 31px);
       text-decoration: none;
-      color: lighten(theme-color('secondary'), 10%);
+      color: lighten(theme-color('secondary'), 20%);
       transition: all 0.3s;
 
       &:hover {

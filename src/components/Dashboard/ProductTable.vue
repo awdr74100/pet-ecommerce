@@ -23,7 +23,7 @@
               <th style="min-width:40px">
                 <input type="checkbox" class="checkbox m-0" />
               </th>
-              <th style="min-width:260px">商品名稱</th>
+              <th style="min-width:260px;width:100%">商品名稱</th>
               <th style="min-width:95px" data-sort="true" @click="sortToggle('origin_price')">
                 <div class="d-flex align-items-center">
                   <p>原價</p>
@@ -114,7 +114,7 @@
         </table>
       </div>
       <!-- (tfoot) -->
-      <div class="tfoot d-flex align-items-center justify-content-end p-3">
+      <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
         <!-- dropdown component -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />

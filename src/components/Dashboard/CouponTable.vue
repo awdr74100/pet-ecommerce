@@ -19,7 +19,7 @@
               <th style="min-width:40px">
                 <input type="checkbox" class="checkbox m-0" />
               </th>
-              <th style="min-width:250px">
+              <th style="min-width:250px;width:100%">
                 <div class="d-flex align-items-center">
                   <p>優惠卷代碼</p>
                   <span class="line mx-1"></span>
@@ -88,7 +88,7 @@
         </table>
       </div>
       <!-- (tfoot) -->
-      <div class="tfoot d-flex align-items-center justify-content-end p-3">
+      <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
         <!-- dropdown component -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />

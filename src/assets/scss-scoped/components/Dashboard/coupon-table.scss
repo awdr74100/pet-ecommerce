@@ -64,11 +64,12 @@
       color: #fff;
     }
     &__code {
-      color: darken(theme-color('secondary'), 20%);
+      color: darken(theme-color('secondary'), 4%);
+      font-weight: 600;
       @include text-ellipsis(1);
     }
     &__title {
-      color: lighten(theme-color('secondary'), 20%);
+      color: theme-color('gray');
       @include text-ellipsis(1);
     }
   }

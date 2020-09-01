@@ -1,16 +1,18 @@
 <template>
-  <div class="sidebar mb-6">
-    <div class="logo d-md-none">毛孩<span class="highlight">百貨</span></div>
-    <ul class="p-4 pt-3">
-      <li>
-        <div class="tab-name py-1" @click="tabToggle('products')">
-          <span class="mr-2"><font-awesome-icon :icon="['fas', 'shopping-bag']" size="sm"/></span>
-          <p class="text-l-2">商品管理</p>
-          <span class="ml-auto" :class="{ rotate: activeTab.includes('products') }">
+  <div class="sidebar">
+    <div class="sidebar__toggle d-md-none" @click="sidebarToggle">
+      <Hamburger />
+    </div>
+    <ul class="pb-6">
+      <li class="mt-2">
+        <div class="tab px-4 py-2" @click="tabToggle('products')">
+          <span class="icon mr-3"><font-awesome-icon :icon="['fas', 'shopping-bag']"/></span>
+          <p>商品管理</p>
+          <span class="arrow ml-auto" :class="{ 'arrow--rotate': activeTab.includes('products') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
-        <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('products') }">
+        <ul class="list" :class="{ 'list--active': activeTab.includes('products') }">
           <li>
             <router-link
               class="list__link"
@@ -56,14 +58,14 @@
         </ul>
       </li>
       <li class="mt-2">
-        <div class="tab-name py-1" @click="tabToggle('coupons')">
-          <span class="mr-2"><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
-          <p class="text-l-1">優惠卷管理</p>
-          <span class="ml-auto" :class="{ rotate: activeTab.includes('coupons') }">
+        <div class="tab px-4 py-2" @click="tabToggle('coupons')">
+          <span class="icon mr-3"><font-awesome-icon :icon="['fas', 'tag']"/></span>
+          <p>優惠卷管理</p>
+          <span class="arrow ml-auto" :class="{ rotate: activeTab.includes('coupons') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
-        <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('coupons') }">
+        <ul class="list" :class="{ 'list--active': activeTab.includes('coupons') }">
           <li>
             <router-link
               class="list__link"
@@ -120,14 +122,14 @@
         </ul>
       </li>
       <li class="mt-2">
-        <div class="tab-name py-1" @click="tabToggle('orders')">
-          <span class="mr-2"><font-awesome-icon :icon="['fas', 'file-alt']" size="sm"/></span>
-          <p class="text-l-3">訂單管理</p>
-          <span class="ml-auto" :class="{ rotate: activeTab.includes('orders') }">
+        <div class="tab px-4 py-2" @click="tabToggle('orders')">
+          <span class="icon mr-3"><font-awesome-icon :icon="['fas', 'file-alt']"/></span>
+          <p>訂單管理</p>
+          <span class="arrow ml-auto" :class="{ rotate: activeTab.includes('orders') }">
             <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
           </span>
         </div>
-        <ul class="list ml-3" :class="{ 'list--active': activeTab.includes('orders') }">
+        <ul class="list" :class="{ 'list--active': activeTab.includes('orders') }">
           <li>
             <router-link
               class="list__link"
@@ -199,7 +201,12 @@
 </template>
 
 <script>
+import Hamburger from '@/components/common/Hamburger.vue';
+
 export default {
+  components: {
+    Hamburger,
+  },
   data() {
     return {
       activeTab: ['products', 'coupons', 'orders'],

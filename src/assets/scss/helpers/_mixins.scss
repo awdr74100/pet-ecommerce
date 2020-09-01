@@ -11,4 +11,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $line;
   word-break: break-all;
+  @if $line >= 2 {
+    line-height: 1.3;
+  }
 }
