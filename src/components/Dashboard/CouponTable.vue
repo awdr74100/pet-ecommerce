@@ -108,8 +108,8 @@
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 張優惠卷</p>
-          <button class="btn btn--danger btn--md mx-3">刪除</button>
-          <button class="btn btn--transparent btn--md">禁用</button>
+          <button class="btn btn--danger btn--sm mx-3">刪除</button>
+          <button class="btn btn--transparent btn--sm">禁用</button>
         </div>
       </div>
     </div>

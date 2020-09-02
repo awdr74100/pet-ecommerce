@@ -74,7 +74,7 @@
     }
     &:focus,
     &:hover {
-      border-color: darken(theme-color('gray'), 4%);
+      border-color: lighten(theme-color('gray'), 4%);
     }
   }
   &__line {

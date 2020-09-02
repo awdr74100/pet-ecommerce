@@ -7,7 +7,7 @@
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
       <p class="font-l text-secondary mr-auto ">2 商品</p>
-      <button class="btn btn--primary btn--lg" @click.prevent="openModal('ProductAddOrEdit')">
+      <button class="btn btn--primary btn--lg" @click.prevent="openModal('product-add-edit-modal')">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>新增商品
         </p>
@@ -138,8 +138,8 @@
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 個商品</p>
-          <button class="btn btn--danger btn--md mx-3">刪除</button>
-          <button class="btn btn--transparent btn--md">下架</button>
+          <button class="btn btn--danger btn--sm mx-3">刪除</button>
+          <button class="btn btn--transparent btn--sm">下架</button>
         </div>
       </div>
     </div>

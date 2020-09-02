@@ -46,8 +46,8 @@
       </div>
     </div>
     <div class="row no-gutters mt-4">
-      <button class="btn btn--primary px-4 py-1" @click.prevent="search">搜尋</button>
-      <button class="btn btn--transparent px-4 py-1 ml-3" @click.prevent="searchReset">
+      <button class="btn btn--primary btn--md" @click.prevent="search">搜尋</button>
+      <button class="btn btn--transparent btn--md ml-3" @click.prevent="searchReset">
         重設
       </button>
     </div>
