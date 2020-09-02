@@ -59,7 +59,6 @@ export default {
   watch: {
     row() {
       this.page = 1;
-      this.$emit('callPageToggle', 1);
     },
   },
 };

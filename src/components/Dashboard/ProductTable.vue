@@ -2,12 +2,12 @@
   <div class="product-table">
     <!-- product panel -->
     <div class="p-4">
-      <ProductPanel />
+      <ProductPanel @callSearch="search" @callSearchReset="searchReset" />
     </div>
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
       <p class="font-l text-secondary mr-auto ">2 商品</p>
-      <button class="btn btn--primary btn--lg">
+      <button class="btn btn--primary btn--lg" @click.prevent="openModal('ProductAddOrEdit')">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>新增商品
         </p>
@@ -106,8 +106,12 @@
               <td>10</td>
               <td>上架</td>
               <td class="text-center">
-                <span class="icon"><font-awesome-icon :icon="['far', 'edit']"/></span>
-                <span class="icon ml-3"><font-awesome-icon :icon="['far', 'trash-alt']"/></span>
+                <span class="icon">
+                  <font-awesome-icon :icon="['far', 'edit']" />
+                </span>
+                <span class="icon ml-3">
+                  <font-awesome-icon :icon="['far', 'trash-alt']" />
+                </span>
               </td>
             </tr>
           </tbody>
@@ -159,10 +163,17 @@ export default {
       page: 1,
       sortMode: 'down',
       sortTarget: '',
-      selectTargets: [],
+      searchTarget: '',
+      searchTargetValue: '',
+      searchCategory: '',
+      searchStockRange: [],
+      searchSalesRange: [],
     };
   },
   methods: {
+    openModal(modal) {
+      this.$store.commit('modal/OPENMODAL', { modal });
+    },
     sortToggle(target) {
       if (this.sortTarget === target) {
         this.sortMode = this.sortMode === 'down' ? 'up' : 'down';
@@ -173,9 +184,24 @@ export default {
     },
     rowToggle(row) {
       this.row = row;
+      this.page = 1;
     },
     pageToggle(page) {
       this.page = page;
+    },
+    search(input) {
+      this.searchTarget = input.searchTarget;
+      this.searchTargetValue = input.searchTargetValue;
+      this.searchCategory = input.searchCategory;
+      this.searchStockRange = [...input.searchStockRange]; // fix call by reference
+      this.searchSalesRange = [...input.searchSalesRange]; // fix call by reference
+    },
+    searchReset() {
+      this.searchTarget = '';
+      this.searchTargetValue = '';
+      this.searchCategory = '';
+      this.searchStockRange = [];
+      this.searchSalesRange = [];
     },
   },
 };

@@ -2,7 +2,7 @@
   <div class="order-table">
     <!-- order panel -->
     <div class="p-4">
-      <OrderPanel />
+      <OrderPanel @callSearch="search" @callSearchReset="searchReset" />
     </div>
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
@@ -192,14 +192,28 @@ export default {
     return {
       row: 12,
       page: 1,
+      searchTarget: '',
+      searchTargetValue: '',
+      searchDateRange: [],
     };
   },
   methods: {
     rowToggle(row) {
       this.row = row;
+      this.page = 1;
     },
     pageToggle(page) {
       this.page = page;
+    },
+    search(input) {
+      this.searchTarget = input.searchTarget;
+      this.searchTargetValue = input.searchTargetValue;
+      this.searchDateRange = input.searchDateRange;
+    },
+    searchReset() {
+      this.searchTarget = '';
+      this.searchTargetValue = '';
+      this.searchDateRange = [];
     },
   },
 };

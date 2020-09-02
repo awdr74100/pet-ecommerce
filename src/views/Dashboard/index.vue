@@ -13,6 +13,8 @@
     </div>
     <!-- Drawer -->
     <div class="drawer" @click="sidebarToggle"></div>
+    <!-- Modal -->
+    <Modal />
   </div>
 </template>
 
@@ -20,12 +22,14 @@
 import { mapState } from 'vuex';
 import Header from '@/components/Dashboard/Header.vue';
 import Sidebar from '@/components/Dashboard/Sidebar.vue';
+import Modal from '@/components/Dashboard/Modal.vue';
 
 export default {
   name: 'Dashboard',
   components: {
     Header,
     Sidebar,
+    Modal,
   },
   methods: {
     sidebarToggle() {

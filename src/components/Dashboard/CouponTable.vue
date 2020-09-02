@@ -145,6 +145,7 @@ export default {
     },
     rowToggle(row) {
       this.row = row;
+      this.page = 1;
     },
     pageToggle(page) {
       this.page = page;
