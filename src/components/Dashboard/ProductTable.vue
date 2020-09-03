@@ -109,7 +109,7 @@
                 <span class="icon">
                   <font-awesome-icon :icon="['far', 'edit']" />
                 </span>
-                <span class="icon ml-3">
+                <span class="icon ml-3" @click.prevent="openModal('product-delete-modal')">
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </span>
               </td>
@@ -139,7 +139,12 @@
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 個商品</p>
           <button class="btn btn--danger btn--sm mx-3">刪除</button>
-          <button class="btn btn--transparent btn--sm">下架</button>
+          <button
+            class="btn btn--transparent btn--sm"
+            @click.prevent="openModal('product-enabled-modal')"
+          >
+            下架
+          </button>
         </div>
       </div>
     </div>

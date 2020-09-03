@@ -3,7 +3,7 @@
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
       <p class="font-l text-secondary mr-auto ">2 優惠卷</p>
-      <button class="btn btn--primary btn--lg">
+      <button class="btn btn--primary btn--lg" @click.prevent="openModal('coupon-add-edit-modal')">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
         </p>
@@ -80,8 +80,12 @@
                 </div>
               </td>
               <td class="text-center">
-                <span class="icon"><font-awesome-icon :icon="['far', 'edit']"/></span>
-                <span class="icon ml-3"><font-awesome-icon :icon="['far', 'trash-alt']"/></span>
+                <span class="icon">
+                  <font-awesome-icon :icon="['far', 'edit']" />
+                </span>
+                <span class="icon ml-3" @click="openModal('coupon-delete-modal')">
+                  <font-awesome-icon :icon="['far', 'trash-alt']" />
+                </span>
               </td>
             </tr>
           </tbody>
@@ -109,7 +113,12 @@
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 1 張優惠卷</p>
           <button class="btn btn--danger btn--sm mx-3">刪除</button>
-          <button class="btn btn--transparent btn--sm">禁用</button>
+          <button
+            class="btn btn--transparent btn--sm"
+            @click.prevent="openModal('coupon-enabled-modal')"
+          >
+            禁用
+          </button>
         </div>
       </div>
     </div>
@@ -135,6 +144,9 @@ export default {
     };
   },
   methods: {
+    openModal(modal) {
+      this.$store.commit('modal/OPENMODAL', { modal });
+    },
     sortToggle(target) {
       if (this.sortTarget === target) {
         this.sortMode = this.sortMode === 'down' ? 'up' : 'down';

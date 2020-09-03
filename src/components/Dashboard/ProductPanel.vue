@@ -32,12 +32,12 @@
           />
         </div>
         <div class="product-panel__group mt-3">
-          <label class="product-panel__label mr-3" for="productNum">庫存數量</label>
+          <label class="product-panel__label mr-3" for="searchProductStock">庫存數量</label>
           <input
             class="product-panel__input"
             type="number"
             min="0"
-            id="productNum"
+            id="searchProductStock"
             placeholder="請輸入"
             v-model.number="searchStockRange[0]"
           />
@@ -53,22 +53,22 @@
       </div>
       <div class="col-md-6">
         <div class="product-panel__group mt-md-0 mt-3">
-          <label class="product-panel__label mr-3" for="productCategory">類別</label>
+          <label class="product-panel__label mr-3" for="searchProductCategory">類別</label>
           <input
             class="product-panel__input"
             type="text"
-            id="productCategory"
+            id="searchProductCategory"
             placeholder="選擇分類"
             v-model="searchCategory"
           />
         </div>
         <div class="product-panel__group mt-3 pr-6">
-          <label class="product-panel__label mr-3" for="productSoldout">已售出</label>
+          <label class="product-panel__label mr-3" for="searchProductSoldout">已售出</label>
           <input
             class="product-panel__input"
             type="number"
             min="0"
-            id="productSoldout"
+            id="searchProductSoldout"
             placeholder="請輸入"
             v-model.number="searchSalesRange[0]"
           />

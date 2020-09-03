@@ -5,7 +5,6 @@ import {
   faBell,
   faEdit,
   faTrashAlt,
-  faImage,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
@@ -53,7 +52,6 @@ const icons = [
   faCheck,
   faUserCircle,
   faTimes,
-  faImage,
 ];
 
 library.add(...icons);

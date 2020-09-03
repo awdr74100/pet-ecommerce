@@ -9,6 +9,11 @@ $input-color: theme-color('secondary');
   }
 }
 
+.mx-datepicker {
+  width: 100% !important;
+  min-width: 200px;
+}
+
 .mx-datepicker-range {
   width: 100% !important;
   min-width: 200px;
