@@ -18,7 +18,7 @@ export default {
     CLOSEMODAL(state, { modal }) {
       state.product = {};
       state.coupon = {};
-      if (modal) vm.$modal.hide(modal);
+      vm.$modal.hide(modal);
     },
   },
 };

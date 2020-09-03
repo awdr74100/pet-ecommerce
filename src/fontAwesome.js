@@ -25,6 +25,7 @@ import {
   faDollarSign,
   faCheck,
   faTimes,
+  faBan,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -52,6 +53,8 @@ const icons = [
   faCheck,
   faUserCircle,
   faTimes,
+  faLock,
+  faBan,
 ];
 
 library.add(...icons);

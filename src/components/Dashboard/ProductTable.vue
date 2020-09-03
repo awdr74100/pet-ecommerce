@@ -92,6 +92,11 @@
               <td>
                 <div class="product">
                   <div class="product__img"></div>
+                  <div class="product__overlay" v-if="false">
+                    <span class="text-white">
+                      <font-awesome-icon :icon="['fas', 'lock']" size="lg" />
+                    </span>
+                  </div>
                   <div class="ml-3">
                     <p class="product__title mb-1">
                       ANIBIO 德國家醫寵物保健系統 -Darm-aktiv 整腸保健粉
@@ -104,7 +109,7 @@
               <td>$1,000</td>
               <td>26</td>
               <td>10</td>
-              <td>上架</td>
+              <td class="text-success">上架</td>
               <td class="text-center">
                 <span class="icon">
                   <font-awesome-icon :icon="['far', 'edit']" />

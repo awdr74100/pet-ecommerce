@@ -44,6 +44,7 @@
     }
   }
   .product {
+    position: relative;
     display: flex;
     align-items: center;
 
@@ -55,6 +56,16 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center center;
+    }
+    &__overlay {
+      position: absolute;
+      left: 0px;
+      width: 56px;
+      height: 56px;
+      background-color: rgba(0, 0, 0, 0.658);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     &__title {
       color: darken(theme-color('secondary'), 4%);

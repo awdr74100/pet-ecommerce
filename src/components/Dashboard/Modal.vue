@@ -23,12 +23,16 @@
         <div class="row no-gutters">
           <div class="col-md-4 px-4 py-1">
             <label class="modal__label mb-1" for="productImg">* 商品圖片</label>
-            <div class="modal__drag modal__drag--active mb-3">
-              <div class="circle"></div>
+            <div class="modal__img" v-if="false">
               <span class="delete-icon text-white">
                 <font-awesome-icon :icon="['far', 'trash-alt']" />
               </span>
             </div>
+            <div class="modal__drag d-flex flex-column align-items-center justify-content-center">
+              <div class="circle"></div>
+              <p class="mt-2">拖曳圖片至此</p>
+            </div>
+            <input class="d-none" type="file" />
           </div>
           <div class="col-md-8 px-4 py-1">
             <div class="modal__body">
@@ -63,6 +67,7 @@
                       type="number"
                       id="productOriginPrice"
                       placeholder="請輸入"
+                      min="0"
                     />
                   </div>
                   <div class="flex-1 ml-1">
@@ -72,6 +77,7 @@
                       type="number"
                       id="productPrice"
                       placeholder="請輸入"
+                      min="0"
                     />
                   </div>
                 </div>
@@ -83,6 +89,7 @@
                       type="number"
                       id="productStock"
                       placeholder="請輸入"
+                      min="0"
                     />
                   </div>
                   <div class="flex-1 ml-1">
@@ -339,7 +346,7 @@
         </div>
         <div class="row no-gutters">
           <div class="modal__body px-4 py-1">
-            <p class="mb-4">商品上架後，買家將可以搜尋和購買您的商品。</p>
+            <p class="mb-4">優惠卷啟用後，買家即可套用至結帳清單上。</p>
           </div>
         </div>
         <div class="row no-gutters">
@@ -370,7 +377,7 @@ export default {
       this.maxWidth = window.innerWidth - 30;
     },
     beforeClose() {
-      this.$store.commit('modal/CLOSEMODAL', { modal: '' });
+      this.$store.commit('modal/CLOSEMODAL', { modal: null });
     },
     closeModal(modal) {
       this.$store.commit('modal/CLOSEMODAL', { modal });

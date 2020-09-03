@@ -50,6 +50,7 @@
     background-color: rgb(187, 187, 187);
   }
   .coupon {
+    position: relative;
     display: flex;
     align-items: center;
 
@@ -62,6 +63,16 @@
       align-items: center;
       background-color: rgb(85, 199, 136);
       color: #fff;
+    }
+    &__overlay {
+      position: absolute;
+      left: 0px;
+      width: 56px;
+      height: 56px;
+      background-color: rgba(0, 0, 0, 0.658);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     &__code {
       color: darken(theme-color('secondary'), 4%);

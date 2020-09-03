@@ -62,6 +62,11 @@
                   <div class="coupon__img">
                     <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
                   </div>
+                  <div class="coupon__overlay" v-if="false">
+                    <span class="text-white">
+                      <font-awesome-icon :icon="['fas', 'ban']" size="lg" />
+                    </span>
+                  </div>
                   <div class="ml-3">
                     <p class="coupon__code mb-1">
                       ALC55DWD
