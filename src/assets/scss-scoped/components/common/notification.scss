@@ -1,0 +1,116 @@
+.notification {
+  position: fixed;
+  top: 30px;
+  right: 50%;
+  transform: translateX(50%);
+  z-index: 100;
+  @include desktop {
+    transform: translateX(0%);
+    right: 80px;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @include desktop {
+      align-items: flex-end;
+    }
+
+    &__item {
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      animation: notification-opacity 0.3s;
+      overflow: hidden;
+
+      &--success {
+        background-color: theme-color('success');
+
+        .icon {
+          padding: 18px 18.5px;
+        }
+        .progress {
+          background-color: darken(theme-color('primary'), 16%);
+        }
+      }
+      &--warning {
+        background-color: theme-color('warning');
+
+        .icon {
+          padding: 18px 23.5px;
+        }
+        .progress {
+          background-color: darken(theme-color('warning'), 16%);
+        }
+      }
+      &--danger {
+        background-color: theme-color('danger');
+
+        .icon {
+          padding: 18px 21px;
+        }
+        .progress {
+          background-color: darken(theme-color('danger'), 16%);
+        }
+      }
+    }
+  }
+  .message {
+    white-space: nowrap;
+  }
+  .close {
+    width: 10px;
+    display: block;
+    cursor: pointer;
+
+    &:hover::before,
+    &:hover::after {
+      background-color: darken(theme-color('white'), 20%);
+    }
+    &::before,
+    &::after {
+      content: '';
+      display: block;
+      background-color: darken(theme-color('white'), 4%);
+      height: 2px;
+      transition: all 0.3s;
+    }
+    &::before {
+      margin-bottom: 10px;
+      transform: translateY(6px) rotate(45deg);
+    }
+    &::after {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+  }
+  .progress {
+    position: absolute;
+    bottom: 0px;
+    height: 3px;
+    left: 0px;
+    right: 0px;
+    width: 0%;
+    animation: notification-progress 3s linear;
+  }
+}
+
+@keyframes notification-progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes notification-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

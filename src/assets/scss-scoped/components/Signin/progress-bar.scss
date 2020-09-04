@@ -15,11 +15,11 @@
     height: 4px;
     width: 50%;
     background-color: theme-color('primary');
-    animation: progress1 1s infinite linear;
+    animation: progress 1s infinite linear;
   }
 }
 
-@keyframes progress1 {
+@keyframes progress {
   0% {
     left: -50%;
   }
