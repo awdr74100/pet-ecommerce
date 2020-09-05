@@ -7,7 +7,10 @@
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
       <p class="font-l text-secondary mr-auto ">2 商品</p>
-      <button class="btn btn--primary btn--lg" @click.prevent="openModal('product-add-edit-modal')">
+      <button
+        class="btn btn--primary btn--lg"
+        @click.prevent="openModal('add-edit-product-modal', 'add', null, null)"
+      >
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>新增商品
         </p>
@@ -21,7 +24,7 @@
           <thead class="thead">
             <tr>
               <th style="min-width:40px">
-                <input type="checkbox" class="checkbox m-0" />
+                <input type="checkbox" class="checkbox m-0" v-model="selectAll" />
               </th>
               <th style="min-width:260px;width:100%">商品名稱</th>
               <th style="min-width:95px" data-sort="true" @click="sortToggle('origin_price')">
@@ -85,36 +88,44 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="index in 3" :key="index">
+            <tr v-for="(item, index) in products" :key="index">
               <td>
-                <input type="checkbox" class="checkbox m-0" />
+                <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
               </td>
               <td>
                 <div class="product">
-                  <div class="product__img"></div>
-                  <div class="product__overlay" v-if="false">
+                  <div
+                    class="product__img"
+                    :style="{ 'background-image': `url('${item.imgUrl}')` }"
+                  ></div>
+                  <div class="product__overlay" v-if="!item.is_enabled">
                     <span class="text-white">
                       <font-awesome-icon :icon="['fas', 'lock']" size="lg" />
                     </span>
                   </div>
                   <div class="ml-3">
-                    <p class="product__title mb-1">
-                      ANIBIO 德國家醫寵物保健系統 -Darm-aktiv 整腸保健粉
-                    </p>
-                    <span class="product__category">寵物戶外用品</span>
+                    <p class="product__title mb-1">{{ item.title }}</p>
+                    <span class="product__category">{{ item.category }}</span>
                   </div>
                 </div>
               </td>
-              <td>$2,000</td>
-              <td>$1,000</td>
-              <td>26</td>
-              <td>10</td>
-              <td class="text-success">上架</td>
+              <td>{{ item.origin_price }}</td>
+              <td>{{ item.price }}</td>
+              <td>{{ item.stock }}</td>
+              <td>{{ item.sales }}</td>
+              <td class="text-success" v-if="item.is_enabled">上架</td>
+              <td class="text-danger" v-else>下架</td>
               <td class="text-center">
-                <span class="icon">
+                <span
+                  class="icon"
+                  @click.prevent="openModal('add-edit-product-modal', 'edit', item, null)"
+                >
                   <font-awesome-icon :icon="['far', 'edit']" />
                 </span>
-                <span class="icon ml-3" @click.prevent="openModal('product-delete-modal')">
+                <span
+                  class="icon ml-3"
+                  @click.prevent="openModal('delete-product-modal', 'delete', null, [{ ...item }])"
+                >
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </span>
               </td>
@@ -135,18 +146,23 @@
       </div>
     </div>
     <!-- batch action -->
-    <div class="p-4 pt-5">
+    <div class="p-4 pt-5" v-if="selected.length > 0">
       <div class="d-flex align-items-center text-secondary">
         <div class="align-items-center ml-2 d-none d-md-flex">
-          <input type="checkbox" class="checkbox m-0" id="selectAll" />
+          <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
           <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部商品</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
-          <p>已選擇 1 個商品</p>
-          <button class="btn btn--danger btn--sm mx-3">刪除</button>
+          <p>已選擇 {{ selected.length }} 個商品</p>
+          <button
+            class="btn btn--danger btn--sm mx-3"
+            @click.prevent="openModal('delete-product-modal', 'delete', null, selected)"
+          >
+            刪除
+          </button>
           <button
             class="btn btn--transparent btn--sm"
-            @click.prevent="openModal('product-enabled-modal')"
+            @click.prevent="openModal('change-status-product-modal')"
           >
             下架
           </button>
@@ -157,6 +173,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 import ProductPanel from '@/components/Dashboard/ProductPanel.vue';
 import Dropdown from '@/components/common/Dropdown.vue';
 import Pagination from '@/components/common/Pagination.vue';
@@ -178,12 +196,10 @@ export default {
       searchCategory: '',
       searchStockRange: [],
       searchSalesRange: [],
+      selected: [],
     };
   },
   methods: {
-    openModal(modal) {
-      this.$store.commit('modal/OPENMODAL', { modal });
-    },
     sortToggle(target) {
       if (this.sortTarget === target) {
         this.sortMode = this.sortMode === 'down' ? 'up' : 'down';
@@ -213,6 +229,34 @@ export default {
       this.searchStockRange = [];
       this.searchSalesRange = [];
     },
+    openModal(modal, action, cache, caches) {
+      const payload = {
+        modal,
+        action,
+        cache,
+        caches,
+      };
+      this.$store.commit('modal/OPENMODAL', payload);
+    },
+    ...mapActions('products', ['getProducts']),
+  },
+  computed: {
+    selectAll: {
+      get() {
+        return this.products.length > 0 ? this.selected.length === this.products.length : false;
+      },
+      set(value) {
+        if (value) {
+          this.selected = this.products;
+        } else {
+          this.selected = [];
+        }
+      },
+    },
+    ...mapState('products', ['products']),
+  },
+  created() {
+    this.getProducts();
   },
 };
 </script>

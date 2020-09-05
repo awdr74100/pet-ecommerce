@@ -18,6 +18,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('date-picker', DatePicker);
 
 Vue.config.productionTip = false;
+axios.defaults.withCredentials = true;
 
 new Vue({
   router,

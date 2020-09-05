@@ -3,7 +3,7 @@
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
       <p class="font-l text-secondary mr-auto ">2 優惠卷</p>
-      <button class="btn btn--primary btn--lg" @click.prevent="openModal('coupon-add-edit-modal')">
+      <button class="btn btn--primary btn--lg" @click.prevent="openModal('add-edit-coupon-modal')">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
         </p>
@@ -88,7 +88,7 @@
                 <span class="icon">
                   <font-awesome-icon :icon="['far', 'edit']" />
                 </span>
-                <span class="icon ml-3" @click="openModal('coupon-delete-modal')">
+                <span class="icon ml-3" @click="openModal('delete-coupon-modal')">
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </span>
               </td>
@@ -120,7 +120,7 @@
           <button class="btn btn--danger btn--sm mx-3">刪除</button>
           <button
             class="btn btn--transparent btn--sm"
-            @click.prevent="openModal('coupon-enabled-modal')"
+            @click.prevent="openModal('change-status-coupon-modal')"
           >
             禁用
           </button>

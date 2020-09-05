@@ -60,16 +60,19 @@ const routes = [
       {
         path: 'products/:tab',
         name: 'Products',
+        meta: { requiresAuth: true, role: 'admin' },
         component: () => import('@/views/Dashboard/Products.vue'),
       },
       {
         path: 'coupons/:tab',
         name: 'Coupons',
+        meta: { requiresAuth: true, role: 'admin' },
         component: () => import('@/views/Dashboard/Coupons.vue'),
       },
       {
         path: 'orders/:tab',
         name: 'Orders',
+        meta: { requiresAuth: true, role: 'admin' },
         component: () => import('@/views/Dashboard/Orders.vue'),
       },
     ],
@@ -93,6 +96,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (!to.meta.requiresAuth) return next();
+  await router.app.$options.store.dispatch(`${to.meta.role}/check`, { from });
+  if (router.app.$options.store.state[to.meta.role].isSignin) return next();
+  return next('/');
 });
 
 export default router;

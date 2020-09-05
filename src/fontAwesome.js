@@ -27,6 +27,7 @@ import {
   faTimes,
   faBan,
   faExclamation,
+  faExchangeAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -57,6 +58,7 @@ const icons = [
   faLock,
   faBan,
   faExclamation,
+  faExchangeAlt,
 ];
 
 library.add(...icons);

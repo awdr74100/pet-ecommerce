@@ -12,7 +12,7 @@
       <span class="header__link ml-2 mr-5"><font-awesome-icon :icon="['far', 'bell']"/></span>
     </div>
     <div class="header__line"></div>
-    <a href="#" class="header__btn ml-3">
+    <a href="#" class="header__btn ml-3" @click.prevent="signout">
       <p>登出</p>
       <span class="ml-2"><font-awesome-icon :icon="['fas', 'sign-out-alt']"/></span>
     </a>
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import Hamburger from '@/components/common/Hamburger.vue';
 import Breadcrumb from '@/components/Dashboard/Breadcrumb.vue';
 
@@ -29,6 +31,7 @@ export default {
     Breadcrumb,
   },
   methods: {
+    ...mapActions('admin', ['signout']),
     sidebarToggle() {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
