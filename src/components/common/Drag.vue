@@ -21,9 +21,9 @@
       class="drag__section"
       :class="{ 'drag__section--hover': dragHover }"
       v-else
-      @dragover="dragOver"
-      @dragleave="dragLeave"
-      @drop="drop"
+      @dragover.prevent.stop="dragOver"
+      @dragleave.prevent.stop="dragLeave"
+      @drop.prevent.stop="drop"
       @click="inputClick"
     >
       <div class="circle"></div>
@@ -44,19 +44,13 @@ export default {
     };
   },
   methods: {
-    dragOver(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    dragOver() {
       this.dragHover = true;
     },
-    dragLeave(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    dragLeave() {
       this.dragHover = false;
     },
     async drop(e) {
-      e.preventDefault();
-      e.stopPropagation();
       this.dragHover = false;
       const file = e.dataTransfer.files[0];
       const valid = this.checkFile(file);

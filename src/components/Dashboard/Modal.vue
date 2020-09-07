@@ -14,7 +14,7 @@
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
           <div class="modal__header p-4">
-            <h5 class="modal__title">{{ action === 'add' ? '新增商品' : '編輯商品' }}</h5>
+            <h5 class="modal__title">{{ cache.id ? '編輯商品' : '新增商品' }}</h5>
             <span class="icon ml-auto" @click="closeModal('add-edit-product-modal')">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -164,7 +164,15 @@
           <div class="modal__footer p-4">
             <button
               class="btn btn--primary btn--md ml-auto"
-              @click="addOrEditProduct('add-edit-product-modal')"
+              v-if="!cache.id"
+              @click="addProduct('add-edit-product-modal')"
+            >
+              確認
+            </button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              v-if="cache.id"
+              @click="editProduct('add-edit-product-modal')"
             >
               確認
             </button>
@@ -246,7 +254,18 @@
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
           <div class="modal__header p-4">
-            <h5 class="modal__title">即將上架 1 個產品</h5>
+            <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] === 0">
+              即將上架 {{ caches[2].length }} 個商品
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'disable' && caches[3] === 0">
+              即將下架 {{ caches[2].length }} 個商品
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] > 0">
+              無法被上架
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'disable' && caches[3] > 0">
+              無法被下架
+            </h5>
             <span class="icon ml-auto" @click="closeModal('change-status-product-modal')">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -254,12 +273,30 @@
         </div>
         <div class="row no-gutters">
           <div class="modal__body px-4 py-1">
-            <p class="mb-4">商品上架後，買家將可以搜尋和購買您的商品。</p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'enable' && caches[3] === 0">
+              商品上架後，買家將可以搜尋和購買商品。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'disable' && caches[3] === 0">
+              商品下架後，買家將無法搜尋和購買商品。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'enable' && caches[3] > 0">
+              您已選擇 {{ caches[1] }} 個商品並且其中
+              {{ caches[3] }} 個已經上架，點擊確定繼續上架另外 {{ caches[2].length }} 個商品。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'disable' && caches[3] > 0">
+              您已選擇 {{ caches[1] }} 個商品並且其中
+              {{ caches[3] }} 個已經下架，點擊確定繼續下架另外 {{ caches[2].length }} 個商品。
+            </p>
           </div>
         </div>
         <div class="row no-gutters">
           <div class="modal__footer p-4">
-            <button class="btn btn--primary btn--md ml-auto">確認</button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              @click.prevent="changeProductStatus('change-status-product-modal')"
+            >
+              確認
+            </button>
             <button
               class="btn btn--transparent btn--md ml-3"
               @click.prevent="closeModal('change-status-product-modal')"
@@ -441,49 +478,50 @@ export default {
   methods: {
     beforeOpen({ name }) {
       this.maxWidth = window.innerWidth - 30;
-      const target = name.split('-')[2];
-      this[target] = { ...this.cache };
+      this[name.split('-')[2]] = { ...this.cache }; // product or coupon
       if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
     },
     closeModal(modal) {
       this.$store.commit('modal/CLOSEMODAL', { modal });
       this.$store.commit('image/DATACLEAR');
     },
-    async addOrEditProduct(modal) {
-      if (this.action === 'add') {
-        if (!this.file) {
-          this.$store.dispatch('notification/updateMessage', {
-            message: '請先上傳圖片',
-            status: 'danger',
-          });
-          return;
-        }
+    async addProduct(modal) {
+      if (!this.file) {
+        const message = '請先上傳圖片';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+        return;
+      }
+      await this.$store.dispatch('image/uploadImage', { file: this.file });
+      this.product.imgUrl = this.imgUrl;
+      await this.$store.dispatch('products/addProduct', { productData: this.product });
+      this.closeModal(modal);
+    },
+    async editProduct(modal) {
+      if (this.file) {
         await this.$store.dispatch('image/uploadImage', { file: this.file });
         this.product.imgUrl = this.imgUrl;
-        await this.$store.dispatch('products/addProduct', { productData: this.product });
-        this.closeModal(modal);
       }
-      if (this.action === 'edit') {
-        if (this.file) {
-          await this.$store.dispatch('image/uploadImage', { file: this.file });
-          this.product.imgUrl = this.imgUrl;
-        }
-        await this.$store.dispatch('products/editProduct', {
-          productId: this.product.id,
-          productData: this.product,
-        });
-        this.closeModal(modal);
-      }
+      const productId = this.product.id;
+      delete this.product.id;
+      const productData = this.product;
+      await this.$store.dispatch('products/editProduct', { productId, productData });
+      this.closeModal(modal);
     },
     async deleteProduct(modal) {
       const ids = this.caches.map((item) => item.id).join(',');
       await this.$store.dispatch('products/deleteProduct', { productId: ids });
       this.closeModal(modal);
     },
+    async changeProductStatus(modal) {
+      const ids = this.caches[2].map((item) => item.id).join(',');
+      const status = this.caches[0] === 'enable';
+      await this.$store.dispatch('products/changeProductStatus', { productId: ids, status });
+      this.closeModal(modal);
+    },
   },
   computed: {
     ...mapState('image', ['file', 'imgUrl']),
-    ...mapState('modal', ['action', 'cache', 'caches']),
+    ...mapState('modal', ['cache', 'caches']),
   },
 };
 </script>

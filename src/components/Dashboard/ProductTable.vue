@@ -6,10 +6,10 @@
     </div>
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">2 商品</p>
+      <p class="font-l text-secondary mr-auto ">{{ filterProducts.length }} 商品</p>
       <button
         class="btn btn--primary btn--lg"
-        @click.prevent="openModal('add-edit-product-modal', 'add', null, null)"
+        @click.prevent="openModal('add-edit-product-modal', undefined, undefined, undefined)"
       >
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>新增商品
@@ -88,7 +88,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in products" :key="index">
+            <tr v-for="(item, index) in sortAndSliceProducts" :key="index">
               <td>
                 <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
               </td>
@@ -118,13 +118,15 @@
               <td class="text-center">
                 <span
                   class="icon"
-                  @click.prevent="openModal('add-edit-product-modal', 'edit', item, null)"
+                  @click.prevent="openModal('add-edit-product-modal', item, undefined, undefined)"
                 >
                   <font-awesome-icon :icon="['far', 'edit']" />
                 </span>
                 <span
                   class="icon ml-3"
-                  @click.prevent="openModal('delete-product-modal', 'delete', null, [{ ...item }])"
+                  @click.prevent="
+                    openModal('delete-product-modal', undefined, [{ ...item }], undefined)
+                  "
                 >
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </span>
@@ -141,12 +143,12 @@
         </div>
         <!-- pagination component -->
         <div class="ml-3">
-          <Pagination :length="33" :row="row" @callPageToggle="pageToggle" />
+          <Pagination :length="filterProducts.length" :row="row" @callPageToggle="pageToggle" />
         </div>
       </div>
     </div>
     <!-- batch action -->
-    <div class="p-4 pt-5" v-if="selected.length > 0">
+    <div class="p-4 pt-5" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
         <div class="align-items-center ml-2 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
@@ -155,16 +157,24 @@
         <div class="d-flex align-items-center ml-auto">
           <p>已選擇 {{ selected.length }} 個商品</p>
           <button
-            class="btn btn--danger btn--sm mx-3"
-            @click.prevent="openModal('delete-product-modal', 'delete', null, selected)"
+            class="btn btn--transparent btn--sm ml-3"
+            @click.prevent="openModal('delete-product-modal', undefined, selected, undefined)"
           >
             刪除
           </button>
           <button
-            class="btn btn--transparent btn--sm"
-            @click.prevent="openModal('change-status-product-modal')"
+            class="btn btn--transparent btn--sm ml-3"
+            v-if="showDisableButton"
+            @click.prevent="openModal('change-status-product-modal', undefined, selected, false)"
           >
             下架
+          </button>
+          <button
+            class="btn btn--primary btn--sm ml-3"
+            v-if="showEnableButton"
+            @click.prevent="openModal('change-status-product-modal', undefined, selected, true)"
+          >
+            上架
           </button>
         </div>
       </div>
@@ -229,14 +239,19 @@ export default {
       this.searchStockRange = [];
       this.searchSalesRange = [];
     },
-    openModal(modal, action, cache, caches) {
-      const payload = {
+    openModal(modal, cache = {}, caches = [], isEnabled) {
+      const cachesFilter = [];
+      if (isEnabled !== undefined) {
+        cachesFilter[0] = isEnabled ? 'enable' : 'disable';
+        cachesFilter[1] = caches.length;
+        cachesFilter[2] = caches.filter((item) => isEnabled !== item.is_enabled);
+        cachesFilter[3] = cachesFilter[1] - cachesFilter[2].length;
+      }
+      this.$store.commit('modal/OPENMODAL', {
         modal,
-        action,
         cache,
-        caches,
-      };
-      this.$store.commit('modal/OPENMODAL', payload);
+        caches: cachesFilter.length > 0 ? cachesFilter : caches,
+      });
     },
     ...mapActions('products', ['getProducts']),
   },
@@ -253,7 +268,77 @@ export default {
         }
       },
     },
+    showBatchAction() {
+      return this.selected.length > 0;
+    },
+    showEnableButton() {
+      return this.selected.filter((item) => !item.is_enabled).length > 0;
+    },
+    showDisableButton() {
+      return this.selected.filter((item) => item.is_enabled).length > 0;
+    },
+    filterProducts() {
+      const vm = this;
+      const { tab } = vm.$route.params;
+      const products = [...vm.products]; /// fix call by reference
+      // prettier-ignore
+      const needSearch = vm.searchTargetValue
+        || vm.searchCategory
+        || vm.searchStockRange.length > 0
+        || vm.searchSalesRange.length > 0;
+      const statusFilter = products.filter((item) => {
+        if (tab === 'listed') return item.is_enabled;
+        if (tab === 'soldout') return item.stock === 0;
+        if (tab === 'unlisted') return !item.is_enabled;
+        return item;
+      });
+      if (needSearch) {
+        return statusFilter
+          .filter((item) => {
+            if (vm.searchTargetValue) {
+              return item[vm.searchTarget === '商品名稱' ? 'title' : 'id'] === vm.searchTarget;
+            }
+            return item;
+          })
+          .filter((item) => {
+            if (vm.searchCategory) {
+              return item.category === vm.searchCategory;
+            }
+            return item;
+          })
+          .filter((item) => {
+            if (vm.searchStockRange.length > 0) {
+              return item.stock >= vm.searchStockRange[0] && item.stock <= vm.searchStockRange[1];
+            }
+            return item;
+          })
+          .filter((item) => {
+            if (vm.searchSalesRange.length > 0) {
+              return item.sales >= vm.searchSalesRange[0] && item.sales <= vm.searchSalesRange[1];
+            }
+            return item;
+          });
+      }
+      return statusFilter;
+    },
+    sortAndSliceProducts() {
+      const vm = this;
+      const products = [...vm.filterProducts]; /// fix call by reference
+      const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
+      const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
+      if (vm.sortTarget) {
+        return products
+          .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
+          .slice(startItem, endItem);
+      }
+      return products.slice(startItem, endItem);
+    },
     ...mapState('products', ['products']),
+  },
+  watch: {
+    products() {
+      this.selected = [];
+    },
   },
   created() {
     this.getProducts();

@@ -6,19 +6,16 @@ export default {
   strict: true,
   namespaced: true,
   state: {
-    action: '',
     cache: {},
     caches: [],
   },
   mutations: {
-    OPENMODAL(state, payload) {
-      state.action = payload.action;
-      state.cache = payload.cache || {};
-      state.caches = payload.caches || [];
-      vm.$modal.show(payload.modal);
+    OPENMODAL(state, { modal, cache, caches }) {
+      state.cache = cache;
+      state.caches = caches;
+      vm.$modal.show(modal);
     },
     CLOSEMODAL(state, { modal }) {
-      state.action = '';
       state.cache = {};
       state.caches = [];
       vm.$modal.hide(modal);

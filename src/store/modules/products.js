@@ -69,7 +69,7 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async editProductStatus({ dispatch }, { productId, status }) {
+    async changeProductStatus({ dispatch }, { productId, status }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products/${productId}/is_enabled`;
       const payload = { status };
       const root = { root: true };
