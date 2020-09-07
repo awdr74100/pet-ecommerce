@@ -6,7 +6,7 @@
     </div>
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">2 訂單</p>
+      <p class="font-l text-secondary mr-auto ">2 筆訂單</p>
     </div>
     <!-- table section -->
     <div class="p-4">

@@ -6,7 +6,7 @@
     </div>
     <!-- section -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">{{ filterProducts.length }} 商品</p>
+      <p class="font-l text-secondary mr-auto ">{{ filterProducts.length }} 件商品</p>
       <button
         class="btn btn--primary btn--lg"
         @click.prevent="openModal('add-edit-product-modal', undefined, undefined, undefined)"
@@ -24,7 +24,12 @@
           <thead class="thead">
             <tr>
               <th style="min-width:40px">
-                <input type="checkbox" class="checkbox m-0" v-model="selectAll" />
+                <input
+                  type="checkbox"
+                  class="checkbox m-0"
+                  v-model="selectAll"
+                  :disabled="sortAndSliceProducts.length === 0"
+                />
               </th>
               <th style="min-width:260px;width:100%">商品名稱</th>
               <th style="min-width:95px" data-sort="true" @click="sortToggle('origin_price')">
@@ -148,14 +153,14 @@
       </div>
     </div>
     <!-- batch action -->
-    <div class="p-4 pt-5" v-if="showBatchAction">
+    <div class="batch mt-3" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
-        <div class="align-items-center ml-2 d-none d-md-flex">
+        <div class="align-items-center ml-3 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
           <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部商品</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
-          <p>已選擇 {{ selected.length }} 個商品</p>
+          <p class="d-md-inline d-none">已選擇 {{ selected.length }} 個商品</p>
           <button
             class="btn btn--transparent btn--sm ml-3"
             @click.prevent="openModal('delete-product-modal', undefined, selected, undefined)"
@@ -239,6 +244,9 @@ export default {
       this.searchStockRange = [];
       this.searchSalesRange = [];
     },
+    selectReset() {
+      this.selected = [];
+    },
     openModal(modal, cache = {}, caches = [], isEnabled) {
       const cachesFilter = [];
       if (isEnabled !== undefined) {
@@ -258,11 +266,13 @@ export default {
   computed: {
     selectAll: {
       get() {
-        return this.products.length > 0 ? this.selected.length === this.products.length : false;
+        return this.sortAndSliceProducts.length > 0
+          ? this.selected.length === this.sortAndSliceProducts.length
+          : false;
       },
       set(value) {
         if (value) {
-          this.selected = this.products;
+          this.selected = this.sortAndSliceProducts;
         } else {
           this.selected = [];
         }
@@ -279,6 +289,7 @@ export default {
     },
     filterProducts() {
       const vm = this;
+      vm.selectReset(); // reset this.selected
       const { tab } = vm.$route.params;
       const products = [...vm.products]; /// fix call by reference
       // prettier-ignore
@@ -296,13 +307,14 @@ export default {
         return statusFilter
           .filter((item) => {
             if (vm.searchTargetValue) {
-              return item[vm.searchTarget === '商品名稱' ? 'title' : 'id'] === vm.searchTarget;
+              const [key, value] = [vm.searchTarget, vm.searchTargetValue];
+              return item[key === '商品名稱' ? 'title' : 'id'].match(value);
             }
             return item;
           })
           .filter((item) => {
             if (vm.searchCategory) {
-              return item.category === vm.searchCategory;
+              return item.category.match(vm.searchCategory);
             }
             return item;
           })
@@ -323,6 +335,7 @@ export default {
     },
     sortAndSliceProducts() {
       const vm = this;
+      vm.selectReset(); // reset this.selected
       const products = [...vm.filterProducts]; /// fix call by reference
       const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
       const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
@@ -334,11 +347,6 @@ export default {
       return products.slice(startItem, endItem);
     },
     ...mapState('products', ['products']),
-  },
-  watch: {
-    products() {
-      this.selected = [];
-    },
   },
   created() {
     this.getProducts();

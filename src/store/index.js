@@ -4,8 +4,9 @@ import modal from './modules/modal';
 import notification from './modules/notification';
 import admin from './modules/admin';
 import user from './modules/user';
-import products from './modules/products';
 import image from './modules/image';
+import products from './modules/products';
+import coupons from './modules/coupons';
 
 Vue.use(Vuex);
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     notification,
     admin,
     user,
-    products,
     image,
+    products,
+    coupons,
   },
 });

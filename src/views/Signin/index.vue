@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="account-form-layout mt-6">
+    <div class="account-form-layout">
       <AccountForm />
     </div>
   </div>

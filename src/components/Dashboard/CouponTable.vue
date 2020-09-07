@@ -2,7 +2,7 @@
   <div class="coupon-table">
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">2 優惠卷</p>
+      <p class="font-l text-secondary mr-auto ">2 張優惠卷</p>
       <button class="btn btn--primary btn--lg" @click.prevent="openModal('add-edit-coupon-modal')">
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
@@ -109,9 +109,9 @@
       </div>
     </div>
     <!-- batch action -->
-    <div class="p-4 pt-5">
+    <div class="batch mt-3">
       <div class="d-flex align-items-center text-secondary">
-        <div class="align-items-center ml-2 d-none d-md-flex">
+        <div class="align-items-center ml-3 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" />
           <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部優惠卷</label>
         </div>
