@@ -29,7 +29,7 @@
       <div class="circle"></div>
       <p class="mt-2">拖曳圖片至此</p>
     </div>
-    <input class="file-input d-none" type="file" @change="inputChange" />
+    <input ref="file" class="d-none" type="file" @change="inputChange" />
   </div>
 </template>
 
@@ -58,14 +58,14 @@ export default {
       await this.$store.dispatch('image/dataTransfer', { file });
     },
     inputClick() {
-      document.querySelector('.file-input').click();
+      this.$refs.file.click();
     },
     async inputChange(e) {
       const file = e.target.files[0];
       const valid = this.checkFile(file);
       if (!valid) return;
       await this.$store.dispatch('image/dataTransfer', { file });
-      document.querySelector('.file-input').value = '';
+      this.$refs.file.value = '';
     },
     checkFile(file) {
       const regex = /\.(gif|jpe?g|png)$/i;

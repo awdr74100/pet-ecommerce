@@ -93,50 +93,70 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in sortAndSliceProducts" :key="index">
-              <td>
-                <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
-              </td>
-              <td>
-                <div class="product">
-                  <div
-                    class="product__img"
-                    :style="{ 'background-image': `url('${item.imgUrl}')` }"
-                  ></div>
-                  <div class="product__overlay" v-if="!item.is_enabled">
-                    <span class="text-white">
-                      <font-awesome-icon :icon="['fas', 'lock']" size="lg" />
-                    </span>
+            <template v-if="skeletonLoading">
+              <tr v-for="index in row" :key="index">
+                <td><PuSkeleton /></td>
+                <td class="d-flex align-items-center">
+                  <div style="flex: 0 0 56px"><PuSkeleton height="56px" /></div>
+                  <div class="ml-3" style="width:100%">
+                    <p class="mb-1"><PuSkeleton /></p>
+                    <span><PuSkeleton width="160px"/></span>
                   </div>
-                  <div class="ml-3">
-                    <p class="product__title mb-1">{{ item.title }}</p>
-                    <span class="product__category">{{ item.category }}</span>
+                </td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr v-for="(item, index) in sortAndSliceProducts" :key="index">
+                <td>
+                  <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
+                </td>
+                <td>
+                  <div class="product">
+                    <div
+                      class="product__img"
+                      :style="{ 'background-image': `url('${item.imgUrl}')` }"
+                    ></div>
+                    <div class="product__overlay" v-if="!item.is_enabled">
+                      <span class="text-white">
+                        <font-awesome-icon :icon="['fas', 'lock']" size="lg" />
+                      </span>
+                    </div>
+                    <div class="ml-3">
+                      <p class="product__title mb-1">{{ item.title }}</p>
+                      <span class="product__category">{{ item.category }}</span>
+                    </div>
                   </div>
-                </div>
-              </td>
-              <td>{{ item.origin_price }}</td>
-              <td>{{ item.price }}</td>
-              <td>{{ item.stock }}</td>
-              <td>{{ item.sales }}</td>
-              <td class="text-success" v-if="item.is_enabled">上架</td>
-              <td class="text-danger" v-else>下架</td>
-              <td class="text-center">
-                <span
-                  class="icon"
-                  @click.prevent="openModal('add-edit-product-modal', item, undefined, undefined)"
-                >
-                  <font-awesome-icon :icon="['far', 'edit']" />
-                </span>
-                <span
-                  class="icon ml-3"
-                  @click.prevent="
-                    openModal('delete-product-modal', undefined, [{ ...item }], undefined)
-                  "
-                >
-                  <font-awesome-icon :icon="['far', 'trash-alt']" />
-                </span>
-              </td>
-            </tr>
+                </td>
+                <td>{{ item.origin_price }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.stock }}</td>
+                <td>{{ item.sales }}</td>
+                <td class="text-success" v-if="item.is_enabled">上架</td>
+                <td class="text-danger" v-else>下架</td>
+                <td class="text-center">
+                  <span
+                    class="icon"
+                    @click.prevent="openModal('add-edit-product-modal', item, undefined, undefined)"
+                  >
+                    <font-awesome-icon :icon="['far', 'edit']" />
+                  </span>
+                  <span
+                    class="icon ml-3"
+                    @click.prevent="
+                      openModal('delete-product-modal', undefined, [{ ...item }], undefined)
+                    "
+                  >
+                    <font-awesome-icon :icon="['far', 'trash-alt']" />
+                  </span>
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </div>
@@ -291,7 +311,7 @@ export default {
       const vm = this;
       vm.selectReset(); // reset this.selected
       const { tab } = vm.$route.params;
-      const products = [...vm.products]; /// fix call by reference
+      const products = [...vm.products]; // fix call by reference
       // prettier-ignore
       const needSearch = vm.searchTargetValue
         || vm.searchCategory
@@ -347,6 +367,7 @@ export default {
       return products.slice(startItem, endItem);
     },
     ...mapState('products', ['products']),
+    ...mapState(['skeletonLoading']),
   },
   created() {
     this.getProducts();

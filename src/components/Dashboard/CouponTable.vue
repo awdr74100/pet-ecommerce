@@ -2,8 +2,11 @@
   <div class="coupon-table">
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">2 張優惠卷</p>
-      <button class="btn btn--primary btn--lg" @click.prevent="openModal('add-edit-coupon-modal')">
+      <p class="font-l text-secondary mr-auto ">{{ filterCoupons.length }} 張優惠卷</p>
+      <button
+        class="btn btn--primary btn--lg"
+        @click.prevent="openModal('add-edit-coupon-modal', undefined, undefined, undefined)"
+      >
         <p>
           <span class="mr-1"><font-awesome-icon :icon="['fas', 'plus']"/></span>產生新的優惠卷
         </p>
@@ -17,7 +20,12 @@
           <thead class="thead">
             <tr>
               <th style="min-width:40px">
-                <input type="checkbox" class="checkbox m-0" />
+                <input
+                  type="checkbox"
+                  class="checkbox m-0"
+                  v-model="selectAll"
+                  :disabled="sortAndSliceCoupons.length === 0"
+                />
               </th>
               <th style="min-width:250px;width:100%">
                 <div class="d-flex align-items-center">
@@ -53,42 +61,56 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="index in 3" :key="index">
+            <tr v-for="(item, index) in sortAndSliceCoupons" :key="index">
               <td>
-                <input type="checkbox" class="checkbox m-0" />
+                <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
               </td>
               <td>
                 <div class="coupon">
                   <div class="coupon__img">
                     <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
                   </div>
-                  <div class="coupon__overlay" v-if="false">
+                  <div class="coupon__overlay" v-if="!item.is_enabled">
                     <span class="text-white">
                       <font-awesome-icon :icon="['fas', 'ban']" size="lg" />
                     </span>
                   </div>
                   <div class="ml-3">
-                    <p class="coupon__code mb-1">
-                      ALC55DWD
-                    </p>
-                    <span class="coupon__title">周年慶，全館商品 95 折</span>
+                    <p class="coupon__code mb-1">{{ item.code }}</p>
+                    <span class="coupon__title">{{ item.title }}</span>
                   </div>
                 </div>
               </td>
               <td>賣場折扣卷</td>
-              <td>70%</td>
-              <td>啟用</td>
+              <td>{{ item.percent }}%</td>
+              <td class="text-success" v-if="item.is_enabled">啟用</td>
+              <td class="text-danger" v-else>未啟用</td>
               <td>
                 <div class="d-flex flex-column align-items-start">
-                  <p class="target target--scheduled">即將開始</p>
-                  <p>2020-08-27 至 2020-08-30</p>
+                  <p class="target target--scheduled" v-if="item.effective_date > Date.now()">
+                    即將開始
+                  </p>
+                  <p
+                    class="target target--underway"
+                    v-else-if="item.effective_date <= Date.now() && item.due_date >= Date.now()"
+                  >
+                    進行中
+                  </p>
+                  <p class="target target--over" v-else>已結束</p>
+                  <p>{{ item.effective_date }} 至 {{ item.due_date }}</p>
                 </div>
               </td>
               <td class="text-center">
-                <span class="icon">
+                <span
+                  class="icon"
+                  @click.prevent="openModal('add-edit-coupon-modal', item, undefined, undefined)"
+                >
                   <font-awesome-icon :icon="['far', 'edit']" />
                 </span>
-                <span class="icon ml-3" @click="openModal('delete-coupon-modal')">
+                <span
+                  class="icon ml-3"
+                  @click="openModal('delete-coupon-modal', undefined, [{ ...item }], undefined)"
+                >
                   <font-awesome-icon :icon="['far', 'trash-alt']" />
                 </span>
               </td>
@@ -104,25 +126,36 @@
         </div>
         <!-- pagination component -->
         <div class="ml-3">
-          <Pagination :length="33" :row="row" @callPageToggle="pageToggle" />
+          <Pagination :length="filterCoupons.length" :row="row" @callPageToggle="pageToggle" />
         </div>
       </div>
     </div>
     <!-- batch action -->
-    <div class="batch mt-3">
+    <div class="batch mt-3" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
         <div class="align-items-center ml-3 d-none d-md-flex">
-          <input type="checkbox" class="checkbox m-0" id="selectAll" />
+          <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
           <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部優惠卷</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
-          <p>已選擇 1 張優惠卷</p>
-          <button class="btn btn--danger btn--sm mx-3">刪除</button>
+          <p class="d-md-inline d-none">已選擇 {{ selected.length }} 張優惠卷</p>
           <button
-            class="btn btn--transparent btn--sm"
-            @click.prevent="openModal('change-status-coupon-modal')"
+            class="btn btn--transparent btn--sm ml-3"
+            @click.prevent="openModal('delete-coupon-modal', undefined, selected, undefined)"
           >
-            禁用
+            刪除
+          </button>
+          <button
+            class="btn btn--transparent btn--sm ml-3"
+            @click.prevent="openModal('change-status-coupon-modal', undefined, selected, false)"
+          >
+            停用
+          </button>
+          <button
+            class="btn btn--primary btn--sm ml-3"
+            @click.prevent="openModal('change-status-coupon-modal', undefined, selected, true)"
+          >
+            啟用
           </button>
         </div>
       </div>
@@ -131,6 +164,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 import Dropdown from '@/components/common/Dropdown.vue';
 import Pagination from '@/components/common/Pagination.vue';
 
@@ -145,13 +180,10 @@ export default {
       page: 1,
       sortMode: 'down',
       sortTarget: '',
-      selectTargets: [],
+      selected: [],
     };
   },
   methods: {
-    openModal(modal) {
-      this.$store.commit('modal/OPENMODAL', { modal });
-    },
     sortToggle(target) {
       if (this.sortTarget === target) {
         this.sortMode = this.sortMode === 'down' ? 'up' : 'down';
@@ -167,6 +199,83 @@ export default {
     pageToggle(page) {
       this.page = page;
     },
+    selectReset() {
+      this.selected = [];
+    },
+    openModal(modal, cache = {}, caches = [], isEnabled) {
+      const cachesFilter = [];
+      if (isEnabled !== undefined) {
+        cachesFilter[0] = isEnabled ? 'enable' : 'disable';
+        cachesFilter[1] = caches.length;
+        cachesFilter[2] = caches.filter((item) => isEnabled !== item.is_enabled);
+        cachesFilter[3] = cachesFilter[1] - cachesFilter[2].length;
+      }
+      this.$store.commit('modal/OPENMODAL', {
+        modal,
+        cache,
+        caches: cachesFilter.length > 0 ? cachesFilter : caches,
+      });
+    },
+    ...mapActions('coupons', ['getCoupons']),
+  },
+  computed: {
+    selectAll: {
+      get() {
+        return this.sortAndSliceCoupons.length > 0
+          ? this.selected.length === this.sortAndSliceCoupons.length
+          : false;
+      },
+      set(value) {
+        if (value) {
+          this.selected = this.sortAndSliceCoupons;
+        } else {
+          this.selected = [];
+        }
+      },
+    },
+    showBatchAction() {
+      return this.selected.length > 0;
+    },
+    showEnableButton() {
+      return this.selected.filter((item) => !item.is_enabled).length > 0;
+    },
+    showDisableButton() {
+      return this.selected.filter((item) => item.is_enabled).length > 0;
+    },
+    filterCoupons() {
+      const vm = this;
+      vm.selectReset(); // reset this.selected
+      const { tab } = vm.$route.params;
+      const coupons = [...vm.coupons]; // fix call by reference
+      return coupons.filter((item) => {
+        if (tab === 'scheduled') return item.effective_date > Date.now();
+        if (tab === 'underway') {
+          const now = Date.now();
+          return item.effective_date <= now && item.due_date >= now;
+        }
+        if (tab === 'over') return item.due_date < Date.now();
+        if (tab === 'not_enabled') return !item.is_enabled;
+        return item;
+      });
+    },
+    sortAndSliceCoupons() {
+      const vm = this;
+      vm.selectReset(); // reset this.selected
+      const coupons = [...vm.filterCoupons]; // fix call by reference
+      const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
+      const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
+      if (vm.sortTarget) {
+        return coupons
+          .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
+          .slice(startItem, endItem);
+      }
+      return coupons.slice(startItem, endItem);
+    },
+    ...mapState('coupons', ['coupons']),
+    ...mapState(['skeletonLoading']),
+  },
+  created() {
+    this.getCoupons();
   },
 };
 </script>

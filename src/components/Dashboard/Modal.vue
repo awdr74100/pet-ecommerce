@@ -165,14 +165,14 @@
             <button
               class="btn btn--primary btn--md ml-auto"
               v-if="!cache.id"
-              @click="addProduct('add-edit-product-modal')"
+              @click.prevent="addProduct('add-edit-product-modal')"
             >
               確認
             </button>
             <button
               class="btn btn--primary btn--md ml-auto"
               v-if="cache.id"
-              @click="editProduct('add-edit-product-modal')"
+              @click.prevent="editProduct('add-edit-product-modal')"
             >
               確認
             </button>
@@ -321,7 +321,7 @@
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
           <div class="modal__header p-4">
-            <h5 class="modal__title">產生新的優惠卷</h5>
+            <h5 class="modal__title">{{ cache.id ? '編輯優惠卷' : '產生新的優惠卷' }}</h5>
             <span class="icon ml-auto" @click="closeModal('add-edit-coupon-modal')">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -332,26 +332,55 @@
             <form>
               <label class="modal__label mb-1" for="couponCode">優惠卷代碼</label>
               <div class="modal__group">
-                <input class="modal__input" type="text" id="couponCode" placeholder="請輸入" />
+                <input
+                  class="modal__input"
+                  type="text"
+                  id="couponCode"
+                  placeholder="請輸入"
+                  v-model="coupon.code"
+                />
                 <small class="modal__error" v-if="false">此欄位不可空白</small>
               </div>
               <label class="modal__label mb-1" for="couponTitle">標題</label>
               <div class="modal__group">
-                <input class="modal__input" type="text" id="couponTitle" placeholder="請輸入" />
+                <input
+                  class="modal__input"
+                  type="text"
+                  id="couponTitle"
+                  placeholder="請輸入"
+                  v-model="coupon.title"
+                />
                 <small class="modal__error" v-if="false">此欄位不可空白</small>
               </div>
               <label class="modal__label mb-1" for="couponPercent">折扣額度 (百分比)</label>
               <div class="modal__group">
-                <input class="modal__input" type="number" id="couponPercent" placeholder="請輸入" />
+                <input
+                  class="modal__input"
+                  type="number"
+                  id="couponPercent"
+                  placeholder="請輸入"
+                  v-model.number="coupon.percent"
+                />
                 <small class="modal__error" v-if="false">此欄位不可空白</small>
               </div>
               <label class="modal__label mb-1" for="couponEffectiveDate">有效日期</label>
               <div class="modal__group">
-                <date-picker type="date" :range="true" />
+                <date-picker
+                  type="date"
+                  value-type="timestamp"
+                  v-model="couponRange"
+                  @clear="datePickerClear"
+                  :range="true"
+                />
                 <small class="modal__error" v-if="false">此欄位不可空白</small>
               </div>
               <div class="d-flex align-items-center">
-                <input class="checkbox m-0" type="checkbox" id="couponEnabled" />
+                <input
+                  class="checkbox m-0"
+                  type="checkbox"
+                  id="couponEnabled"
+                  v-model="coupon.is_enabled"
+                />
                 <label class="cursor-pointer ml-2" for="couponEnabled">是否啟用</label>
               </div>
             </form>
@@ -359,7 +388,20 @@
         </div>
         <div class="row no-gutters">
           <div class="modal__footer p-4">
-            <button class="btn btn--primary btn--md ml-auto">確認</button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              v-if="!cache.id"
+              @click.prevent="addCoupon('add-edit-coupon-modal')"
+            >
+              確認
+            </button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              v-if="cache.id"
+              @click.prevent="editCoupon('add-edit-coupon-modal')"
+            >
+              確認
+            </button>
             <button
               class="btn btn--transparent btn--md ml-3"
               @click.prevent="closeModal('add-edit-coupon-modal')"
@@ -473,6 +515,10 @@ export default {
       maxWidth: 0,
       product: {},
       coupon: {},
+      couponRange: [
+        new Date(new Date().toDateString()).getTime(),
+        new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).toDateString()).getTime(),
+      ],
     };
   },
   methods: {
@@ -480,6 +526,9 @@ export default {
       this.maxWidth = window.innerWidth - 30;
       this[name.split('-')[2]] = { ...this.cache }; // product or coupon
       if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
+      if (this.cache.effective_date) {
+        this.couponRange = [this.cache.effective_date, this.cache.due_date];
+      }
     },
     closeModal(modal) {
       this.$store.commit('modal/CLOSEMODAL', { modal });
@@ -492,18 +541,17 @@ export default {
         return;
       }
       await this.$store.dispatch('image/uploadImage', { file: this.file });
-      this.product.imgUrl = this.imgUrl;
-      await this.$store.dispatch('products/addProduct', { productData: this.product });
+      const productData = { ...this.product, imgUrl: this.imgUrl };
+      await this.$store.dispatch('products/addProduct', { productData });
       this.closeModal(modal);
     },
     async editProduct(modal) {
       if (this.file) {
         await this.$store.dispatch('image/uploadImage', { file: this.file });
-        this.product.imgUrl = this.imgUrl;
       }
       const productId = this.product.id;
-      delete this.product.id;
-      const productData = this.product;
+      const productData = { ...this.product, imgUrl: this.imgUrl };
+      delete productData.id;
       await this.$store.dispatch('products/editProduct', { productId, productData });
       this.closeModal(modal);
     },
@@ -517,6 +565,22 @@ export default {
       const status = this.caches[0] === 'enable';
       await this.$store.dispatch('products/changeProductStatus', { productId: ids, status });
       this.closeModal(modal);
+    },
+    async addCoupon(modal) {
+      console.log(modal);
+    },
+    async editCoupon(modal) {
+      console.log(modal);
+    },
+    datePickerClear() {
+      if (this.cache.effective_date) {
+        this.couponRange = [this.cache.effective_date, this.cache.due_date];
+        return;
+      }
+      this.couponRange = [
+        new Date(new Date().toDateString()).getTime(),
+        new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).toDateString()).getTime(),
+      ];
     },
   },
   computed: {

@@ -27,6 +27,7 @@ export default {
     async getProducts({ dispatch, commit }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
       const root = { root: true };
+      commit('SKELETONTOGGLE', true, root);
       try {
         const { data } = await axios.get(url);
         if (!data.success) {
@@ -34,6 +35,7 @@ export default {
           return;
         }
         commit('GETPRODUCTS', data.products);
+        commit('SKELETONTOGGLE', false, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }

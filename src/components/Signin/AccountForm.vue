@@ -26,7 +26,7 @@
       </li>
     </ul>
     <!-- signin form -->
-    <form @submit.prevent="signin" class="form mt-3" v-if="tab === 'signin'">
+    <form @submit.prevent="signin" class="mt-3" v-if="tab === 'signin'">
       <div class="account-form__group">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
         <input
@@ -48,10 +48,14 @@
           v-model="account.password"
         />
         <small class="account-form__error" v-if="false">此欄位不可空白</small>
-        <span class="hide-btn" @click="showPassword = !showPassword">
-          <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
-          <font-awesome-icon :icon="['far', 'eye-slash']" v-else />
-        </span>
+        <button type="button" class="btn p-0 hide-btn" @click="showPassword = !showPassword">
+          <span class="text-secondary" v-if="showPassword">
+            <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
+          </span>
+          <span class="text-secondary" v-else>
+            <font-awesome-icon :icon="['far', 'eye-slash']" />
+          </span>
+        </button>
       </div>
       <div class="d-flex align-items-center mt-1 mb-3">
         <input type="checkbox" class="checkbox" id="isAdmin" v-model="isAdmin" />
@@ -63,7 +67,7 @@
       <a href="#" class="forget mt-3" @click.prevent="toggleTab('reset')">忘記密碼？</a>
     </form>
     <!-- signup form -->
-    <form @submit.prevent="signup" class="form mt-3" v-if="tab === 'signup'">
+    <form @submit.prevent="signup" class="mt-3" v-if="tab === 'signup'">
       <div class="account-form__group">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
         <input
@@ -83,10 +87,14 @@
           v-model="account.password"
         />
         <small class="account-form__error" v-if="false">此欄位不可空白</small>
-        <span class="hide-btn" @click="showPassword = !showPassword">
-          <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
-          <font-awesome-icon :icon="['far', 'eye-slash']" v-else />
-        </span>
+        <button type="button" class="btn p-0 hide-btn" @click="showPassword = !showPassword">
+          <span class="text-secondary" v-if="showPassword">
+            <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
+          </span>
+          <span class="text-secondary" v-else>
+            <font-awesome-icon :icon="['far', 'eye-slash']" />
+          </span>
+        </button>
       </div>
       <div class="account-form__group mt-1 mb-3">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
@@ -103,7 +111,7 @@
       </button>
     </form>
     <!-- reset form -->
-    <form @submit.prevent="reset" class="form mt-3" v-if="tab === 'reset'">
+    <form @submit.prevent="reset" class="mt-3" v-if="tab === 'reset'">
       <p class="py-1">發送密碼重置郵件</p>
       <div class="account-form__group mt-3 mb-3">
         <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'envelope']"/></span>
@@ -163,6 +171,7 @@ export default {
     },
     toggleTab(action) {
       if (action === this.tab) return;
+      this.showPassword = false;
       this.account = {};
       this.tab = action;
     },

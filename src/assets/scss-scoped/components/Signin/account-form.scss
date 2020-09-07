@@ -92,9 +92,7 @@
     color: lighten(theme-color('secondary'), 10%);
   }
   .hide-btn {
-    cursor: pointer;
     top: 21px;
-    // top: 50%;
     transform: translateY(-50%);
     position: absolute;
     right: 20px;
