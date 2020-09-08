@@ -95,12 +95,12 @@
           <tbody>
             <template v-if="skeletonLoading">
               <tr v-for="index in row" :key="index">
-                <td><PuSkeleton /></td>
+                <td><PuSkeleton height="16px" /></td>
                 <td class="d-flex align-items-center">
                   <div style="flex: 0 0 56px"><PuSkeleton height="56px" /></div>
                   <div class="ml-3" style="width:100%">
                     <p class="mb-1"><PuSkeleton /></p>
-                    <span><PuSkeleton width="160px"/></span>
+                    <p style="max-width:160px"><PuSkeleton /></p>
                   </div>
                 </td>
                 <td><PuSkeleton /></td>
@@ -160,7 +160,7 @@
           </tbody>
         </table>
       </div>
-      <!-- (tfoot) -->
+      <!-- (tfoot) - fix scroll problem -->
       <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
         <!-- dropdown component -->
         <div>

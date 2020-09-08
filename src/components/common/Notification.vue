@@ -20,7 +20,9 @@
         </div>
         <p class="message mr-3">{{ item.message }}</p>
         <span class="close mx-3" @click="removeMessage(index)"></span>
-        <div class="progress"></div>
+        <div class="progress-wrap">
+          <div class="progress"></div>
+        </div>
       </li>
     </ul>
   </div>

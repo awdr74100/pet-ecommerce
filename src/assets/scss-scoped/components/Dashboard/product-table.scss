@@ -102,7 +102,10 @@
     }
   }
   .batch {
-    position: static;
+    position: sticky;
+    bottom: 0px;
     padding: 18px 21px 18px 21px;
+    background-color: theme-color('white');
+    border-top: 1px solid lighten(theme-color('gray'), 30%);
   }
 }

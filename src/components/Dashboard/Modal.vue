@@ -215,9 +215,7 @@
                   class="product-img"
                   :style="{ 'background-image': `url('${item.imgUrl}')` }"
                 ></div>
-                <p class="product-title ml-3">
-                  {{ item.title }}
-                </p>
+                <p class="product-title ml-3">{{ item.title }}</p>
               </li>
             </ul>
           </div>
@@ -226,7 +224,7 @@
           <div class="modal__footer p-4">
             <button
               class="btn btn--primary btn--md ml-auto"
-              @click="deleteProduct('delete-product-modal')"
+              @click.prevent="deleteProduct('delete-product-modal')"
             >
               確認
             </button>
@@ -255,10 +253,10 @@
         <div class="row no-gutters">
           <div class="modal__header p-4">
             <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] === 0">
-              即將上架 {{ caches[2].length }} 個商品
+              即將上架 {{ caches[2].length }} 件商品
             </h5>
             <h5 class="modal__title" v-if="caches[0] === 'disable' && caches[3] === 0">
-              即將下架 {{ caches[2].length }} 個商品
+              即將下架 {{ caches[2].length }} 件商品
             </h5>
             <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] > 0">
               無法被上架
@@ -280,12 +278,12 @@
               商品下架後，買家將無法搜尋和購買商品。
             </p>
             <p class="modal__message mb-2" v-if="caches[0] === 'enable' && caches[3] > 0">
-              您已選擇 {{ caches[1] }} 個商品並且其中
-              {{ caches[3] }} 個已經上架，點擊確定繼續上架另外 {{ caches[2].length }} 個商品。
+              您已選擇 {{ caches[1] }} 件商品並且其中
+              {{ caches[3] }} 件已經上架，點擊確定繼續上架另外 {{ caches[2].length }} 件商品。
             </p>
             <p class="modal__message mb-2" v-if="caches[0] === 'disable' && caches[3] > 0">
-              您已選擇 {{ caches[1] }} 個商品並且其中
-              {{ caches[3] }} 個已經下架，點擊確定繼續下架另外 {{ caches[2].length }} 個商品。
+              您已選擇 {{ caches[1] }} 件商品並且其中
+              {{ caches[3] }} 件已經下架，點擊確定繼續下架另外 {{ caches[2].length }} 件商品。
             </p>
           </div>
         </div>
@@ -436,20 +434,23 @@
           <div class="modal__body px-4 py-1">
             <p>確定刪除這些優惠卷嗎？</p>
             <ul class="modal__list mt-3 px-2">
-              <li class="modal__item py-1" v-for="index in 4" :key="index">
+              <li class="modal__item py-1" v-for="(item, index) in caches" :key="index">
                 <div class="coupon-img">
                   <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
                 </div>
-                <p class="coupon-title ml-3">
-                  ALC55DWD
-                </p>
+                <p class="coupon-title ml-3">{{ item.code }}</p>
               </li>
             </ul>
           </div>
         </div>
         <div class="row no-gutters">
           <div class="modal__footer p-4">
-            <button class="btn btn--primary btn--md ml-auto">確認</button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              @click.prevent="deleteCoupon('delete-coupon-modal')"
+            >
+              確認
+            </button>
             <button
               class="btn btn--transparent btn--md ml-3"
               @click.prevent="closeModal('delete-coupon-modal')"
@@ -474,7 +475,18 @@
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
           <div class="modal__header p-4">
-            <h5 class="modal__title">即將啟用 2 張優惠卷</h5>
+            <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] === 0">
+              即將啟用 {{ caches[2].length }} 張優惠卷
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'disable' && caches[3] === 0">
+              即將禁用 {{ caches[2].length }} 張優惠卷
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'enable' && caches[3] > 0">
+              無法被啟用
+            </h5>
+            <h5 class="modal__title" v-if="caches[0] === 'disable' && caches[3] > 0">
+              無法被禁用
+            </h5>
             <span class="icon ml-auto" @click="closeModal('change-status-coupon-modal')">
               <font-awesome-icon :icon="['fas', 'times']" />
             </span>
@@ -482,12 +494,30 @@
         </div>
         <div class="row no-gutters">
           <div class="modal__body px-4 py-1">
-            <p class="mb-4">優惠卷啟用後，買家即可套用至結帳清單上。</p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'enable' && caches[3] === 0">
+              優惠券啟用後，買家將可以套用至購物車上。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'disable' && caches[3] === 0">
+              優惠券禁用後，買家將無法套用至購物車上。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'enable' && caches[3] > 0">
+              您已選擇 {{ caches[1] }} 張優惠卷並且其中
+              {{ caches[3] }} 張已經啟用，點擊確定繼續啟用另外 {{ caches[2].length }} 張優惠卷。
+            </p>
+            <p class="modal__message mb-2" v-if="caches[0] === 'disable' && caches[3] > 0">
+              您已選擇 {{ caches[1] }} 張優惠卷並且其中
+              {{ caches[3] }} 張已經禁用，點擊確定繼續禁用另外 {{ caches[2].length }} 張優惠卷。
+            </p>
           </div>
         </div>
         <div class="row no-gutters">
           <div class="modal__footer p-4">
-            <button class="btn btn--primary btn--md ml-auto">確認</button>
+            <button
+              class="btn btn--primary btn--md ml-auto"
+              @click.prevent="changeCouponStatus('change-status-coupon-modal')"
+            >
+              確認
+            </button>
             <button
               class="btn btn--transparent btn--md ml-3"
               @click.prevent="closeModal('change-status-coupon-modal')"
@@ -534,6 +564,7 @@ export default {
       this.$store.commit('modal/CLOSEMODAL', { modal });
       this.$store.commit('image/DATACLEAR');
     },
+    // 新增商品
     async addProduct(modal) {
       if (!this.file) {
         const message = '請先上傳圖片';
@@ -545,6 +576,7 @@ export default {
       await this.$store.dispatch('products/addProduct', { productData });
       this.closeModal(modal);
     },
+    // 編輯產品
     async editProduct(modal) {
       if (this.file) {
         await this.$store.dispatch('image/uploadImage', { file: this.file });
@@ -555,23 +587,55 @@ export default {
       await this.$store.dispatch('products/editProduct', { productId, productData });
       this.closeModal(modal);
     },
+    // 刪除商品
     async deleteProduct(modal) {
       const ids = this.caches.map((item) => item.id).join(',');
       await this.$store.dispatch('products/deleteProduct', { productId: ids });
       this.closeModal(modal);
     },
+    // 更改商品狀態
     async changeProductStatus(modal) {
       const ids = this.caches[2].map((item) => item.id).join(',');
       const status = this.caches[0] === 'enable';
       await this.$store.dispatch('products/changeProductStatus', { productId: ids, status });
       this.closeModal(modal);
     },
+    // 產生新的優惠卷
     async addCoupon(modal) {
-      console.log(modal);
+      const couponData = {
+        ...this.coupon,
+        effective_date: this.couponRange[0],
+        due_date: this.couponRange[1],
+      };
+      await this.$store.dispatch('coupons/addCoupon', { couponData });
+      this.closeModal(modal);
     },
+    // 編輯優惠卷
     async editCoupon(modal) {
-      console.log(modal);
+      const couponId = this.coupon.id;
+      const couponData = {
+        ...this.coupon,
+        effective_date: this.couponRange[0],
+        due_date: this.couponRange[1],
+      };
+      delete couponData.id;
+      await this.$store.dispatch('coupons/editCoupon', { couponId, couponData });
+      this.closeModal(modal);
     },
+    // 刪除優惠卷
+    async deleteCoupon(modal) {
+      const ids = this.caches.map((item) => item.id).join(',');
+      await this.$store.dispatch('coupons/deleteCoupon', { couponId: ids });
+      this.closeModal(modal);
+    },
+    // 更改優惠卷狀態
+    async changeCouponStatus(modal) {
+      const ids = this.caches[2].map((item) => item.id).join(',');
+      const status = this.caches[0] === 'enable';
+      await this.$store.dispatch('coupons/changeCouponStatus', { couponId: ids, status });
+      this.closeModal(modal);
+    },
+    // 重置日期
     datePickerClear() {
       if (this.cache.effective_date) {
         this.couponRange = [this.cache.effective_date, this.cache.due_date];

@@ -11,10 +11,13 @@ import './registerServiceWorker';
 import router from './router';
 import store from './store';
 import './fontAwesome';
+import datetime from './filter/datetime';
 
 Vue.use(VueAxios, axios);
 Vue.use(VModal);
 Vue.use(Skeleton);
+
+Vue.filter('datetime', datetime);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('date-picker', DatePicker);

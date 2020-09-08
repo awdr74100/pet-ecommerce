@@ -116,7 +116,7 @@
               }"
               to="/admin/coupons/not_enabled"
               @click.native="sidebarToggle"
-              >未啟用</router-link
+              >被禁用</router-link
             >
           </li>
         </ul>

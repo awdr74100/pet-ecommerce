@@ -23,7 +23,7 @@
       justify-content: flex-start;
       align-items: center;
       box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
+      border-radius: 3px;
       animation: notification-opacity 0.3s;
       overflow: hidden;
 
@@ -31,30 +31,21 @@
         background-color: theme-color('success');
 
         .icon {
-          padding: 18px 18.5px;
-        }
-        .progress {
-          background-color: darken(theme-color('primary'), 16%);
+          padding: 18px 18.5px; // resize
         }
       }
       &--warning {
         background-color: theme-color('warning');
 
         .icon {
-          padding: 18px 23.5px;
-        }
-        .progress {
-          background-color: darken(theme-color('warning'), 16%);
+          padding: 18px 23.5px; // resize
         }
       }
       &--danger {
         background-color: theme-color('danger');
 
         .icon {
-          padding: 18px 21px;
-        }
-        .progress {
-          background-color: darken(theme-color('danger'), 16%);
+          padding: 18px 21px; // resize
         }
       }
     }
@@ -87,13 +78,19 @@
       transform: translateY(-6px) rotate(-45deg);
     }
   }
-  .progress {
+  .progress-wrap {
     position: absolute;
-    bottom: 0px;
+    bottom: 3px;
     height: 3px;
-    left: 0px;
-    right: 0px;
+    left: 3px;
+    right: 3px;
+    overflow: hidden;
+  }
+  .progress {
     width: 0%;
+    height: 100%;
+    border-radius: 3px;
+    background-color: rgba(theme-color('white'), 0.4);
     animation: notification-progress 3s linear;
   }
 }

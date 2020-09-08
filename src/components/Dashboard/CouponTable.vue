@@ -2,7 +2,7 @@
   <div class="coupon-table">
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">{{ filterCoupons.length }} 張優惠卷</p>
+      <p class="font-l text-secondary mr-auto">{{ filterCoupons.length }} 張優惠卷</p>
       <button
         class="btn btn--primary btn--lg"
         @click.prevent="openModal('add-edit-coupon-modal', undefined, undefined, undefined)"
@@ -61,64 +61,89 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in sortAndSliceCoupons" :key="index">
-              <td>
-                <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
-              </td>
-              <td>
-                <div class="coupon">
-                  <div class="coupon__img">
-                    <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
+            <template v-if="skeletonLoading">
+              <tr v-for="index in row" :key="index">
+                <td><PuSkeleton height="16px" /></td>
+                <td class="d-flex align-items-center">
+                  <div style="flex: 0 0 56px"><PuSkeleton height="56px" /></div>
+                  <div class="ml-3" style="width:100%">
+                    <p class="mb-1" style="max-width:160px"><PuSkeleton /></p>
+                    <p><PuSkeleton /></p>
                   </div>
-                  <div class="coupon__overlay" v-if="!item.is_enabled">
-                    <span class="text-white">
-                      <font-awesome-icon :icon="['fas', 'ban']" size="lg" />
-                    </span>
+                </td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td>
+                  <p class="mb-1"><PuSkeleton width="60px" /></p>
+                  <p><PuSkeleton /></p>
+                </td>
+                <td><PuSkeleton /></td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr v-for="(item, index) in sortAndSliceCoupons" :key="index">
+                <td>
+                  <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
+                </td>
+                <td>
+                  <div class="coupon">
+                    <div class="coupon__img">
+                      <span><font-awesome-icon :icon="['fas', 'dollar-sign']" size="2x"/></span>
+                    </div>
+                    <div class="coupon__overlay" v-if="!item.is_enabled">
+                      <span class="text-white">
+                        <font-awesome-icon :icon="['fas', 'ban']" size="lg" />
+                      </span>
+                    </div>
+                    <div class="ml-3">
+                      <p class="coupon__code mb-1">{{ item.code }}</p>
+                      <span class="coupon__title">{{ item.title }}</span>
+                    </div>
                   </div>
-                  <div class="ml-3">
-                    <p class="coupon__code mb-1">{{ item.code }}</p>
-                    <span class="coupon__title">{{ item.title }}</span>
+                </td>
+                <td>賣場折扣卷</td>
+                <td>{{ item.percent }}%</td>
+                <td class="text-success" v-if="item.is_enabled">啟用</td>
+                <td class="text-danger" v-else>禁用</td>
+                <td>
+                  <div class="d-flex flex-column align-items-start">
+                    <p
+                      class="target target--scheduled mb-1"
+                      v-if="item.effective_date > Date.now()"
+                    >
+                      即將開始
+                    </p>
+                    <p
+                      class="target target--underway mb-1"
+                      v-else-if="item.effective_date <= Date.now() && item.due_date >= Date.now()"
+                    >
+                      進行中
+                    </p>
+                    <p class="target target--over mb-1" v-else>已結束</p>
+                    <p>{{ item.effective_date | datetime }} 至 {{ item.due_date | datetime }}</p>
                   </div>
-                </div>
-              </td>
-              <td>賣場折扣卷</td>
-              <td>{{ item.percent }}%</td>
-              <td class="text-success" v-if="item.is_enabled">啟用</td>
-              <td class="text-danger" v-else>未啟用</td>
-              <td>
-                <div class="d-flex flex-column align-items-start">
-                  <p class="target target--scheduled" v-if="item.effective_date > Date.now()">
-                    即將開始
-                  </p>
-                  <p
-                    class="target target--underway"
-                    v-else-if="item.effective_date <= Date.now() && item.due_date >= Date.now()"
+                </td>
+                <td class="text-center">
+                  <span
+                    class="icon"
+                    @click.prevent="openModal('add-edit-coupon-modal', item, undefined, undefined)"
                   >
-                    進行中
-                  </p>
-                  <p class="target target--over" v-else>已結束</p>
-                  <p>{{ item.effective_date }} 至 {{ item.due_date }}</p>
-                </div>
-              </td>
-              <td class="text-center">
-                <span
-                  class="icon"
-                  @click.prevent="openModal('add-edit-coupon-modal', item, undefined, undefined)"
-                >
-                  <font-awesome-icon :icon="['far', 'edit']" />
-                </span>
-                <span
-                  class="icon ml-3"
-                  @click="openModal('delete-coupon-modal', undefined, [{ ...item }], undefined)"
-                >
-                  <font-awesome-icon :icon="['far', 'trash-alt']" />
-                </span>
-              </td>
-            </tr>
+                    <font-awesome-icon :icon="['far', 'edit']" />
+                  </span>
+                  <span
+                    class="icon ml-3"
+                    @click="openModal('delete-coupon-modal', undefined, [{ ...item }], undefined)"
+                  >
+                    <font-awesome-icon :icon="['far', 'trash-alt']" />
+                  </span>
+                </td>
+              </tr>
+            </template>
           </tbody>
         </table>
       </div>
-      <!-- (tfoot) -->
+      <!-- (tfoot) - fix scroll problem -->
       <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
         <!-- dropdown component -->
         <div>
@@ -147,12 +172,14 @@
           </button>
           <button
             class="btn btn--transparent btn--sm ml-3"
+            v-if="showDisableButton"
             @click.prevent="openModal('change-status-coupon-modal', undefined, selected, false)"
           >
-            停用
+            禁用
           </button>
           <button
             class="btn btn--primary btn--sm ml-3"
+            v-if="showEnableButton"
             @click.prevent="openModal('change-status-coupon-modal', undefined, selected, true)"
           >
             啟用
