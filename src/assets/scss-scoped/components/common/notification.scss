@@ -23,7 +23,7 @@
       justify-content: flex-start;
       align-items: center;
       box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 3px;
+      border-radius: 4px;
       animation: notification-opacity 0.3s;
       overflow: hidden;
 
@@ -89,9 +89,9 @@
   .progress {
     width: 0%;
     height: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     background-color: rgba(theme-color('white'), 0.4);
-    animation: notification-progress 3s linear;
+    animation: notification-progress infinite 3s linear;
   }
 }
 

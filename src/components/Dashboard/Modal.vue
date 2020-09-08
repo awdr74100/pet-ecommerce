@@ -23,7 +23,7 @@
         <div class="row no-gutters">
           <div class="col-md-4 px-4 py-1">
             <label class="modal__label mb-1" for="productImg">商品圖片</label>
-            <div class="modal__drag">
+            <div class="modal__drag mb-3">
               <Drag />
             </div>
           </div>

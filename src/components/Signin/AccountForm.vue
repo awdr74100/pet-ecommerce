@@ -77,7 +77,7 @@
     <!-- signup form -->
     <ValidationObserver ref="signup-form" slim>
       <form @submit.prevent="signup" class="mt-3" v-if="tab === 'signup'">
-        <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+        <ValidationProvider rules="required|include" v-slot="{ errors, failed }" slim>
           <div class="account-form__group">
             <span class="account-form__icon"><font-awesome-icon :icon="['fas', 'user']"/></span>
             <input

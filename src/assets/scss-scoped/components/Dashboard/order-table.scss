@@ -47,6 +47,7 @@
     }
   }
   .table-footer {
+    border-radius: 4px;
     border: 1px solid lighten(theme-color('gray'), 30%);
   }
   .table {
@@ -54,8 +55,9 @@
     font-size: 14px;
     min-height: 293px;
   }
-  .user-img {
+  .avatar {
     font-size: 22px;
+    color: darken(theme-color('gray'), 16%);
   }
   th,
   td {
@@ -104,7 +106,7 @@
       font-size: 14px;
     }
   }
-  .data {
+  .info {
     position: absolute;
     top: 15px;
     z-index: 1;

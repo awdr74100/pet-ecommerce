@@ -16,18 +16,17 @@
     background-position: center center;
     background-size: contain;
   }
-  &__link {
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      color: lighten(theme-color('secondary'), 10%);
-    }
+  &__avatar {
+    font-size: 28px;
+    color: darken(theme-color('gray'), 16%);
+  }
+  &__name {
+    font-size: 14px;
   }
   &__line {
-    width: 2px;
-    height: 24px;
-    background-color: rgb(219, 219, 219);
+    width: 1px;
+    height: 36px;
+    background-color: darken(theme-color('white'), 10%);
   }
   &__btn {
     text-decoration: none;

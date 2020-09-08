@@ -39,7 +39,7 @@
             <tr>
               <th style="min-width:300px;width:100%">
                 <div class="d-flex align-items-center">
-                  <span class="user-img"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
+                  <span class="avatar"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
                   <p class="ml-2">Apenny7066</p>
                 </div>
               </th>
@@ -92,24 +92,24 @@
               </td>
               <td style="min-width:215px">
                 <template v-if="index === 1">
-                  <ul class="data">
-                    <li class="data__item">
+                  <ul class="info">
+                    <li class="info__item">
                       <p>購買人</p>
                       <span>藍奕濡</span>
                     </li>
-                    <li class="data__item mt-2">
+                    <li class="info__item mt-2">
                       <p>收件地址</p>
                       <span>台南市永康區中正南路592巷38弄14號</span>
                     </li>
-                    <li class="data__item mt-2">
+                    <li class="info__item mt-2">
                       <p>連絡電話</p>
                       <span>0972791303</span>
                     </li>
-                    <li class="data__item mt-2">
+                    <li class="info__item mt-2">
                       <p>電子信箱</p>
                       <span>4a6g0068@stust.edu.tw</span>
                     </li>
-                    <li class="data__item mt-2">
+                    <li class="info__item mt-2">
                       <p>備註</p>
                       <span>請使用紙箱將其包裝</span>
                     </li>

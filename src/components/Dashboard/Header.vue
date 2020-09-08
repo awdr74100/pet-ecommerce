@@ -7,9 +7,9 @@
     <div class="d-md-block d-none">
       <Breadcrumb />
     </div>
-    <div class="ml-auto text-secondary">
-      <span class="header__link mr-5"><font-awesome-icon :icon="['fas', 'user-cog']"/></span>
-      <span class="header__link ml-2 mr-5"><font-awesome-icon :icon="['far', 'bell']"/></span>
+    <div class="ml-auto d-flex align-items-center text-secondary">
+      <span class="header__avatar mr-2"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
+      <span class="header__name mr-5">{{ account.username }}</span>
     </div>
     <div class="header__line"></div>
     <a href="#" class="header__btn ml-3" @click.prevent="signout">
@@ -35,6 +35,11 @@ export default {
     sidebarToggle() {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
+    },
+  },
+  computed: {
+    account() {
+      return JSON.parse(localStorage.getItem('admin'));
     },
   },
 };

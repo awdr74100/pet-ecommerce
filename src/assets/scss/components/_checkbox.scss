@@ -4,7 +4,7 @@
   border: 1px solid lighten(theme-color('secondary'), 50%);
   width: 16px;
   height: 16px;
-  border-radius: 3px;
+  border-radius: 4px;
   transition: all 0.3s;
   background-color: #fff;
 
@@ -19,7 +19,7 @@
     display: inline-block;
     width: 16px;
     height: 16px;
-    border-radius: 3px;
+    border-radius: 4px;
     background-color: lighten(theme-color('primary'), 10%);
     position: absolute;
     top: -1px;

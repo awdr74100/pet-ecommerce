@@ -143,7 +143,7 @@
           </tbody>
         </table>
       </div>
-      <!-- (tfoot) - fix scroll problem -->
+      <!-- (foot) - fix scroll problem -->
       <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
         <!-- dropdown component -->
         <div>

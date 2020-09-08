@@ -12,3 +12,8 @@ extend('required', {
   ...required,
   message: '此欄位不可空白',
 });
+
+extend('include', {
+  validate: (value) => !value.includes('@'),
+  message: '禁止包含 @ 符號',
+});
