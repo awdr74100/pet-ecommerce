@@ -38,8 +38,7 @@
   &__group {
     min-height: 50px;
   }
-  &__input,
-  &__textarea {
+  %control {
     width: 100%;
     font-size: 14px;
     border: 1px solid lighten(theme-color('gray'), 30%);
@@ -53,13 +52,20 @@
       cursor: not-allowed;
       background-color: lighten(theme-color('gray'), 36%);
     }
+  }
+  &__textarea {
+    @extend %control;
+  }
+  &__input {
+    @extend %control;
 
-    &:not(:disabled):hover,
-    &:focus {
-      border-color: lighten(theme-color('gray'), 4%);
-    }
     &--error {
-      border-color: theme-color('danger');
+      border: 1px solid theme-color('danger') !important;
+      background-color: lighten(theme-color('danger'), 41%);
+    }
+    &:not(&--error):not(:disabled):hover,
+    &:not(&--error):focus {
+      border-color: lighten(theme-color('gray'), 4%);
     }
   }
   &__message {

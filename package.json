@@ -15,6 +15,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
+    "vee-validate": "^3.3.9",
     "vue": "^2.6.12",
     "vue-axios": "^2.1.5",
     "vue-js-modal": "^2.0.0-rc.6",

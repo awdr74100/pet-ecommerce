@@ -29,134 +29,154 @@
           </div>
           <div class="col-md-8 px-4 py-1">
             <div class="modal__body">
-              <form>
-                <label class="modal__label mb-1" for="productTitle">商品名稱</label>
-                <div class="modal__group">
-                  <input
-                    class="modal__input"
-                    type="text"
-                    id="productTitle"
+              <ValidationObserver ref="product-form" slim>
+                <form>
+                  <label class="modal__label mb-1" for="productTitle">商品名稱</label>
+                  <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                    <div class="modal__group">
+                      <input
+                        class="modal__input"
+                        type="text"
+                        id="productTitle"
+                        placeholder="請輸入"
+                        :class="{ 'modal__input--error': failed }"
+                        v-model="product.title"
+                      />
+                      <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                    </div>
+                  </ValidationProvider>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-2 mr-1">
+                      <label class="modal__label mb-1" for="productCategory">分類</label>
+                      <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                        <div class="modal__group">
+                          <input
+                            class="modal__input"
+                            type="text"
+                            id="productCategory"
+                            placeholder="請輸入"
+                            :class="{ 'modal__input--error': failed }"
+                            v-model="product.category"
+                          />
+                          <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                        </div>
+                      </ValidationProvider>
+                    </div>
+                    <div class="flex-1 ml-1">
+                      <label class="modal__label mb-1" for="productUnit">單位</label>
+                      <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                        <div class="modal__group">
+                          <input
+                            class="modal__input"
+                            type="text"
+                            id="productUnit"
+                            placeholder="請輸入"
+                            :class="{ 'modal__input--error': failed }"
+                            v-model="product.unit"
+                          />
+                          <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                        </div>
+                      </ValidationProvider>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-1 mr-1">
+                      <label class="modal__label mb-1" for="productOriginPrice">原價</label>
+                      <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                        <div class="modal__group">
+                          <input
+                            class="modal__input"
+                            type="number"
+                            id="productOriginPrice"
+                            placeholder="請輸入"
+                            min="0"
+                            :class="{ 'modal__input--error': failed }"
+                            v-model.number="product.origin_price"
+                          />
+                          <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                        </div>
+                      </ValidationProvider>
+                    </div>
+                    <div class="flex-1 ml-1">
+                      <label class="modal__label mb-1" for="productPrice">售價</label>
+                      <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                        <div class="modal__group">
+                          <input
+                            class="modal__input"
+                            type="number"
+                            id="productPrice"
+                            placeholder="請輸入"
+                            min="0"
+                            :class="{ 'modal__input--error': failed }"
+                            v-model.number="product.price"
+                          />
+                          <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                        </div>
+                      </ValidationProvider>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-1 mr-1">
+                      <label class="modal__label mb-1" for="productStock">庫存量</label>
+                      <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                        <div class="modal__group">
+                          <input
+                            class="modal__input"
+                            type="number"
+                            id="productStock"
+                            placeholder="請輸入"
+                            min="0"
+                            :class="{ 'modal__input--error': failed }"
+                            v-model.number="product.stock"
+                          />
+                          <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                        </div>
+                      </ValidationProvider>
+                    </div>
+                    <div class="flex-1 ml-1">
+                      <label class="modal__label mb-1" for="productSales">已售出</label>
+                      <div class="modal__group">
+                        <input
+                          class="modal__input"
+                          type="number"
+                          id="productSales"
+                          disabled
+                          v-model.number="product.sales"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <label class="modal__label mb-1" for="productDescription">商品描述</label>
+                  <textarea
+                    class="modal__textarea mb-3"
+                    id="productDescription"
+                    cols="30"
+                    rows="3"
                     placeholder="請輸入"
-                    v-model="product.title"
-                  />
-                  <small class="modal__error" v-if="false">此欄位不可空白</small>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="flex-2 mr-1">
-                    <label class="modal__label mb-1" for="productCategory">分類</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="text"
-                        id="productCategory"
-                        placeholder="請輸入"
-                        v-model="product.category"
-                      />
-                      <small class="modal__error" v-if="false">此欄位不可空白</small>
-                    </div>
+                    v-model="product.description"
+                  >
+                  </textarea>
+                  <label class="modal__label mb-1" for="productContent">商品內容</label>
+                  <textarea
+                    class="modal__textarea mb-3"
+                    id="productContent"
+                    cols="30"
+                    rows="3"
+                    placeholder="請輸入"
+                    v-model="product.content"
+                  >
+                  </textarea>
+                  <div class="d-flex align-items-center">
+                    <input
+                      class="checkbox m-0"
+                      type="checkbox"
+                      id="productEnabled"
+                      v-model="product.is_enabled"
+                    />
+                    <label class="cursor-pointer ml-2" for="productEnabled">立即上架商品</label>
                   </div>
-                  <div class="flex-1 ml-1">
-                    <label class="modal__label mb-1" for="productUnit">單位</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="text"
-                        id="productUnit"
-                        placeholder="請輸入"
-                        v-model="product.unit"
-                      />
-                      <small class="modal__error" v-if="false">此欄位不可空白</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="flex-1 mr-1">
-                    <label class="modal__label mb-1" for="productOriginPrice">原價</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="number"
-                        id="productOriginPrice"
-                        placeholder="請輸入"
-                        min="0"
-                        v-model.number="product.origin_price"
-                      />
-                      <small class="modal__error" v-if="false">此欄位不可空白</small>
-                    </div>
-                  </div>
-                  <div class="flex-1 ml-1">
-                    <label class="modal__label mb-1" for="productPrice">售價</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="number"
-                        id="productPrice"
-                        placeholder="請輸入"
-                        min="0"
-                        v-model.number="product.price"
-                      />
-                      <small class="modal__error" v-if="false">此欄位不可空白</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-flex align-items-center">
-                  <div class="flex-1 mr-1">
-                    <label class="modal__label mb-1" for="productStock">庫存量</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="number"
-                        id="productStock"
-                        placeholder="請輸入"
-                        min="0"
-                        v-model.number="product.stock"
-                      />
-                      <small class="modal__error" v-if="false">此欄位不可空白</small>
-                    </div>
-                  </div>
-                  <div class="flex-1 ml-1">
-                    <label class="modal__label mb-1" for="productSales">已售出</label>
-                    <div class="modal__group">
-                      <input
-                        class="modal__input"
-                        type="number"
-                        id="productSales"
-                        disabled
-                        v-model.number="product.sales"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <label class="modal__label mb-1" for="productDescription">商品描述</label>
-                <textarea
-                  class="modal__textarea mb-3"
-                  id="productDescription"
-                  cols="30"
-                  rows="3"
-                  placeholder="請輸入"
-                  v-model="product.description"
-                >
-                </textarea>
-                <label class="modal__label mb-1" for="productContent">商品內容</label>
-                <textarea
-                  class="modal__textarea mb-3"
-                  id="productContent"
-                  cols="30"
-                  rows="3"
-                  placeholder="請輸入"
-                  v-model="product.content"
-                >
-                </textarea>
-                <div class="d-flex align-items-center">
-                  <input
-                    class="checkbox m-0"
-                    type="checkbox"
-                    id="productEnabled"
-                    v-model="product.is_enabled"
-                  />
-                  <label class="cursor-pointer ml-2" for="productEnabled">立即上架商品</label>
-                </div>
-              </form>
+                </form>
+              </ValidationObserver>
             </div>
           </div>
         </div>
@@ -164,15 +184,7 @@
           <div class="modal__footer p-4">
             <button
               class="btn btn--primary btn--md ml-auto"
-              v-if="!cache.id"
-              @click.prevent="addProduct('add-edit-product-modal')"
-            >
-              確認
-            </button>
-            <button
-              class="btn btn--primary btn--md ml-auto"
-              v-if="cache.id"
-              @click.prevent="editProduct('add-edit-product-modal')"
+              @click.prevent="validateProduct('add-edit-product-modal')"
             >
               確認
             </button>
@@ -327,76 +339,78 @@
         </div>
         <div class="row no-gutters">
           <div class="modal__body px-4 py-1">
-            <form>
-              <label class="modal__label mb-1" for="couponCode">優惠卷代碼</label>
-              <div class="modal__group">
-                <input
-                  class="modal__input"
-                  type="text"
-                  id="couponCode"
-                  placeholder="請輸入"
-                  v-model="coupon.code"
-                />
-                <small class="modal__error" v-if="false">此欄位不可空白</small>
-              </div>
-              <label class="modal__label mb-1" for="couponTitle">標題</label>
-              <div class="modal__group">
-                <input
-                  class="modal__input"
-                  type="text"
-                  id="couponTitle"
-                  placeholder="請輸入"
-                  v-model="coupon.title"
-                />
-                <small class="modal__error" v-if="false">此欄位不可空白</small>
-              </div>
-              <label class="modal__label mb-1" for="couponPercent">折扣額度 (百分比)</label>
-              <div class="modal__group">
-                <input
-                  class="modal__input"
-                  type="number"
-                  id="couponPercent"
-                  placeholder="請輸入"
-                  v-model.number="coupon.percent"
-                />
-                <small class="modal__error" v-if="false">此欄位不可空白</small>
-              </div>
-              <label class="modal__label mb-1" for="couponEffectiveDate">有效日期</label>
-              <div class="modal__group">
-                <date-picker
-                  type="date"
-                  value-type="timestamp"
-                  v-model="couponRange"
-                  @clear="datePickerClear"
-                  :range="true"
-                />
-                <small class="modal__error" v-if="false">此欄位不可空白</small>
-              </div>
-              <div class="d-flex align-items-center">
-                <input
-                  class="checkbox m-0"
-                  type="checkbox"
-                  id="couponEnabled"
-                  v-model="coupon.is_enabled"
-                />
-                <label class="cursor-pointer ml-2" for="couponEnabled">是否啟用</label>
-              </div>
-            </form>
+            <ValidationObserver ref="coupon-form" slim>
+              <form>
+                <label class="modal__label mb-1" for="couponCode">優惠卷代碼</label>
+                <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                  <div class="modal__group">
+                    <input
+                      class="modal__input"
+                      type="text"
+                      id="couponCode"
+                      placeholder="請輸入"
+                      :class="{ 'modal__input--error': failed }"
+                      v-model="coupon.code"
+                    />
+                    <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                  </div>
+                </ValidationProvider>
+                <label class="modal__label mb-1" for="couponTitle">標題</label>
+                <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                  <div class="modal__group">
+                    <input
+                      class="modal__input"
+                      type="text"
+                      id="couponTitle"
+                      placeholder="請輸入"
+                      :class="{ 'modal__input--error': failed }"
+                      v-model="coupon.title"
+                    />
+                    <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                  </div>
+                </ValidationProvider>
+                <label class="modal__label mb-1" for="couponPercent">折扣額度 (百分比)</label>
+                <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                  <div class="modal__group">
+                    <input
+                      class="modal__input"
+                      type="number"
+                      id="couponPercent"
+                      placeholder="請輸入"
+                      :class="{ 'modal__input--error': failed }"
+                      v-model.number="coupon.percent"
+                    />
+                    <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
+                  </div>
+                </ValidationProvider>
+                <label class="modal__label mb-1" for="couponEffectiveDate">有效日期</label>
+                <div class="modal__group">
+                  <date-picker
+                    type="date"
+                    value-type="timestamp"
+                    v-model="couponRange"
+                    @clear="datePickerClear"
+                    :range="true"
+                  />
+                </div>
+                <div class="d-flex align-items-center">
+                  <input
+                    class="checkbox m-0"
+                    type="checkbox"
+                    id="couponEnabled"
+                    v-model="coupon.is_enabled"
+                  />
+                  <label class="cursor-pointer ml-2" for="couponEnabled">是否啟用</label>
+                </div>
+              </form>
+            </ValidationObserver>
           </div>
         </div>
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
               class="btn btn--primary btn--md ml-auto"
-              v-if="!cache.id"
-              @click.prevent="addCoupon('add-edit-coupon-modal')"
-            >
-              確認
-            </button>
-            <button
-              class="btn btn--primary btn--md ml-auto"
-              v-if="cache.id"
-              @click.prevent="editCoupon('add-edit-coupon-modal')"
+              @click.prevent="validateCoupon('add-edit-coupon-modal')"
             >
               確認
             </button>
@@ -552,6 +566,7 @@ export default {
     };
   },
   methods: {
+    // 開啟前處理
     beforeOpen({ name }) {
       this.maxWidth = window.innerWidth - 30;
       this[name.split('-')[2]] = { ...this.cache }; // product or coupon
@@ -560,9 +575,20 @@ export default {
         this.couponRange = [this.cache.effective_date, this.cache.due_date];
       }
     },
+    // 關閉後處理
     closeModal(modal) {
       this.$store.commit('modal/CLOSEMODAL', { modal });
       this.$store.commit('image/DATACLEAR');
+    },
+    // 驗證表單 - Product
+    async validateProduct(modal) {
+      const valid = await this.$refs['product-form'].validate();
+      if (!valid) return;
+      if (this.cache.id) {
+        this.editProduct(modal);
+      } else {
+        this.addProduct(modal);
+      }
     },
     // 新增商品
     async addProduct(modal) {
@@ -576,7 +602,7 @@ export default {
       await this.$store.dispatch('products/addProduct', { productData });
       this.closeModal(modal);
     },
-    // 編輯產品
+    // 編輯商品
     async editProduct(modal) {
       if (this.file) {
         await this.$store.dispatch('image/uploadImage', { file: this.file });
@@ -599,6 +625,16 @@ export default {
       const status = this.caches[0] === 'enable';
       await this.$store.dispatch('products/changeProductStatus', { productId: ids, status });
       this.closeModal(modal);
+    },
+    // 驗證表單 - Coupon
+    async validateCoupon(modal) {
+      const valid = await this.$refs['coupon-form'].validate();
+      if (!valid) return;
+      if (this.cache.id) {
+        this.editCoupon(modal);
+      } else {
+        this.addCoupon(modal);
+      }
     },
     // 產生新的優惠卷
     async addCoupon(modal) {

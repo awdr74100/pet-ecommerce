@@ -58,7 +58,7 @@
     font-size: 16px;
     transition: all 0.3s;
 
-    &:focus {
+    &:not(&--error):focus {
       border: 1px solid lighten(theme-color('primary'), 10%);
     }
     &::placeholder {
@@ -66,6 +66,7 @@
     }
     &--error {
       border-color: theme-color('danger');
+      background-color: lighten(theme-color('danger'), 41%);
     }
   }
   &__btn {
