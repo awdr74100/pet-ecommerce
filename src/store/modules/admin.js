@@ -43,10 +43,17 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async check({ dispatch, commit }, { from }) {
+    async check({ dispatch, commit }, { to, from }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/admin/check`;
       const root = { root: true };
+      // 標籤切換
+      if (to.path.split('/')[2] === from.path.split('/')[2]) {
+        commit('ISSIGNIN', true);
+        return;
+      }
+      // 項目切換
       try {
+        this._vm.$Progress.start();
         const { data } = await axios.post(url);
         if (!data.success) {
           localStorage.removeItem('admin');
@@ -56,6 +63,7 @@ export default {
           return;
         }
         commit('ISSIGNIN', true);
+        this._vm.$Progress.finish();
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }

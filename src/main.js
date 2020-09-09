@@ -3,6 +3,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VModal from 'vue-js-modal';
 import Skeleton from 'vue-loading-skeleton';
+import VueProgressBar from 'vue-progressbar';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import DatePicker from 'vue2-datepicker';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
@@ -18,6 +19,7 @@ import datetime from './filter/datetime';
 Vue.use(VueAxios, axios);
 Vue.use(VModal);
 Vue.use(Skeleton);
+Vue.use(VueProgressBar, { color: '#4bb36e', thickness: '3px' });
 
 Vue.filter('datetime', datetime);
 

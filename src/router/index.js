@@ -100,9 +100,9 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (!to.meta.requiresAuth) return next();
-  await router.app.$options.store.dispatch(`${to.meta.role}/check`, { from });
+  await router.app.$options.store.dispatch(`${to.meta.role}/check`, { to, from });
   if (router.app.$options.store.state[to.meta.role].isSignin) return next();
-  return next('/');
+  return next('/signin');
 });
 
 export default router;

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Notification />
+    <vue-progress-bar></vue-progress-bar>
     <router-view></router-view>
   </div>
 </template>
