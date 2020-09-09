@@ -1,26 +1,19 @@
 .header-layout {
   position: fixed;
-  top: 0px;
+  top: 0;
   width: 100%;
   z-index: 5;
-  @include desktop() {
-    z-index: 15;
-  }
 }
 
 .sidebar-layout {
   position: fixed;
   top: 0px;
-  width: 220px;
+  width: 250px;
   height: 100%;
   transition: transform 0.3s;
-  transform: translateX(-220px);
+  transform: translateX(-250px);
   z-index: 15;
   overflow: auto;
-  @include desktop() {
-    top: 56px;
-    z-index: 5;
-  }
 
   .openSidebar & {
     transform: translateX(0px);
@@ -30,14 +23,16 @@
 .main-layout {
   position: relative;
   width: 100%;
-  padding-top: 56px;
   padding-left: 0px;
-  transition: all 0.3s;
-  min-height: 100vh;
   background-color: lighten(theme-color('gray'), 38%);
+  padding-top: 36px;
+  min-height: 100vh;
+  transition: padding-left 0.3s;
   @include desktop() {
+    padding-top: 42px;
+
     .openSidebar & {
-      padding-left: 220px;
+      padding-left: 250px;
     }
   }
 }

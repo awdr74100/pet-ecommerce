@@ -3,16 +3,16 @@
     <div class="header-layout bg-white shadow-header">
       <Header />
     </div>
+    <div class="sidebar-layout bg-white shadow-sidebar">
+      <Sidebar />
+    </div>
     <div class="row no-gutters">
-      <div class="sidebar-layout bg-white shadow-sidebar">
-        <Sidebar />
-      </div>
       <div class="main-layout">
         <router-view></router-view>
       </div>
     </div>
-    <!-- Drawer -->
-    <div class="drawer" @click="sidebarToggle"></div>
+    <!-- Overlay -->
+    <div class="overlay" @click="sidebarToggle"></div>
     <!-- Modal -->
     <Modal />
   </div>

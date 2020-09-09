@@ -1,0 +1,77 @@
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .list {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    @include desktop() {
+      flex: 0 0 auto;
+    }
+
+    &__item {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid lighten(theme-color('gray'), 30%);
+      border-left: none;
+      border-top: none;
+      background-color: theme-color('white');
+      transition: all 0.3s;
+      flex: 1;
+      min-height: 36px;
+      font-size: 14px;
+      @include desktop() {
+        flex: 0 0 auto;
+        min-height: 32px;
+        border-radius: 4px;
+        border-left: 1px solid lighten(theme-color('gray'), 30%);
+        border-top: 1px solid lighten(theme-color('gray'), 30%);
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+      &:not(.search):hover {
+        background-color: lighten(theme-color('gray'), 37%);
+      }
+      &.search:hover .header__input {
+        max-width: 150px;
+      }
+    }
+  }
+  &__input {
+    min-height: 30px;
+    min-width: 0px;
+    max-width: 0px;
+    border: none;
+    font-size: 14px;
+    color: theme-color('secondary');
+    transition: all 0.3s;
+  }
+  &__line {
+    width: 1px;
+    display: inline-block;
+    width: 1px;
+    background-color: darken(theme-color('white'), 30%);
+    height: 10px;
+    margin: 0px 4px;
+  }
+  .icon {
+    font-size: 18px;
+    @include desktop() {
+      font-size: 14px;
+    }
+  }
+  .icon-resize {
+    font-size: 20px;
+    @include desktop() {
+      font-size: 16px;
+    }
+  }
+}

@@ -5,4 +5,7 @@
   .bg-#{$key} {
     background-color: $value !important;
   }
+  .border-#{$key} {
+    border: $value !important;
+  }
 }
