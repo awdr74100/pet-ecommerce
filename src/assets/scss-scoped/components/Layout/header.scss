@@ -21,7 +21,7 @@
       border: 1px solid lighten(theme-color('gray'), 30%);
       border-left: none;
       border-top: none;
-      background-color: theme-color('white');
+      background-color: rgba(theme-color('white'), 0.9);
       transition: all 0.3s;
       flex: 1;
       min-height: 36px;

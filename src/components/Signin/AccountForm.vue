@@ -85,6 +85,7 @@
               class="account-form__input text-secondary"
               autocomplete="on"
               placeholder="使用者名稱"
+              maxlength="10"
               :class="{ 'account-form__input--error': failed }"
               v-model="account.username"
             />
@@ -99,6 +100,7 @@
               class="account-form__input text-secondary"
               autocomplete="on"
               placeholder="密碼"
+              maxlength="12"
               :class="{ 'account-form__input--error': failed }"
               v-model="account.password"
             />

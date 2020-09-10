@@ -21,6 +21,11 @@ const routes = [
         component: () => import('@/views/Layout/About.vue'),
       },
       {
+        path: 'news',
+        name: 'News',
+        component: () => import('@/views/Layout/News.vue'),
+      },
+      {
         path: 'category/:category',
         name: 'Category',
         component: () => import('@/views/Layout/Category.vue'),
@@ -29,11 +34,6 @@ const routes = [
         path: 'product/:id',
         name: 'Product',
         component: () => import('@/views/Layout/Product.vue'),
-      },
-      {
-        path: 'news',
-        name: 'News',
-        component: () => import('@/views/Layout/News.vue'),
       },
       {
         path: 'coupon',

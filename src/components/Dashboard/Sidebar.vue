@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="sidebar__toggle d-md-none" @click="sidebarToggle">
+    <div class="sidebar__toggle shadow d-md-none" @click="sidebarToggle">
       <Hamburger />
     </div>
     <ul class="pb-6">

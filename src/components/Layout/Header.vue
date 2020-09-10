@@ -1,13 +1,13 @@
 <template>
   <header class="header text-secondary">
     <ul class="list p-md-1 p-0">
-      <li class="list__item px-3 bg-primary border-primary text-white" v-if="true">
+      <!-- <li class="list__item user px-3 bg-primary border-primary text-white">
         <span class="icon mr-1 icon-resize">
           <font-awesome-icon :icon="['fas', 'user-circle']" />
         </span>
         <p class="d-md-inline d-none">awdr74100</p>
-      </li>
-      <li class="list__item px-3" v-if="false">
+      </li> -->
+      <li class="list__item px-3" v-if="true">
         <span class="icon mr-1 icon-resize">
           <font-awesome-icon :icon="['fas', 'user-circle']" />
         </span>
@@ -27,7 +27,7 @@
       </li>
       <li class="list__item search ml-md-1 pl-3 d-md-flex d-none">
         <span class="icon"><font-awesome-icon :icon="['fas', 'search']"/></span>
-        <input class="header__input p-0 pl-3" type="text" />
+        <input class="header__input p-0 pl-3" type="text" placeholder="找商品" />
       </li>
       <li class="list__item ml-md-1 px-3" @click="sidebarToggle">
         <Hamburger />

@@ -1,9 +1,9 @@
 <template>
-  <div class="container mt-3 mb-6">
-    <div class="row no-gutters bg-white shadow-section">
+  <main class="container mt-3 mb-6">
+    <div class="row no-gutters bg-white shadow">
       <CouponTable />
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

@@ -3,7 +3,7 @@
     <div class="header-layout">
       <Header />
     </div>
-    <div class="sidebar-layout bg-primary">
+    <div class="sidebar-layout bg-white shadow-right">
       <Sidebar />
     </div>
     <div class="row no-gutters">

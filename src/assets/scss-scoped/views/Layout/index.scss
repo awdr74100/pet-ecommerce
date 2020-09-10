@@ -1,8 +1,12 @@
 .header-layout {
   position: fixed;
-  top: 0;
-  width: 100%;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   z-index: 5;
+  @include desktop() {
+    left: 50%;
+  }
 }
 
 .sidebar-layout {
@@ -18,6 +22,9 @@
   .openSidebar & {
     transform: translateX(0px);
   }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .main-layout {
@@ -29,7 +36,7 @@
   min-height: 100vh;
   transition: padding-left 0.3s;
   @include desktop() {
-    padding-top: 42px;
+    padding-top: 0px;
 
     .openSidebar & {
       padding-left: 250px;
