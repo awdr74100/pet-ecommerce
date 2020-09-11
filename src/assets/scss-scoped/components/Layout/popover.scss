@@ -1,0 +1,45 @@
+.popover {
+  position: absolute;
+  top: 32px;
+  overflow: hidden;
+  right: -90px;
+  z-index: 1;
+  display: none;
+  // max-height: 0px;
+  @include desktop() {
+    display: block;
+  }
+
+  &__drawer {
+    height: 12px;
+  }
+  &__container {
+    position: relative;
+    min-width: 400px;
+    background-color: theme-color('white');
+    border: 1px solid lighten(theme-color('gray'), 30%);
+    border-radius: 4px;
+    font-size: 14px;
+
+    &::before {
+      position: absolute;
+      top: -5.6px;
+      right: 120px;
+      content: '';
+      width: 10px;
+      height: 10px;
+      background-color: theme-color('white');
+      border-left: 1px solid lighten(theme-color('gray'), 30%);
+      border-top: 1px solid lighten(theme-color('gray'), 30%);
+      transform: rotate(45deg);
+    }
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    color: lighten(theme-color('gray'), 12%);
+  }
+  &__footer {
+    font-size: 15px;
+  }
+}

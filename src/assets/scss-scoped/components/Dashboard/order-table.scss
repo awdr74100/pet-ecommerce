@@ -72,7 +72,7 @@
   }
   .product {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 
     &__img {
       flex: 0 0 56px;
@@ -84,21 +84,19 @@
       background-position: center center;
     }
     &__content {
+      flex: 1;
       display: flex;
-      align-items: center;
+      flex-direction: column;
       font-size: 12px;
-      color: theme-color('gray');
     }
     &__title {
       color: darken(theme-color('secondary'), 4%);
       font-weight: 600;
-      line-height: 1.3;
       @include text-ellipsis(2);
       font-size: 14px;
     }
     &__qty {
       line-height: 1.3;
-      align-self: start;
       font-size: 14px;
       color: darken(theme-color('secondary'), 4%);
     }

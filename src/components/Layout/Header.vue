@@ -1,36 +1,47 @@
 <template>
-  <header class="header text-secondary">
+  <header class="header">
     <ul class="list p-md-1 p-0">
-      <!-- <li class="list__item user px-3 bg-primary border-primary text-white">
-        <span class="icon mr-1 icon-resize">
-          <font-awesome-icon :icon="['fas', 'user-circle']" />
-        </span>
-        <p class="d-md-inline d-none">awdr74100</p>
-      </li> -->
-      <li class="list__item px-3" v-if="true">
-        <span class="icon mr-1 icon-resize">
-          <font-awesome-icon :icon="['fas', 'user-circle']" />
-        </span>
-        <div class="align-items-center d-md-flex d-none">
-          <p>登入</p>
-          <div class="header__line"></div>
-          <p>註冊</p>
-        </div>
+      <!-- 登入/註冊 -->
+      <li class="list__item ml-md-1">
+        <a href="#" class="list__link px-3">
+          <span class="icon icon-resize mr-1">
+            <font-awesome-icon :icon="['fas', 'user-circle']" />
+          </span>
+          <div class="align-items-center d-md-flex d-none">
+            <p>登入</p>
+            <span class="line"></span>
+            <p>註冊</p>
+          </div>
+        </a>
       </li>
-      <li class="list__item ml-md-1 px-3">
-        <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
-        <p><span class="d-md-inline d-none">購物車</span> (0)</p>
+      <!-- 購物車 -->
+      <li class="list__item ml-md-1">
+        <a href="#" class="list__link px-3">
+          <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
+          <p><span class="d-md-inline d-none">購物車</span> (0)</p>
+        </a>
+        <!-- popover -->
+        <Popover />
       </li>
-      <li class="list__item ml-md-1 px-3">
-        <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'file-alt']"/></span>
-        <p class="d-md-inline d-none">訂單管理</p>
+      <!-- 訂單管理 -->
+      <li class="list__item ml-md-1">
+        <a href="#" class="list__link px-3">
+          <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'file-alt']"/></span>
+          <p class="d-md-inline d-none">訂單管理</p>
+        </a>
       </li>
-      <li class="list__item search ml-md-1 pl-3 d-md-flex d-none">
-        <span class="icon"><font-awesome-icon :icon="['fas', 'search']"/></span>
-        <input class="header__input p-0 pl-3" type="text" placeholder="找商品" />
+      <!-- 搜尋 -->
+      <li class="list__item ml-md-1 d-md-flex d-none">
+        <a href="#" class="list__link search-link pl-3">
+          <span class="icon"><font-awesome-icon :icon="['fas', 'search']"/></span>
+          <input class="search p-0 pl-3" type="text" placeholder="找商品" />
+        </a>
       </li>
-      <li class="list__item ml-md-1 px-3" @click="sidebarToggle">
-        <Hamburger />
+      <!-- Sidebar 開關 -->
+      <li class="list__item ml-md-1">
+        <a href="#" class="list__link menu-link px-3" @click="sidebarToggle">
+          <Hamburger />
+        </a>
       </li>
     </ul>
   </header>
@@ -40,10 +51,12 @@
 import { mapState } from 'vuex';
 
 import Hamburger from '@/components/common/Hamburger.vue';
+import Popover from '@/components/Layout/Popover.vue';
 
 export default {
   components: {
     Hamburger,
+    Popover,
   },
   methods: {
     sidebarToggle() {

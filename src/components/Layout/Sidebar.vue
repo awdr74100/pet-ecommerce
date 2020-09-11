@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <div class="py-3 shadow">
+    <div class="py-2 shadow">
       <router-link to="/" class="sidebar__logo" @click.native="sidebarToggle"></router-link>
     </div>
     <div class="py-2 px-5 shadow d-block d-md-none">

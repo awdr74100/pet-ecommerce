@@ -31,11 +31,11 @@ export default {
     Breadcrumb,
   },
   methods: {
-    ...mapActions('admin', ['signout']),
     sidebarToggle() {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
     },
+    ...mapActions('admin', ['signout']),
   },
   computed: {
     account() {

@@ -54,28 +54,24 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="mb-6" v-for="index in 2" :key="index">
+            <tr v-for="index in 2" :key="index">
               <td>
                 <div class="product">
                   <div class="product__img"></div>
-                  <div class="product__content ml-3">
-                    <div>
-                      <p class="product__title mb-1">
-                        The North Face Resolve Insulated 鋪棉風衣外套The North Face Resolve
-                        Insulated 鋪棉風衣外套
-                      </p>
-                      <div class="d-flex align-items-end">
-                        <span class="mr-1">
-                          <font-awesome-icon :icon="['fas', 'tag']" size="sm" />
-                        </span>
-                        <p>3.6 折</p>
-                        <p class="ml-auto text-primary">
-                          $<span class="product__total">2,400</span>
-                        </p>
-                      </div>
+                  <div class="product__content text-gray ml-3 mr-2">
+                    <p class="product__title">
+                      Moshi Helios Mini 時尚雙肩迷你後背包（都會遊獵系列，2018
+                      SS，橄欖綠）13吋電腦包 筆電
+                    </p>
+                    <div class="d-flex align-items-end mt-auto">
+                      <template>
+                        <span><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
+                        <p class="ml-1">3.6 折</p>
+                      </template>
+                      <p class="ml-auto text-primary">$<span class="product__total">2,400</span></p>
                     </div>
-                    <div class="product__qty ml-2">x2</div>
                   </div>
+                  <div class="product__qty ml-auto">x2</div>
                 </div>
               </td>
               <td class="text-center">

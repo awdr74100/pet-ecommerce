@@ -37,7 +37,7 @@ export default {
         }
         localStorage.removeItem('admin');
         commit('ISSIGNIN', false);
-        router.push({ path: '/' });
+        router.push({ path: '/signin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -60,6 +60,7 @@ export default {
           commit('ISSIGNIN', false);
           const message = from.meta.role === 'admin' ? '請重新登入' : '僅限管理員進入';
           dispatch('notification/updateMessage', { message, status: 'danger' }, root);
+          this._vm.$Progress.fail();
           return;
         }
         commit('ISSIGNIN', true);
