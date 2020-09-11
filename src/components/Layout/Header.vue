@@ -18,7 +18,7 @@
       <li class="list__item ml-md-1">
         <a href="#" class="list__link px-3">
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
-          <p><span class="d-md-inline d-none">購物車</span> (0)</p>
+          <p><span class="d-md-inline d-none">購物車</span> (5)</p>
         </a>
         <!-- popover -->
         <Popover />
@@ -39,7 +39,7 @@
       </li>
       <!-- Sidebar 開關 -->
       <li class="list__item ml-md-1">
-        <a href="#" class="list__link menu-link px-3" @click="sidebarToggle">
+        <a href="#" class="list__link menu-link px-3" @click.prevent="sidebarToggle">
           <Hamburger />
         </a>
       </li>

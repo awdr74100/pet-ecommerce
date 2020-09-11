@@ -19,7 +19,8 @@
         flex: 0 0 auto;
 
         &:hover .popover {
-          max-height: 500px;
+          opacity: 1;
+          pointer-events: auto;
         }
       }
     }

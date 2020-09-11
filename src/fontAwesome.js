@@ -29,6 +29,7 @@ import {
   faExchangeAlt,
   faShoppingCart,
   faSearch,
+  faCartArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -61,6 +62,7 @@ const icons = [
   faExchangeAlt,
   faShoppingCart,
   faSearch,
+  faCartArrowDown,
 ];
 
 library.add(...icons);
