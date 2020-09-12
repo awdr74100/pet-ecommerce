@@ -51,10 +51,7 @@
     display: flex;
     align-items: stretch;
     transition: all 0.1s;
-
-    &:hover {
-      background-color: lighten(theme-color('gray'), 37%);
-    }
+    
     &:not(:last-child) {
       border-bottom: 1px dashed lighten(theme-color('gray'), 30%);
     }
