@@ -4,8 +4,11 @@
   left: 0px;
   right: 0px;
   z-index: 5;
+  transition: all 0.3s;
   @include desktop() {
-    left: 50%;
+    .openSidebar & {
+      left: 250px;
+    }
   }
 }
 
@@ -36,7 +39,7 @@
   min-height: 100vh;
   transition: padding-left 0.3s;
   @include desktop() {
-    padding-top: 0px;
+    padding-top: 42px;
 
     .openSidebar & {
       padding-left: 250px;

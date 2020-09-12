@@ -51,7 +51,7 @@
     display: flex;
     align-items: stretch;
     transition: all 0.1s;
-    
+
     &:not(:last-child) {
       border-bottom: 1px dashed lighten(theme-color('gray'), 30%);
     }

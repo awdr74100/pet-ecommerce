@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid px-0" :class="{ openSidebar: openSidebar }">
-    <div class="header-layout">
+    <div class="header-layout bg-white shadow">
       <Header />
     </div>
     <div class="sidebar-layout bg-white shadow-right">

@@ -21,6 +21,13 @@
   margin-right: -($gutter-width / 2);
 }
 
+.row-sm {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -($gutter-width / 2 - 5);
+  margin-right: -($gutter-width / 2 - 5);
+}
+
 .no-gutters {
   margin-left: 0px;
   margin-right: 0px;
