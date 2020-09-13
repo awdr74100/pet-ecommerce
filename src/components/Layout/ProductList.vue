@@ -7,22 +7,8 @@
     <!-- product list -->
     <div class="p-3 pt-0">
       <ul class="row-sm">
-        <li class="col-md-3 px-2 mt-4" v-for="index in 12" :key="index">
-          <div class="product text-secondary p-3">
-            <div class="product__img"></div>
-            <p class="product__title mt-3">
-              海洋之星FISH4CATS 鮭魚無麩質低敏配方400g、全貓ergergegergergerg
-            </p>
-            <div class="product__category text-gray d-flex align-items-center mt-2">
-              <span><font-awesome-icon :icon="['fas', 'tag']"/></span>
-              <p class="ml-1">品牌貓飼料</p>
-            </div>
-            <div class="d-flex align-items-end justify-content-end mt-2">
-              <p class="product__origin-price">$1,180</p>
-              <p class="product__price text-primary ml-2"><span class="dollar">$</span>1,160</p>
-            </div>
-            <!-- <button class="btn btn--primary mt-2">加入購物車</button> -->
-          </div>
+        <li class="col-md-3 px-2 mt-4" v-for="index in 5" :key="index">
+          <ProductCard />
         </li>
       </ul>
     </div>
@@ -35,16 +21,18 @@
 
 <script>
 import ProductPanel from '@/components/Layout/ProductPanel.vue';
+import ProductCard from '@/components/Layout/ProductCard.vue';
 import Pagination from '@/components/common/Pagination.vue';
 
 export default {
   components: {
     ProductPanel,
+    ProductCard,
     Pagination,
   },
   data() {
     return {
-      row: 12, // can import dropdown component
+      row: 12, // use with the dropdown component
       page: 1,
       sortTarget: 'created_at',
       sortMode: 'down',

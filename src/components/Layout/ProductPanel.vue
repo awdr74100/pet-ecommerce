@@ -1,5 +1,5 @@
 <template>
-  <div class="product-panel text-secondary p-md-1 p-0">
+  <div class="product-panel text-secondary p-md-2 p-0">
     <div
       class="product-panel__tab ml-md-2"
       :class="{ 'product-panel__tab--active': sortTarget === 'created_at' }"
@@ -33,7 +33,11 @@
       class="product-panel__dropdown bg-white ml-md-2 py-2 d-md-flex d-none"
       @click="dropdownToggle"
     >
-      <p class="ml-3" :class="{ 'text-primary': text }">{{ text || '價格' }}</p>
+      <p class="ml-3" :class="{ 'text-primary': sortTarget === 'price' }">
+        {{
+          sortTarget === 'price' ? (sortMode === 'down' ? '價格：高到低' : '價格：低到高') : '價格'
+        }}
+      </p>
       <span class="icon ml-auto mr-3" :class="{ 'icon--rotate': dropdownActive }">
         <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
       </span>
@@ -60,7 +64,6 @@ export default {
   data() {
     return {
       dropdownActive: false,
-      text: '',
       sortTarget: 'created_at',
       sortMode: 'down',
     };
@@ -73,17 +76,16 @@ export default {
       if (e.target.tagName !== 'LI') return;
       const text = e.target.textContent.trim();
       if (text === '價格：低到高') {
-        this.sortToggle('price', 'up', '價格：低到高');
+        this.sortToggle('price', 'up');
         this.dropdownActive = !this.dropdownActive;
         return;
       }
-      this.sortToggle('price', 'down', '價格：高到低');
+      this.sortToggle('price', 'down');
       this.dropdownActive = !this.dropdownActive;
     },
-    sortToggle(target, mode = 'down', text = '') {
+    sortToggle(target, mode = 'down') {
       this.sortTarget = target;
       this.sortMode = mode;
-      this.text = text;
       this.$emit('callSortToggle', { sortTarget: this.sortTarget, sortMode: this.sortMode });
     },
   },

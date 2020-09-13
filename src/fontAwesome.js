@@ -1,4 +1,5 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { faGithub, faBloggerB } from '@fortawesome/free-brands-svg-icons';
 import {
   faEye,
   faEyeSlash,
@@ -30,6 +31,7 @@ import {
   faShoppingCart,
   faSearch,
   faCartArrowDown,
+  faCube,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -63,6 +65,9 @@ const icons = [
   faShoppingCart,
   faSearch,
   faCartArrowDown,
+  faGithub,
+  faBloggerB,
+  faCube,
 ];
 
 library.add(...icons);

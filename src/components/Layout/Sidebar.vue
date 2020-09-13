@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <nav class="sidebar">
     <div class="py-2 shadow">
       <router-link to="/" class="sidebar__logo" @click.native="sidebarToggle"></router-link>
     </div>
@@ -165,7 +165,7 @@
         <p>Copyright © 2020 Roya</p>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>

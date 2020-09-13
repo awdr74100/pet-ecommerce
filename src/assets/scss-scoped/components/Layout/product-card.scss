@@ -1,0 +1,45 @@
+.product-card {
+  display: block;
+  text-decoration: none;
+  border: 1px solid lighten(theme-color('gray'), 30%);
+  border-radius: 4px;
+  box-shadow: 0 0 54px -24px rgba(190, 190, 190, 0.5);
+  transition: all 0.3s;
+  @include desktop() {
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 54px -24px rgba(73, 73, 73, 0.5);
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 200px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url('https://storage.googleapis.com/vue-course-api.appspot.com/roya%2F1568791356178.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=p6cQs4AXFtFB7HZ2UuxKv9aWa7Jem2LH%2F4obfgm4w5FyJiZot5nskGdDGr%2FtyxYt7m1mfxgwWY84fTSqD%2F7Yv5gj7IibFYiOb3rAInuRITC%2BPPrMCEn10SpHYjxu8%2FNOqULXm%2BVzB2Hsv8lV1TLHWQauppNk%2FsytL3Oy3cG1FAdT56KQ03niqXVrVr2JCysM3qhJE%2FynLmeuDjkONYbnmxfJL7u36MZvLLf2DSX7EisDvSzvr7SRW3MdJO84zOIxVkKXLJ8ttGfaHQVCiJkCfN2ru3tmoFbxVVgh%2BFCUB8Ifb6yXPFngdiQNCS1RDwDJP4a4eHabsO2T8QiuSUVTpQ%3D%3D');
+  }
+  &__title {
+    color: darken(theme-color('secondary'), 4%);
+    @include text-ellipsis(2);
+    font-size: 15px;
+    min-height: 38px;
+  }
+  &__category,
+  &__stock {
+    font-size: 14px;
+  }
+  &__origin-price {
+    color: lighten(theme-color('gray'), 10%);
+    font-size: 14px;
+    text-decoration: line-through;
+  }
+  &__price {
+    font-size: 18px;
+
+    .dollar {
+      font-size: 14px;
+    }
+  }
+}
