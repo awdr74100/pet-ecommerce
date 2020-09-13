@@ -1,5 +1,5 @@
 <template>
-  <a href="#" class="product-card text-secondary p-3">
+  <router-link to="/product/wdww" class="product-card text-secondary p-3">
     <div class="product-card__img"></div>
     <p class="product-card__title mt-3">
       海洋之星FISH4CATS 鮭魚無麩質低敏配方400g、全貓ergergegergergerg
@@ -17,7 +17,7 @@
       <p class="product-card__origin-price">$1,180</p>
       <p class="product-card__price text-primary ml-2"><span class="dollar">$</span>1,160</p>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>

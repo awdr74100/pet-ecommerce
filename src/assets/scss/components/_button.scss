@@ -20,6 +20,12 @@
   &--lg {
     padding: 8px 10px;
   }
+  &--xl {
+    padding: 8px 26px;
+    @include desktop() {
+      padding: 8px 36px;
+    }
+  }
   &--transparent {
     border: 1px solid lighten(theme-color('gray'), 30%);
     background-color: transparent;

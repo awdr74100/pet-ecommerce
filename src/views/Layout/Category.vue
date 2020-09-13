@@ -1,7 +1,7 @@
 <template>
-  <div class="container min-height d-flex flex-column mt-3">
-    <div class="row no-gutters bg-white shadow mb-auto">
-      <main>
+  <div class="container h-100 d-flex flex-column">
+    <div class="row no-gutters bg-white shadow mb-auto mt-3">
+      <main class="w-100">
         <ProductList />
       </main>
     </div>
@@ -22,9 +22,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.min-height {
-  min-height: calc(100% - 15px);
-}
-</style>

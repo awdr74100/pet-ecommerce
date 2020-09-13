@@ -1,5 +1,5 @@
 <template>
-  <div class="product-list">
+  <div class="product-list text-secondary">
     <!-- product panel -->
     <div class="p-3 pb-2">
       <ProductPanel @callSortToggle="sortToggle" />
@@ -7,7 +7,7 @@
     <!-- product list -->
     <div class="p-3 pt-0">
       <ul class="row-sm">
-        <li class="col-md-3 px-2 mt-4" v-for="index in 5" :key="index">
+        <li class="col-md-3 px-2 mt-4" v-for="index in 12" :key="index">
           <ProductCard />
         </li>
       </ul>

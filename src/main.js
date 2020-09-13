@@ -15,6 +15,7 @@ import store from './store';
 import './fontAwesome';
 import './validation';
 import datetime from './filter/datetime';
+import currency from './filter/currency';
 
 Vue.use(VueAxios, axios);
 Vue.use(VModal);
@@ -22,6 +23,7 @@ Vue.use(Skeleton);
 Vue.use(VueProgressBar, { color: '#4bb36e', thickness: '3px' });
 
 Vue.filter('datetime', datetime);
+Vue.filter('currency', currency);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('date-picker', DatePicker);
