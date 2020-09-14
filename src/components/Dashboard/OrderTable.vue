@@ -1,5 +1,5 @@
 <template>
-  <div class="order-table">
+  <div class="order-table w-100">
     <!-- order panel -->
     <div class="p-4">
       <OrderPanel @callSearch="search" @callSearchReset="searchReset" />

@@ -72,7 +72,6 @@
     }
     &__title {
       color: darken(theme-color('secondary'), 4%);
-      font-weight: 600;
       @include text-ellipsis(1);
       font-size: 14px;
     }

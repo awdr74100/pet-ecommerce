@@ -16,10 +16,10 @@
       </li>
       <!-- 購物車 -->
       <li class="list__item ml-md-1">
-        <a href="#" class="list__link px-3">
+        <router-link to="/cart" class="list__link px-3">
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
           <p><span class="d-md-inline d-none">購物車</span> (5)</p>
-        </a>
+        </router-link>
         <!-- popover -->
         <Popover />
       </li>

@@ -50,6 +50,16 @@ const routes = [
         name: 'Contact',
         component: () => import('@/views/Layout/Contact.vue'),
       },
+      {
+        path: 'cart',
+        name: 'Cart',
+        component: () => import('@/views/Layout/Cart.vue'),
+      },
+      {
+        path: 'checkout',
+        name: 'Checkout',
+        component: () => import('@/views/Layout/Checkout.vue'),
+      },
     ],
   },
   {

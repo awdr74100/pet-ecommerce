@@ -1,5 +1,5 @@
 <template>
-  <div class="product-table">
+  <div class="product-table w-100">
     <!-- product panel -->
     <div class="p-4">
       <ProductPanel @callSearch="search" @callSearchReset="searchReset" />
@@ -31,7 +31,7 @@
                   :disabled="sortAndSliceProducts.length === 0"
                 />
               </th>
-              <th style="min-width:260px;width:100%">商品名稱</th>
+              <th style="min-width:260px" class="w-100">商品名稱</th>
               <th style="min-width:95px" data-sort="true" @click="sortToggle('origin_price')">
                 <div class="d-flex align-items-center">
                   <p>原價</p>
@@ -98,7 +98,7 @@
                 <td><PuSkeleton height="16px" /></td>
                 <td class="d-flex align-items-center">
                   <div style="flex: 0 0 56px"><PuSkeleton height="56px" /></div>
-                  <div class="ml-3" style="width:100%">
+                  <div class="ml-3 w-100">
                     <p class="mb-1"><PuSkeleton /></p>
                     <p style="max-width:160px"><PuSkeleton /></p>
                   </div>
@@ -177,10 +177,10 @@
       <div class="d-flex align-items-center text-secondary">
         <div class="align-items-center ml-3 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
-          <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部商品</label>
+          <label for="selectAll" class="pl-3 cursor-pointer">選擇本頁全部商品</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
-          <p class="d-md-inline d-none">已選擇 {{ selected.length }} 個商品</p>
+          <p class="d-md-inline d-none">已選擇 {{ selected.length }} 件商品</p>
           <button
             class="btn btn--transparent btn--sm ml-3"
             @click.prevent="openModal('delete-product-modal', undefined, selected, undefined)"

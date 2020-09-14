@@ -1,5 +1,5 @@
 <template>
-  <div class="coupon-table">
+  <div class="coupon-table w-100">
     <!-- section -->
     <div class="d-flex align-items-center p-4 pb-1">
       <p class="font-l text-secondary mr-auto">{{ filterCoupons.length }} 張優惠卷</p>
@@ -160,7 +160,7 @@
       <div class="d-flex align-items-center text-secondary">
         <div class="align-items-center ml-3 d-none d-md-flex">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
-          <label for="selectAll" class="ml-3 cursor-pointer">選擇本頁全部優惠卷</label>
+          <label for="selectAll" class="pl-3 cursor-pointer">選擇本頁全部優惠卷</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p class="d-md-inline d-none">已選擇 {{ selected.length }} 張優惠卷</p>

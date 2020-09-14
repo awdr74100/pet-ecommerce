@@ -82,7 +82,7 @@
                 <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
               </button>
               <input type="number" class="product-detail__input" min="0" v-model.number="qty" />
-              <button class="btn  product-detail__btn right" @click.prevent="adjustQty('add')">
+              <button class="btn product-detail__btn right" @click.prevent="adjustQty('add')">
                 <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
               </button>
               <span class="product-detail__stock ml-3">還剩 1 件</span>

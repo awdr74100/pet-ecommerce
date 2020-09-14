@@ -29,7 +29,12 @@
         </ul>
         <div class="popover__footer d-flex align-items-end p-3">
           <p>總計：<span class="text-primary">$785</span></p>
-          <button class="btn btn--primary btn--sm ml-auto">查看並結帳</button>
+          <button
+            class="btn btn--primary btn--sm ml-auto"
+            @click.prevent="$router.push({ path: '/cart' })"
+          >
+            查看我的購物車
+          </button>
         </div>
       </template>
       <template v-else>
