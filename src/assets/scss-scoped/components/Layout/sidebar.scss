@@ -1,7 +1,6 @@
 .sidebar {
   color: theme-color('secondary');
   display: flex;
-  height: 100%;
   flex-direction: column;
 
   &__logo {
@@ -12,6 +11,23 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 1;
+  }
+  &__nav {
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: lighten(theme-color('gray'), 26%);
+    }
+    &:hover::-webkit-scrollbar {
+      width: 8px;
+    }
   }
   &__input {
     border: 1px solid lighten(theme-color('gray'), 30%);
@@ -97,9 +113,11 @@
     font-size: 14px;
   }
   .arrow {
-    margin-top: 4px;
-    transition: all 0.3s;
+    display: inline-block;
+    margin-top: 3px;
+    transition: transform 0.3s;
     font-size: 14px;
+    margin-left: 73px; // can't use ml-auto
 
     &--rotate {
       transform: rotate(180deg);

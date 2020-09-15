@@ -175,9 +175,12 @@
     <!-- batch action -->
     <div class="batch mt-3" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
-        <div class="align-items-center ml-3 d-none d-md-flex">
+        <div class="d-flex align-items-center ml-3">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
-          <label for="selectAll" class="pl-3 cursor-pointer">選擇本頁全部商品</label>
+          <label for="selectAll" class="pl-3 cursor-pointer d-md-inline d-none"
+            >選擇本頁全部商品</label
+          >
+          <label for="selectAll" class="pl-3 cursor-pointer d-md-none d-inline">全選</label>
         </div>
         <div class="d-flex align-items-center ml-auto">
           <p class="d-md-inline d-none">已選擇 {{ selected.length }} 件商品</p>

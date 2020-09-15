@@ -91,7 +91,7 @@
               <button class="btn btn--transparent btn--xl">加入購物車</button>
               <button class="btn btn--primary btn--xl ml-3">直接購買</button>
             </div>
-            <div class="br"></div>
+            <div class="hr"></div>
           </div>
         </div>
       </div>

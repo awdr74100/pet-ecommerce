@@ -3,7 +3,6 @@ $grid-sum: 12;
 $grid-breakpoints: (
   '': false,
   'md': 768px,
-  // 'lg': 992px,
 );
 
 $spacies: (
@@ -12,8 +11,8 @@ $spacies: (
   '2': 10px,
   '3': 15px,
   '4': 20px,
-  "5": 30px,
-  "6": 60px,
+  '5': 30px,
+  '6': 60px,
   'auto': auto,
 );
 
@@ -26,6 +25,7 @@ $theme-colors: (
   'white': #fff,
   'danger': #e73c3c,
   'success': #47ae74,
-  'warning': #f6b654,
+  'warning': #f6a700,
+  'info': #0055aa,
   'gray': #979797,
 );

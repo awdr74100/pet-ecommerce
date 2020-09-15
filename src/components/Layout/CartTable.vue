@@ -1,7 +1,7 @@
 <template>
   <div class="cart-table">
     <!-- table -->
-    <div class="p-4">
+    <div class="p-3">
       <!-- (head, body) -->
       <div class="table-responsive">
         <table class="table text-secondary">
@@ -10,7 +10,7 @@
               <th style="min-width:40px">
                 <input type="checkbox" class="checkbox m-0" />
               </th>
-              <th style="min-width:400px" class="w-100">商品</th>
+              <th style="min-width:320px" class="w-100">商品</th>
               <th style="min-width:140px">單價</th>
               <th style="min-width:200px">數量</th>
               <th style="min-width:140px">總計</th>
@@ -60,6 +60,47 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <!-- footer -->
+    <div class="footer mt-3">
+      <div class="d-flex align-items-center justify-content-end py-3">
+        <p class="footer__message text-info d-md-inline d-none mr-4">
+          慶祝開幕，輸入折扣碼「sdf9fwef7」，即享有全館商品9折優惠
+        </p>
+        <div class="d-flex align-items-center footer__group">
+          <input type="text" class="footer__input" placeholder="輸入優惠卷代碼" />
+          <button class="btn btn--secondary footer__btn">確定</button>
+        </div>
+      </div>
+      <div class="footer__hr"></div>
+      <div class="d-flex align-items-center justify-content-end py-3">
+        <div class="d-flex flex-column align-items-end">
+          <div class="d-flex align-items-center text-secondary">
+            <span class="d-md-inline d-none">購買總金額 (2 件商品)：</span>
+            <span class="d-md-none d-inline">2 個商品：</span>
+            <span class="footer__total mr-2">$1,300</span>
+            <span class="footer__f-total text-primary">$1,100</span>
+          </div>
+          <span class="text-warning footer__message mt-1">已將優惠卷套用至購物車</span>
+        </div>
+        <button class="btn btn--primary py-md-2 px-md-5 p-2 ml-3">
+          <p><span class="d-md-inline d-none">前往</span>結帳</p>
+        </button>
+      </div>
+      <template v-if="true">
+        <div class="footer__hr"></div>
+        <div class="d-flex align-items-center text-secondary py-3">
+          <div class="d-flex align-items-center ml-3">
+            <input type="checkbox" class="checkbox m-0" id="selectAll" />
+            <label for="selectAll" class="pl-2 cursor-pointer">全選</label>
+          </div>
+          <div class="d-flex align-items-center ml-auto">
+            <p class="d-md-inline d-none">已選擇 3 件商品</p>
+            <button class="btn btn--transparent btn--sm ml-3">清空</button>
+            <button class="btn btn--primary btn--sm ml-3">刪除</button>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </template>

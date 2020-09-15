@@ -20,13 +20,9 @@
   transition: transform 0.3s;
   transform: translateX(-250px);
   z-index: 15;
-  overflow: auto;
 
   .openSidebar & {
     transform: translateX(0px);
-  }
-  &::-webkit-scrollbar {
-    display: none;
   }
 }
 
