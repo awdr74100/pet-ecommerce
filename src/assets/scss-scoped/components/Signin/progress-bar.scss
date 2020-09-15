@@ -15,7 +15,7 @@
     height: 4px;
     width: 50%;
     background-color: theme-color('primary');
-    animation: progress 1s infinite linear;
+    animation: progress 1s infinite ease-in-out;
   }
 }
 

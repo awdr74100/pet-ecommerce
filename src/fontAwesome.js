@@ -33,6 +33,7 @@ import {
   faSearch,
   faCartArrowDown,
   faCube,
+  faPen,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -70,6 +71,7 @@ const icons = [
   faGithub,
   faBloggerB,
   faCube,
+  faPen,
 ];
 
 library.add(...icons);

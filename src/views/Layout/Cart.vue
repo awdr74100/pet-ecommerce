@@ -2,7 +2,7 @@
   <div class="container h-100 d-flex flex-column">
     <div class="row no-gutters bg-white shadow mb-auto mt-3">
       <main class="w-100">
-        <CartTable />
+        <CartDetail />
       </main>
     </div>
     <div class="row no-gutters bg-white shadow mt-3">
@@ -13,12 +13,12 @@
 
 <script>
 import Footer from '@/components/Layout/Footer.vue';
-import CartTable from '@/components/Layout/CartTable.vue';
+import CartDetail from '@/components/Layout/CartDetail.vue';
 
 export default {
   components: {
     Footer,
-    CartTable,
+    CartDetail,
   },
 };
 </script>

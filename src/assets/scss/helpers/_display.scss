@@ -6,6 +6,10 @@
   display: flex !important;
 }
 
+.d-block {
+  display: block;
+}
+
 .d-md-inline {
   @include desktop() {
     display: inline !important;

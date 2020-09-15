@@ -6,7 +6,7 @@
     <div class="py-2 px-5 shadow d-block d-md-none">
       <input type="text" class="sidebar__input px-2 py-1" placeholder="找商品" />
     </div>
-    <nav class="sidebar__nav w-100 h-100">
+    <nav class="sidebar__nav w-100 flex-1">
       <div class="py-2 shadow">
         <ul>
           <li>
@@ -162,7 +162,7 @@
         </ul>
       </div>
       <div class="py-2 mb-2 text-gray mt-auto">
-        <div class="copyright d-flex justify-content-center align-items-center">
+        <div class="copyright ml-5 d-flex align-items-center">
           <p>Copyright © 2020 Roya</p>
         </div>
       </div>
