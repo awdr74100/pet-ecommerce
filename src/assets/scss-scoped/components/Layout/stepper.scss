@@ -3,20 +3,28 @@
   align-items: center;
   justify-content: space-between;
   @media screen and (min-width: 992px) {
-    padding: 0px 150px;
+    padding: 0px 180px;
   }
 
   &__item {
     position: relative;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background-color: theme-color('secondary');
     color: theme-color('white');
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    font-size: 16px;
+
+    &--active {
+      background-color: theme-color('primary');
+
+      .stepper__text {
+        color: theme-color('primary');
+      }
+    }
   }
   &__line {
     flex: 1;

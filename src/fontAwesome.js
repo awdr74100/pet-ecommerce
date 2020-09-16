@@ -6,6 +6,7 @@ import {
   faBell,
   faEdit,
   faTrashAlt,
+  faMoneyBillAlt,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
@@ -34,6 +35,10 @@ import {
   faCartArrowDown,
   faCube,
   faPen,
+  faShippingFast,
+  faMoneyBillWave,
+  faMoneyCheck,
+  faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -59,9 +64,7 @@ const icons = [
   faArrowDown,
   faDollarSign,
   faCheck,
-  faUserCircle,
   faTimes,
-  faLock,
   faBan,
   faExclamation,
   faExchangeAlt,
@@ -72,6 +75,11 @@ const icons = [
   faBloggerB,
   faCube,
   faPen,
+  faShippingFast,
+  faMoneyBillWave,
+  faMoneyBillAlt,
+  faMoneyCheck,
+  faUserEdit,
 ];
 
 library.add(...icons);

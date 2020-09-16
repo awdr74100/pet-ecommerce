@@ -21,7 +21,9 @@
     padding: 8px 10px;
   }
   &--xl {
-    padding: 8px 26px;
+    padding: 8px 36px;
+  }
+  &-md--xl {
     @include desktop() {
       padding: 8px 36px;
     }

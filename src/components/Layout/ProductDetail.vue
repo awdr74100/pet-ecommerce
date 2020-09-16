@@ -30,8 +30,8 @@
               <li class="item py-1">DL-蛋氨酸添加，保護泌尿道健康</li>
               <li class="item py-1">有機濃縮海藻促進及加強組織的修復與再生，紓緩皮</li>
             </ul>
-            <div class="product-detail__dropdown mb-2" @click="dropdownToggle">
-              <div class="d-flex align-items-center cursor-pointer py-2">
+            <div class="product-detail__dropdown mb-2">
+              <div class="d-flex align-items-center cursor-pointer py-2" @click="dropdownToggle">
                 <p class="text-gray">付款與運送</p>
                 <span class="icon text-gray ml-auto" :class="{ 'icon--rotate': dropdownActive }">
                   <font-awesome-icon :icon="['fas', 'angle-down']" />
@@ -68,7 +68,7 @@
                       <p>黑貓宅急便</p>
                       <span class="ml-auto">$120</span>
                     </div>
-                    <p class="text-graydate date">預計到貨時間9月15日 - 9月17日</p>
+                    <p class="text-gray date">預計到貨時間9月15日 - 9月17日</p>
                   </li>
                 </ul>
               </div>
@@ -88,8 +88,8 @@
               <span class="product-detail__stock ml-3">還剩 1 件</span>
             </div>
             <div class="d-flex align-items-center mb-5">
-              <button class="btn btn--transparent btn--xl">加入購物車</button>
-              <button class="btn btn--primary btn--xl ml-3">直接購買</button>
+              <button class="btn btn--transparent btn-md--xl btn--lg">加入購物車</button>
+              <button class="btn btn--primary btn-md--xl btn--lg ml-3">直接購買</button>
             </div>
             <div class="hr"></div>
           </div>

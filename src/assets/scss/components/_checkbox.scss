@@ -13,6 +13,7 @@
   }
   &:disabled {
     cursor: not-allowed;
+    background-color: darken(theme-color('white'), 4%);
   }
   &:checked::before {
     content: '';
