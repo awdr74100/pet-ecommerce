@@ -2,36 +2,51 @@
   <ul class="stepper w-100 text-secondary mb-md-6 mb-3  mt-2">
     <li
       class="stepper__item mr-2"
-      :class="{ 'stepper__item--active': step === 'write' || steps.includes('write') }"
+      :class="{ 'stepper__item--active': step === 'write' || stepFinsh.includes('write') }"
     >
-      <span v-if="steps.includes('write')"><font-awesome-icon :icon="['fas', 'check']"/></span>
+      <span v-if="stepFinsh.includes('write')"><font-awesome-icon :icon="['fas', 'check']"/></span>
       <span v-else><font-awesome-icon :icon="['fas', 'pen']"/></span>
       <p class="stepper__text">填寫訂購資料</p>
     </li>
     <li class="stepper__line"></li>
     <li
       class="stepper__item mx-2"
-      :class="{ 'stepper__item--active': step === 'created' || steps.includes('created') }"
+      :class="{ 'stepper__item--active': step === 'created' || stepFinsh.includes('created') }"
     >
-      <span v-if="steps.includes('created')"><font-awesome-icon :icon="['fas', 'check']"/></span>
+      <span v-if="stepFinsh.includes('created')">
+        <font-awesome-icon :icon="['fas', 'check']" />
+      </span>
       <span v-else><font-awesome-icon :icon="['fas', 'file-alt']"/></span>
       <p class="stepper__text">已建立訂單</p>
     </li>
+    <!-- cancelled -->
+    <template v-if="step === 'cancelled'">
+      <li class="stepper__line"></li>
+      <li class="stepper__item stepper__item--cancel mx-2">
+        <span><font-awesome-icon :icon="['fas', 'times']"/></span>
+        <p class="stepper__text">已取消訂單</p>
+      </li>
+    </template>
+    <!-- // -->
     <li class="stepper__line"></li>
     <li
       class="stepper__item mx-2"
-      :class="{ 'stepper__item--active': step === 'paid' || steps.includes('paid') }"
+      :class="{ 'stepper__item--active': step === 'paid' || stepFinsh.includes('paid') }"
     >
-      <span v-if="steps.includes('paid')"><font-awesome-icon :icon="['fas', 'check']"/></span>
+      <span v-if="stepFinsh.includes('paid')"><font-awesome-icon :icon="['fas', 'check']"/></span>
       <span v-else><font-awesome-icon :icon="['fas', 'money-bill-wave']"/></span>
       <p class="stepper__text">付款成功</p>
     </li>
-    <li class="stepper__line"></li>
+    <li class="stepper__line">
+      <span class="loading" v-if="step === 'paid'">
+        <font-awesome-icon :icon="['fas', 'spinner']" spin />
+      </span>
+    </li>
     <li
       class="stepper__item ml-2"
-      :class="{ 'stepper__item--active': step === 'toship' || steps.includes('toship') }"
+      :class="{ 'stepper__item--active': step === 'toship' || stepFinsh.includes('toship') }"
     >
-      <span v-if="steps.includes('toship')"><font-awesome-icon :icon="['fas', 'check']"/></span>
+      <span v-if="stepFinsh.includes('toship')"><font-awesome-icon :icon="['fas', 'check']"/></span>
       <span v-else><font-awesome-icon :icon="['fas', 'shipping-fast']"/></span>
       <p class="stepper__text">準備出貨中</p>
     </li>
@@ -42,7 +57,7 @@
 export default {
   props: {
     step: String,
-    steps: Array,
+    stepFinsh: Array,
   },
 };
 </script>

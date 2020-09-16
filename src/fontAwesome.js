@@ -39,6 +39,7 @@ import {
   faMoneyBillWave,
   faMoneyCheck,
   faUserEdit,
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -80,6 +81,7 @@ const icons = [
   faMoneyBillAlt,
   faMoneyCheck,
   faUserEdit,
+  faSpinner,
 ];
 
 library.add(...icons);

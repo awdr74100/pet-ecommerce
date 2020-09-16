@@ -25,8 +25,16 @@
         color: theme-color('primary');
       }
     }
+    &--cancel {
+      background-color: theme-color('danger');
+
+      .stepper__text {
+        color: theme-color('danger');
+      }
+    }
   }
   &__line {
+    position: relative;
     flex: 1;
     height: 1px;
     background-color: lighten(theme-color('gray'), 20%);
@@ -41,5 +49,13 @@
     @media screen and (min-width: 992px) {
       display: inline;
     }
+  }
+  .loading {
+    padding: 10px;
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: theme-color('white');
   }
 }
