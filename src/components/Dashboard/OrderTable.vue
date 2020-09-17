@@ -166,7 +166,7 @@
         </div>
         <!-- pagination component -->
         <div class="ml-3">
-          <Pagination :length="33" :row="row" @callPageToggle="pageToggle" />
+          <Pagination :length="33" :row="row" :resetKey="resetKey" @callPageToggle="pageToggle" />
         </div>
       </div>
     </div>
@@ -191,6 +191,7 @@ export default {
       searchTarget: '',
       searchTargetValue: '',
       searchDateRange: [],
+      resetKey: Date.now(),
     };
   },
   methods: {
@@ -210,6 +211,10 @@ export default {
       this.searchTarget = '';
       this.searchTargetValue = '';
       this.searchDateRange = [];
+    },
+    paginationReset() {
+      this.resetKey = Date.now();
+      this.page = 1;
     },
   },
 };

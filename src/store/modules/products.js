@@ -18,14 +18,17 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts');
+        dispatch('getProducts', { role: 'admin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async getProducts({ dispatch, commit }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
+    async getProducts({ dispatch, commit }, { role }) {
+      let url = `${process.env.VUE_APP_BASE_URL}/api/products`;
+      if (role === 'admin') {
+        url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
+      }
       const root = { root: true };
       commit('SKELETONTOGGLE', true, root);
       try {
@@ -35,6 +38,22 @@ export default {
           return;
         }
         commit('GETPRODUCTS', data.products);
+        commit('SKELETONTOGGLE', false, root);
+      } catch (error) {
+        dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
+      }
+    },
+    async getProduct({ dispatch, commit }, { productId }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/products/${productId}`;
+      const root = { root: true };
+      commit('SKELETONTOGGLE', true, root);
+      try {
+        const { data } = await axios.get(url);
+        if (!data.success) {
+          dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
+          return;
+        }
+        commit('GETPRODUCT', data.product);
         commit('SKELETONTOGGLE', false, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -50,7 +69,7 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts');
+        dispatch('getProducts', { role: 'admin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -65,7 +84,7 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts');
+        dispatch('getProducts', { role: 'admin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -81,7 +100,7 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts');
+        dispatch('getProducts', { role: 'admin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);

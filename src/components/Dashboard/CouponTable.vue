@@ -151,7 +151,12 @@
         </div>
         <!-- pagination component -->
         <div class="ml-3">
-          <Pagination :length="filterCoupons.length" :row="row" @callPageToggle="pageToggle" />
+          <Pagination
+            :length="filterCoupons.length"
+            :row="row"
+            :resetKey="resetKey"
+            @callPageToggle="pageToggle"
+          />
         </div>
       </div>
     </div>
@@ -211,6 +216,7 @@ export default {
       sortMode: 'down',
       sortTarget: '',
       selected: [],
+      resetKey: Date.now(),
     };
   },
   methods: {
@@ -231,6 +237,10 @@ export default {
     },
     selectReset() {
       this.selected = [];
+    },
+    paginationReset() {
+      this.resetKey = Date.now();
+      this.page = 1;
     },
     openModal(modal, cache = {}, caches = [], isEnabled) {
       const cachesFilter = [];
@@ -275,6 +285,7 @@ export default {
     filterCoupons() {
       const vm = this;
       vm.selectReset(); // reset this.selected
+      vm.paginationReset(); // reset pagination page
       const { tab } = vm.$route.params;
       const coupons = [...vm.coupons]; // fix call by reference
       return coupons.filter((item) => {

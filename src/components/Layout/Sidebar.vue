@@ -183,7 +183,6 @@ export default {
     },
     sidebarToggle() {
       if (window.innerWidth >= 768) return;
-      console.log(this.$route.path);
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
     },

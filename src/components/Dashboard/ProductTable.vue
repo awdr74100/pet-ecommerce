@@ -133,8 +133,8 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ item.origin_price }}</td>
-                <td>{{ item.price }}</td>
+                <td>{{ item.origin_price | currency | dollar }}</td>
+                <td>{{ item.price | currency | dollar }}</td>
                 <td>{{ item.stock }}</td>
                 <td>{{ item.sales }}</td>
                 <td class="text-success" v-if="item.is_enabled">上架</td>
@@ -168,7 +168,12 @@
         </div>
         <!-- pagination component -->
         <div class="ml-3">
-          <Pagination :length="filterProducts.length" :row="row" @callPageToggle="pageToggle" />
+          <Pagination
+            :length="filterProducts.length"
+            :row="row"
+            :resetKey="resetKey"
+            @callPageToggle="pageToggle"
+          />
         </div>
       </div>
     </div>
@@ -211,7 +216,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 import ProductPanel from '@/components/Dashboard/ProductPanel.vue';
 import Dropdown from '@/components/common/Dropdown.vue';
@@ -235,6 +240,7 @@ export default {
       searchStockRange: [],
       searchSalesRange: [],
       selected: [],
+      resetKey: Date.now(),
     };
   },
   methods: {
@@ -270,6 +276,10 @@ export default {
     selectReset() {
       this.selected = [];
     },
+    paginationReset() {
+      this.resetKey = Date.now();
+      this.page = 1;
+    },
     openModal(modal, cache = {}, caches = [], isEnabled) {
       const cachesFilter = [];
       if (isEnabled !== undefined) {
@@ -284,7 +294,6 @@ export default {
         caches: cachesFilter.length > 0 ? cachesFilter : caches,
       });
     },
-    ...mapActions('products', ['getProducts']),
   },
   computed: {
     selectAll: {
@@ -313,6 +322,7 @@ export default {
     filterProducts() {
       const vm = this;
       vm.selectReset(); // reset this.selected
+      vm.paginationReset(); // reset pagination page
       const { tab } = vm.$route.params;
       const products = [...vm.products]; // fix call by reference
       // prettier-ignore
@@ -373,7 +383,7 @@ export default {
     ...mapState(['skeletonLoading']),
   },
   created() {
-    this.getProducts();
+    this.$store.dispatch('products/getProducts', { role: 'admin' });
   },
 };
 </script>

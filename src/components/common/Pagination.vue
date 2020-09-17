@@ -39,6 +39,7 @@ export default {
   props: {
     length: Number,
     row: Number,
+    resetKey: Number,
   },
   data() {
     return {
@@ -58,6 +59,9 @@ export default {
   },
   watch: {
     row() {
+      this.page = 1;
+    },
+    resetKey() {
       this.page = 1;
     },
   },

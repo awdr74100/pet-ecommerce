@@ -3,7 +3,7 @@
     <ul class="list p-md-1 p-0">
       <!-- 登入/註冊 -->
       <li class="list__item ml-md-1">
-        <a href="#" class="list__link px-3">
+        <router-link to="/signin" class="list__link px-3">
           <span class="icon icon-resize mr-1">
             <font-awesome-icon :icon="['fas', 'user-circle']" />
           </span>
@@ -12,7 +12,7 @@
             <span class="line"></span>
             <p>註冊</p>
           </div>
-        </a>
+        </router-link>
       </li>
       <!-- 購物車 -->
       <li class="list__item ml-md-1">
