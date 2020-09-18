@@ -6,6 +6,6 @@
     background-color: $value !important;
   }
   .border-#{$key} {
-    border: $value !important;
+    border-color: $value !important;
   }
 }

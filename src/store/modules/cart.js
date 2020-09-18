@@ -4,13 +4,14 @@ export default {
   strict: true,
   namespaced: true,
   state: {
-    product: {},
-    products: [],
+    cart: [],
+    total: 0,
+    final_total: 0,
   },
   actions: {
-    async addProduct({ dispatch }, { productData }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
-      const payload = { ...productData };
+    async addToCart({ dispatch }, { productId, qty }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/cart`;
+      const payload = { productId, qty };
       const root = { root: true };
       try {
         const { data } = await axios.post(url, payload);
@@ -18,50 +19,32 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts', { role: 'admin' });
+        dispatch('getCart');
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async getProducts({ dispatch, commit }, { role }) {
-      let url = `${process.env.VUE_APP_BASE_URL}/api/products`;
-      if (role === 'admin') {
-        url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
-      }
+    async getCart({ dispatch, commit }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/cart`;
       const root = { root: true };
-      commit('SKELETONACTIVE', 'products', root);
+      commit('SKELETONACTIVE', 'cart', root);
       try {
         const { data } = await axios.get(url);
         if (!data.success) {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        commit('GETPRODUCTS', data.products);
         commit('SKELETONACTIVE', '', root);
+        commit('GETCART', { cart: data.cart, total: data.total, finalTotal: data.final_total });
       } catch (error) {
+        console.log(error);
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async getProduct({ dispatch, commit }, { productId }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/products/${productId}`;
-      const root = { root: true };
-      commit('SKELETONACTIVE', 'product', root);
-      try {
-        const { data } = await axios.get(url);
-        if (!data.success) {
-          dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
-          return;
-        }
-        commit('GETPRODUCT', data.product);
-        commit('SKELETONACTIVE', '', root);
-      } catch (error) {
-        dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
-      }
-    },
-    async editProduct({ dispatch }, { productId, productData }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products/${productId}`;
-      const payload = { ...productData };
+    async updateCartItemQty({ dispatch }, { cartProductId, qty }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/cart/${cartProductId}`;
+      const payload = { qty };
       const root = { root: true };
       try {
         const { data } = await axios.patch(url, payload);
@@ -69,14 +52,14 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts', { role: 'admin' });
+        dispatch('getCart');
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async deleteProduct({ dispatch }, { productId }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products/${productId}`;
+    async removeFromCart({ dispatch }, { cartProductId }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/cart/${cartProductId}`;
       const root = { root: true };
       try {
         const { data } = await axios.delete(url);
@@ -84,23 +67,22 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts', { role: 'admin' });
+        dispatch('getCart');
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async changeProductStatus({ dispatch }, { productId, status }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/products/${productId}/is_enabled`;
-      const payload = { status };
+    async clearCart({ dispatch }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/cart`;
       const root = { root: true };
       try {
-        const { data } = await axios.patch(url, payload);
+        const { data } = await axios.delete(url);
         if (!data.success) {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getProducts', { role: 'admin' });
+        dispatch('getCart');
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -108,11 +90,10 @@ export default {
     },
   },
   mutations: {
-    GETPRODUCTS(state, products) {
-      state.products = products;
-    },
-    GETPRODUCT(state, product) {
-      state.product = product;
+    GETCART(state, { cart, total, finalTotal }) {
+      state.cart = cart;
+      state.total = total;
+      state.final_total = finalTotal;
     },
   },
 };

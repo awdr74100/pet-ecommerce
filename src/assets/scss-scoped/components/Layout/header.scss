@@ -39,7 +39,11 @@
       @include desktop() {
         min-height: 32px;
         border-radius: 4px;
-        border: 1px solid lighten(theme-color('gray'), 30%) !important;
+        border: 1px solid lighten(theme-color('gray'), 30%);
+
+        &.menu-link {
+          border-right: 1px solid lighten(theme-color('gray'), 30%) !important;
+        }
       }
 
       &.menu-link {
@@ -50,6 +54,15 @@
       }
       &:not(.search-link):hover {
         background-color: lighten(theme-color('gray'), 37%);
+      }
+      &--primary {
+        border-color: theme-color('primary');
+        background-color: theme-color('primary');
+        color: theme-color('white');
+
+        &:hover {
+          background-color: darken(theme-color('primary'), 8%) !important;
+        }
       }
     }
   }

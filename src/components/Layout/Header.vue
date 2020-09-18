@@ -2,7 +2,7 @@
   <header class="header">
     <ul class="list p-md-1 p-0">
       <!-- 登入/註冊 -->
-      <li class="list__item ml-md-1">
+      <li class="list__item ml-md-1" v-if="!isSignin">
         <router-link to="/signin" class="list__link px-3">
           <span class="icon icon-resize mr-1">
             <font-awesome-icon :icon="['fas', 'user-circle']" />
@@ -14,21 +14,28 @@
           </div>
         </router-link>
       </li>
+      <!-- 登出 -->
+      <li class="list__item ml-md-1" v-if="isSignin">
+        <a href="#" class="list__link list__link--primary px-3" @click.prevent="signout">
+          <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'sign-out-alt']"/></span>
+          <p class="d-md-inline d-none">登出</p>
+        </a>
+      </li>
       <!-- 購物車 -->
       <li class="list__item ml-md-1">
         <router-link to="/cart" class="list__link px-3">
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
-          <p><span class="d-md-inline d-none">購物車</span> (5)</p>
+          <p><span class="d-md-inline d-none">購物車</span> ({{ isSignin ? cart.length : 0 }})</p>
         </router-link>
         <!-- popover -->
         <Popover />
       </li>
       <!-- 訂單管理 -->
       <li class="list__item ml-md-1">
-        <a href="#" class="list__link px-3">
+        <router-link to="/orders" class="list__link px-3">
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'file-alt']"/></span>
           <p class="d-md-inline d-none">訂單管理</p>
-        </a>
+        </router-link>
       </li>
       <!-- 搜尋 -->
       <li class="list__item ml-md-1 d-md-flex d-none">
@@ -48,7 +55,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import Hamburger from '@/components/common/Hamburger.vue';
 import Popover from '@/components/Layout/Popover.vue';
@@ -63,12 +70,11 @@ export default {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
     },
+    ...mapActions('user', ['signout']),
   },
   computed: {
-    account() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
     ...mapState('user', ['isSignin']),
+    ...mapState('cart', ['cart']),
   },
 };
 </script>

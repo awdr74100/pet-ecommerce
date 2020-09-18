@@ -7,11 +7,13 @@
     <!-- product list -->
     <div class="p-3 pt-0">
       <ul class="row-sm">
-        <template v-if="skeletonLoading">
+        <!-- 骨架屏 -->
+        <template v-if="skeletonTarget === 'products'">
           <li class="col-md-3 px-2 mt-4" v-for="index in row" :key="index">
             <FakeProductCard />
           </li>
         </template>
+        <!-- 實體 -->
         <template v-else>
           <li class="col-md-3 px-2 mt-4" v-for="(item, index) in sortAndSliceProducts" :key="index">
             <ProductCard :item="item" />
@@ -94,7 +96,7 @@ export default {
         .slice(startItem, endItem);
     },
     ...mapState('products', ['products']),
-    ...mapState(['skeletonLoading']),
+    ...mapState(['skeletonTarget']),
   },
   created() {
     this.$store.dispatch('products/getProducts', { role: 'guest' });

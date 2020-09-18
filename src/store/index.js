@@ -7,20 +7,21 @@ import user from './modules/user';
 import image from './modules/image';
 import products from './modules/products';
 import coupons from './modules/coupons';
+import cart from './modules/cart';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     openSidebar: !(window.innerWidth < 768),
-    skeletonLoading: false,
+    skeletonTarget: '',
   },
   mutations: {
     SIDEBARTOGGLE(state, status) {
       state.openSidebar = status;
     },
-    SKELETONTOGGLE(state, status) {
-      state.skeletonLoading = status;
+    SKELETONACTIVE(state, target) {
+      state.skeletonTarget = target;
     },
   },
   modules: {
@@ -31,5 +32,6 @@ export default new Vuex.Store({
     image,
     products,
     coupons,
+    cart,
   },
 });

@@ -6,7 +6,97 @@
     </div>
     <!-- table -->
     <div class="p-3">
-      <CartTable :edit="false" :collapse="true" />
+      <div class="table-responsive">
+        <table class="table text-secondary">
+          <thead class="thead">
+            <tr>
+              <th style="min-width:320px" class="w-100">商品</th>
+              <th style="min-width:140px">單價</th>
+              <th style="min-width:200px">數量</th>
+              <th style="min-width:140px">總計</th>
+              <th style="min-width:95px" class="text-center">備註</th>
+            </tr>
+          </thead>
+          <tbody>
+            <template v-if="skeletonTarget === 'cart'">
+              <tr v-for="index in 2" :key="index">
+                <td class="d-flex align-items-center">
+                  <div style="flex: 0 0 70px"><PuSkeleton height="70px" /></div>
+                  <div class="ml-3 w-100">
+                    <p class="mb-1"><PuSkeleton /></p>
+                    <p style="max-width:160px"><PuSkeleton /></p>
+                  </div>
+                </td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+                <td><PuSkeleton /></td>
+              </tr>
+            </template>
+            <template v-else>
+              <tr v-for="(item, index) in collapseCart" :key="index">
+                <td>
+                  <div class="product">
+                    <div
+                      class="product__img"
+                      :style="{ 'background-image': `url('${item.product.imgUrl}')` }"
+                    ></div>
+                    <div class="product__content text-gray ml-3 mr-2">
+                      <p class="product__title">
+                        {{ item.product.title }}
+                      </p>
+                      <p class="mt-1">{{ item.product.category }}</p>
+                      <div class="d-flex align-items-center mt-auto" v-if="item.coupon">
+                        <span><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
+                        <p class="ml-1">{{ item.coupon.percent / 10 }} 折</p>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{{ item.product.price | currency | dollar }}</td>
+                <td>
+                  <div class="d-flex align-items-center text-secondary btn-group">
+                    <button class="btn btn-group__btn left" disabled>
+                      <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
+                    </button>
+                    <input type="number" class="btn-group__input" :value="item.qty" disabled />
+                    <button class="btn btn-group__btn right" disabled>
+                      <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
+                    </button>
+                  </div>
+                  <span class="stock d-block mt-1 text-primary" v-if="item.product.stock <= 5"
+                    >剩下 {{ item.product.stock }} 個商品</span
+                  >
+                </td>
+                <td>
+                  <span class="mr-2 line-through" v-if="item.coupon">{{
+                    item.total | currency | dollar
+                  }}</span>
+                  <span class="text-primary">{{ item.final_total | currency | dollar }}</span>
+                </td>
+                <td class="text-center">
+                  <p class="cursor-pointer text-center">
+                    <span>無</span>
+                  </p>
+                </td>
+              </tr>
+              <tr v-if="cart.length > 2">
+                <td class="text-center" colspan="5">
+                  <button class="btn btn--primary btn--xl" @click.prevent="collapse = !collapse">
+                    <div class="d-flex align-items-center">
+                      <p v-if="collapse">查看其餘 {{ cart.length - 2 }} 件商品</p>
+                      <p v-if="!collapse">摺疊購物車</p>
+                      <span class="icon ml-2" :class="{ 'icon--rotate': !collapse }">
+                        <font-awesome-icon :icon="['fas', 'angle-down']" />
+                      </span>
+                    </div>
+                  </button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
     </div>
     <!-- form / window -->
     <div class="p-3">
@@ -233,18 +323,19 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import Stepper from '@/components/Layout/Stepper.vue';
-import CartTable from '@/components/Layout/CartTable.vue';
 
 export default {
   components: {
     Stepper,
-    CartTable,
   },
   data() {
     return {
       step: 'write',
       stepFinsh: [],
+      collapse: true,
     };
   },
   methods: {
@@ -252,6 +343,14 @@ export default {
       this.stepFinsh.push(this.step);
       this.step = step;
     },
+  },
+  computed: {
+    collapseCart() {
+      if (this.collapse) return this.cart.slice(0, 2);
+      return this.cart;
+    },
+    ...mapState('cart', ['cart', 'total', 'final_total']),
+    ...mapState(['skeletonTarget']),
   },
 };
 </script>

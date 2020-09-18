@@ -93,7 +93,8 @@
             </tr>
           </thead>
           <tbody>
-            <template v-if="skeletonLoading">
+            <!-- 骨架屏 -->
+            <template v-if="skeletonTarget === 'products'">
               <tr v-for="index in row" :key="index">
                 <td><PuSkeleton height="16px" /></td>
                 <td class="d-flex align-items-center">
@@ -111,6 +112,7 @@
                 <td><PuSkeleton /></td>
               </tr>
             </template>
+            <!-- 實體 -->
             <template v-else>
               <tr v-for="(item, index) in sortAndSliceProducts" :key="index">
                 <td>
@@ -380,7 +382,7 @@ export default {
       return products.slice(startItem, endItem);
     },
     ...mapState('products', ['products']),
-    ...mapState(['skeletonLoading']),
+    ...mapState(['skeletonTarget']),
   },
   created() {
     this.$store.dispatch('products/getProducts', { role: 'admin' });

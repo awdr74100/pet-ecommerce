@@ -1,7 +1,8 @@
 <template>
   <div class="product-detail text-secondary">
     <div class="p-3">
-      <template v-if="skeletonLoading">
+      <!-- 骨架屏 -->
+      <template v-if="skeletonTarget === 'product'">
         <div class="row">
           <div class="col-md-5">
             <div class="p-3">
@@ -30,14 +31,8 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="p-0">
-              <p class="product-detail__content p-3"><PuSkeleton width="100%" height="60px" /></p>
-            </div>
-          </div>
-        </div>
       </template>
+      <!-- 實體 -->
       <template v-else>
         <div class="row">
           <div class="col-md-5">
@@ -128,24 +123,45 @@
               <div class="d-flex align-items-center text-secondary mb-2">
                 <button
                   class="btn product-detail__btn left"
-                  :disabled="qty <= 0"
+                  :disabled="qty <= 1"
                   @click.prevent="qty -= 1"
                 >
                   <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
                 </button>
-                <input type="number" class="product-detail__input" min="0" v-model.number="qty" />
+                <input
+                  type="number"
+                  class="product-detail__input"
+                  :disabled="product.stock === 0"
+                  v-model.number="inputQty"
+                />
                 <button
                   class="btn product-detail__btn right"
-                  @click.prevent="qty += 1"
                   :disabled="qty >= product.stock"
+                  @click.prevent="qty += 1"
                 >
                   <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
                 </button>
                 <span class="product-detail__stock ml-3">還剩 {{ product.stock }} 件</span>
               </div>
               <div class="d-flex align-items-center mb-5">
-                <button class="btn btn--transparent btn-md--xl btn--lg">加入購物車</button>
-                <button class="btn btn--primary btn-md--xl btn--lg ml-3">直接購買</button>
+                <button
+                  class="btn btn--transparent btn-md--xl btn--lg d-flex align-items-center"
+                  @click.prevent="addToCart(undefined)"
+                >
+                  <p>加入購物車</p>
+                  <span class="ml-2" v-if="iconLoadingTarget === 'add'">
+                    <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                  </span>
+                </button>
+                <button
+                  class="btn btn--primary btn-md--xl btn--lg ml-3 d-flex align-items-center"
+                  @click="addToCart(true)"
+                >
+                  <p>直接購買</p>
+                  <span class="ml-2" v-if="iconLoadingTarget === 'push'">
+                    <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                  </span>
+                </button>
               </div>
               <div class="hr"></div>
             </div>
@@ -172,11 +188,33 @@ export default {
     return {
       dropdownActive: false,
       qty: 1,
+      iconLoadingTarget: '',
     };
   },
   methods: {
     dropdownToggle() {
       this.dropdownActive = !this.dropdownActive;
+    },
+    async addToCart(push) {
+      if (!this.isSignin) {
+        this.$router.push({ path: '/signin' });
+        return;
+      }
+      if (this.qty > this.product.stock) {
+        const message = '庫存不足';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+        return;
+      }
+      if (push) {
+        this.iconLoadingTarget = 'push';
+        await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
+        this.iconLoadingTarget = '';
+        this.$router.push('/cart');
+        return;
+      }
+      this.iconLoadingTarget = 'add';
+      await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
+      this.iconLoadingTarget = '';
     },
   },
   computed: {
@@ -191,8 +229,19 @@ export default {
       }
       return [];
     },
+    inputQty: {
+      get() {
+        return this.qty;
+      },
+      set(value) {
+        if (!value || typeof value === 'string') return;
+        if (value < 1 || value > this.product.stock) return;
+        this.qty = value;
+      },
+    },
+    ...mapState('user', ['isSignin']),
     ...mapState('products', ['product']),
-    ...mapState(['skeletonLoading']),
+    ...mapState(['skeletonTarget']),
   },
   created() {
     const { id } = this.$route.params;

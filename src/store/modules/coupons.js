@@ -26,7 +26,7 @@ export default {
     async getCoupons({ dispatch, commit }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/admin/coupons`;
       const root = { root: true };
-      commit('SKELETONTOGGLE', true, root);
+      commit('SKELETONACTIVE', 'coupons', root);
       try {
         const { data } = await axios.get(url);
         if (!data.success) {
@@ -34,7 +34,7 @@ export default {
           return;
         }
         commit('GETCOUPONS', data.coupons);
-        commit('SKELETONTOGGLE', false, root);
+        commit('SKELETONACTIVE', '', root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
@@ -81,6 +81,22 @@ export default {
           return;
         }
         dispatch('getCoupons');
+        dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
+      } catch (error) {
+        dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
+      }
+    },
+    async applyCoupon({ dispatch }, { code }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/coupon`;
+      const payload = { code };
+      const root = { root: true };
+      try {
+        const { data } = await axios.post(url, payload);
+        if (!data.success) {
+          dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
+          return;
+        }
+        dispatch('cart/getCart', undefined, root);
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);

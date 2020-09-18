@@ -53,12 +53,20 @@ const routes = [
       {
         path: 'cart',
         name: 'Cart',
+        meta: { requiresAuth: true, role: 'user' },
         component: () => import('@/views/Layout/Cart.vue'),
       },
       {
         path: 'checkout',
         name: 'Checkout',
+        meta: { requiresAuth: true, role: 'user' },
         component: () => import('@/views/Layout/Checkout.vue'),
+      },
+      {
+        path: 'orders',
+        name: 'OrderList',
+        meta: { requiresAuth: true, role: 'user' },
+        component: () => import('@/views/Layout/Orders.vue'),
       },
     ],
   },

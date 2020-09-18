@@ -37,7 +37,6 @@ export default {
         }
         localStorage.removeItem('user');
         commit('ISSIGNIN', false);
-        router.push({ path: '/' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -73,7 +72,7 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async check({ dispatch, commit }, { from }) {
+    async check({ dispatch, commit }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/user/check`;
       const root = { root: true };
       try {
@@ -81,8 +80,6 @@ export default {
         if (!data.success) {
           localStorage.removeItem('user');
           commit('ISSIGNIN', false);
-          const message = from.meta.role === 'user' ? '請重新登入' : '僅限管理員進入';
-          dispatch('notification/updateMessage', { message, status: 'danger' }, root);
           return;
         }
         commit('ISSIGNIN', true);
