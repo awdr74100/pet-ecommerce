@@ -18,6 +18,7 @@
             </tr>
           </thead>
           <tbody>
+            <!-- 骨架屏 -->
             <template v-if="skeletonTarget === 'cart'">
               <tr v-for="index in 2" :key="index">
                 <td class="d-flex align-items-center">
@@ -33,6 +34,7 @@
                 <td><PuSkeleton /></td>
               </tr>
             </template>
+            <!-- 實體 -->
             <template v-else>
               <tr v-for="(item, index) in collapseCart" :key="index">
                 <td>
@@ -104,7 +106,7 @@
         <!-- steps -->
         <div class="col-md-8 order-md-1 order-2 text-secondary">
           <!-- write step -->
-          <template v-if="true">
+          <template v-if="step === 'write'">
             <div class="row">
               <div class="col-md-6">
                 <!-- transport -->
@@ -116,7 +118,13 @@
                 </div>
                 <form class="form ml-3">
                   <div class="d-flex mt-3">
-                    <input type="radio" name="transport" class="radio m-0" id="7-11" checked />
+                    <input
+                      type="radio"
+                      class="radio m-0"
+                      id="7-11"
+                      value="7-11"
+                      v-model="shipping_method"
+                    />
                     <label for="7-11" class="form__label pl-3 d-flex flex-column flex-1">
                       <div class="d-flex align-items-center">
                         <p>7-11 純取貨</p>
@@ -128,7 +136,13 @@
                     </label>
                   </div>
                   <div class="d-flex mt-3">
-                    <input type="radio" name="transport" class="radio m-0" id="family" />
+                    <input
+                      type="radio"
+                      class="radio m-0"
+                      id="family"
+                      value="family"
+                      v-model="shipping_method"
+                    />
                     <label for="family" class="form__label pl-3 d-flex flex-column flex-1">
                       <div class="d-flex align-items-center">
                         <p>全家純取貨</p>
@@ -140,7 +154,13 @@
                     </label>
                   </div>
                   <div class="d-flex mt-3">
-                    <input type="radio" name="transport" class="radio m-0" id="t-cat" />
+                    <input
+                      type="radio"
+                      class="radio m-0"
+                      id="t-cat"
+                      value="t-cat"
+                      v-model="shipping_method"
+                    />
                     <label for="t-cat" class="form__label pl-3 d-flex flex-column flex-1">
                       <div class="d-flex align-items-center">
                         <p>黑貓宅急便</p>
@@ -163,22 +183,34 @@
                 </div>
                 <form class="form ml-3">
                   <div class="d-flex align-items-center mt-3">
-                    <input type="radio" name="pay" class="radio m-0" id="atm" checked />
+                    <input
+                      type="radio"
+                      class="radio m-0"
+                      id="atm"
+                      value="atm"
+                      v-model="payment_method"
+                    />
                     <label for="atm" class="form__label pl-3">
                       <div class="d-flex align-items-center">
                         <span class="d-block mr-2">
-                          <font-awesome-icon :icon="['far', 'money-bill-alt']" size="lg" />
+                          <font-awesome-icon :icon="['far', 'credit-card']" size="lg" />
                         </span>
                         <p>ATM 轉帳</p>
                       </div>
                     </label>
                   </div>
                   <div class="d-flex align-items-center mt-3">
-                    <input type="radio" name="pay" class="radio m-0" id="credit-card" />
+                    <input
+                      type="radio"
+                      class="radio m-0"
+                      id="credit-card"
+                      value="credit_card"
+                      v-model="payment_method"
+                    />
                     <label for="credit-card" class="form__label pl-3">
                       <div class="d-flex align-items-center">
                         <span class="d-block mr-2">
-                          <font-awesome-icon :icon="['fas', 'money-check']" size="lg" />
+                          <font-awesome-icon :icon="['fab', 'cc-visa']" size="lg" />
                         </span>
                         <p>信用卡一次付清</p>
                       </div>
@@ -197,34 +229,64 @@
                 <div class="col-md-6">
                   <label for="name" class="form__label d-block mb-1 mt-3">姓名*</label>
                   <div class="form__group">
-                    <input type="text" class="form__input" id="name" placeholder="請輸入" />
+                    <input
+                      type="text"
+                      class="form__input"
+                      id="name"
+                      placeholder="請輸入"
+                      v-model="user.name"
+                    />
                     <small class="form__error" v-if="false">此欄位不可空白</small>
                   </div>
                   <label for="tel" class="form__label d-block mb-1">連絡電話*</label>
                   <div class="form__group">
-                    <input type="tel" class="form__input" id="tel" placeholder="請輸入" />
+                    <input
+                      type="tel"
+                      class="form__input"
+                      id="tel"
+                      placeholder="請輸入"
+                      v-model="user.tel"
+                    />
                     <small class="form__error" v-if="false">此欄位不可空白</small>
                   </div>
                   <label for="email" class="form__label d-block mb-1">電子郵件*</label>
                   <div class="form__group">
-                    <input type="email" class="form__input" id="email" placeholder="請輸入" />
+                    <input
+                      type="email"
+                      class="form__input"
+                      id="email"
+                      placeholder="請輸入"
+                      v-model="user.email"
+                    />
                     <small class="form__error" v-if="false">此欄位不可空白</small>
                   </div>
                   <label for="address" class="form__label d-block mb-1">收件地址*</label>
                   <div class="form__group">
-                    <input type="text" class="form__input" id="address" placeholder="請輸入" />
+                    <input
+                      type="text"
+                      class="form__input"
+                      id="address"
+                      placeholder="請輸入"
+                      v-model="user.address"
+                    />
                     <small class="form__error" v-if="false">此欄位不可空白</small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <label for="remarks" class="form__label d-block mb-1 mt-md-3 mt-0">備註</label>
-                  <textarea class="form__textarea" cols="30" rows="6" id="remarks"></textarea>
+                  <textarea
+                    class="form__textarea"
+                    cols="30"
+                    rows="6"
+                    id="remarks"
+                    v-model="message"
+                  ></textarea>
                 </div>
               </div>
             </form>
           </template>
           <!-- created step -->
-          <template v-if="true">
+          <template v-if="step === 'created'">
             <div class="window text-secondary mt-md-0 mt-5">
               <h2 class="bg-primary window__header text-white p-3">結帳資訊</h2>
               <div class="p-3 window__body">
@@ -296,15 +358,17 @@
             <div class="p-3 window__body">
               <div class="d-flex align-items-center">
                 <p class="text-gray white-nowrap">購買總金額</p>
-                <span class="ml-auto">$1,300</span>
+                <span class="ml-auto">{{ final_total | currency | dollar }}</span>
               </div>
               <div class="d-flex align-items-center mt-3">
                 <p class="text-gray white-nowrap">運費</p>
-                <span class="ml-auto">$90</span>
+                <span class="ml-auto">{{ shippingFee | currency | dollar }}</span>
               </div>
               <div class="d-flex align-items-center mt-3">
                 <p class="text-gray white-nowrap">總計</p>
-                <span class="ml-auto text-primary">$1,390</span>
+                <span class="ml-auto text-primary">{{
+                  (final_total + shippingFee) | currency | dollar
+                }}</span>
               </div>
             </div>
           </div>
@@ -336,6 +400,15 @@ export default {
       step: 'write',
       stepFinsh: [],
       collapse: true,
+      shipping_method: '7-11',
+      payment_method: 'atm',
+      user: {
+        name: '',
+        email: '',
+        tel: '',
+        address: '',
+      },
+      message: '',
     };
   },
   methods: {
@@ -348,6 +421,11 @@ export default {
     collapseCart() {
       if (this.collapse) return this.cart.slice(0, 2);
       return this.cart;
+    },
+    shippingFee() {
+      if (this.shipping_method === '7-11') return 60;
+      if (this.shipping_method === 'family') return 60;
+      return 120;
     },
     ...mapState('cart', ['cart', 'total', 'final_total']),
     ...mapState(['skeletonTarget']),

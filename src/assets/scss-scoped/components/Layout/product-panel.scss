@@ -1,8 +1,5 @@
 .product-panel {
   font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   background-color: lighten(theme-color('gray'), 38%);
 
   &__tab {
@@ -11,18 +8,14 @@
     cursor: pointer;
     padding: 10px 0px;
     flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     @include desktop() {
+      min-width: 96px;
       flex: 0 0 auto;
       border: 1px solid lighten(theme-color('gray'), 30%) !important;
       border-radius: 4px;
-      padding: 10px 26px;
     }
-
-    &:not(:first-child) {
-      border-left: none;
+    &:not(:last-child) {
+      border-right: none;
     }
     &--active {
       background-color: theme-color('primary');
@@ -32,11 +25,9 @@
   &__dropdown {
     position: relative;
     cursor: pointer;
-    display: flex;
-    align-items: center;
+    background-color: theme-color('white');
     flex: 1;
     border: 1px solid lighten(theme-color('gray'), 30%);
-    border-left: none;
     z-index: 1;
     @include desktop() {
       flex: 0 0 auto;

@@ -63,8 +63,8 @@
 
     &__btn {
       border: 1px solid lighten(theme-color('gray'), 30%);
-      color: theme-color('secondary');
-      padding: 6px;
+      color: lighten(theme-color('secondary'), 10%);
+      padding: 6px 8px;
 
       &.left {
         border-right: none;
@@ -77,8 +77,9 @@
         border-bottom-left-radius: 0px;
       }
       &:disabled {
-        background-color: lighten(theme-color('gray'), 36%);
         cursor: not-allowed;
+        color: lighten(theme-color('secondary'), 40%);
+        background-color: lighten(theme-color('gray'), 36%);
       }
     }
     &__input {

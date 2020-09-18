@@ -19,6 +19,7 @@
               </tr>
             </thead>
             <tbody>
+              <!-- 骨架屏 -->
               <template v-if="skeletonTarget === 'cart'">
                 <tr v-for="index in 4" :key="index">
                   <td><PuSkeleton height="16px" /></td>
@@ -35,6 +36,7 @@
                   <td><PuSkeleton /></td>
                 </tr>
               </template>
+              <!-- 實體 -->
               <template v-else>
                 <tr v-for="(item, index) in cart" :key="index">
                   <td>
@@ -96,9 +98,10 @@
           </table>
         </div>
       </div>
-      <!-- info 骨架屏 -->
-      <template v-if="skeletonTarget === 'cart'">
-        <div class="info mt-3">
+      <!-- info -->
+      <div class="info mt-3">
+        <!-- 骨架屏 -->
+        <template v-if="skeletonTarget === 'cart'">
           <div class="d-flex align-items-center justify-content-end py-3">
             <span class="flex-1" style="max-width:340px"><PuSkeleton height="24px"/></span>
           </div>
@@ -106,11 +109,9 @@
           <div class="d-flex align-items-center justify-content-end py-3">
             <span class="flex-1" style="max-width:340px"><PuSkeleton height="24px"/></span>
           </div>
-        </div>
-      </template>
-      <!-- info 實體 -->
-      <template v-else>
-        <div class="info mt-3">
+        </template>
+        <!-- 實體 -->
+        <template v-else>
           <div class="d-flex align-items-center justify-content-end py-3">
             <p class="info__message text-info d-md-inline d-none mr-4">
               慶祝開幕，輸入折扣碼「ALCRE88045」，即享有全館商品 75 折優惠
@@ -124,7 +125,7 @@
                 @keypress.enter="applyCoupon"
               />
               <button class="btn btn--secondary info__btn" @click.prevent="applyCoupon">
-                <span v-if="iconLoadingTarget === 'apply'" class="px-2">
+                <span style="min-width:28px" v-if="iconLoadingTarget === 'apply'" class="d-block">
                   <font-awesome-icon :icon="['fas', 'spinner']" spin />
                 </span>
                 <p v-else>套用</p>
@@ -176,8 +177,8 @@
               </div>
             </div>
           </template>
-        </div>
-      </template>
+        </template>
+      </div>
     </template>
     <!-- 當購物車為空 -->
     <template v-else>

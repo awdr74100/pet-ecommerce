@@ -2,6 +2,7 @@
   <div class="popover">
     <div class="popover__drawer"></div>
     <div class="popover__container text-secondary bg-white">
+      <!-- 當購物車存在商品 -->
       <template v-if="isSignin && cart.length > 0">
         <div class="popover__header p-3">
           <p>最近加入的商品</p>
@@ -57,6 +58,7 @@
           >
         </div>
       </template>
+      <!-- 當購物車為空 -->
       <template v-else>
         <div class="d-flex flex-column align-items-center justify-content-center py-6">
           <span class="text-secondary">

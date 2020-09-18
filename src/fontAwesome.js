@@ -1,12 +1,12 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faGithub, faBloggerB } from '@fortawesome/free-brands-svg-icons';
+import { faGithub, faBloggerB, faCcVisa } from '@fortawesome/free-brands-svg-icons';
 import {
   faEye,
   faEyeSlash,
   faBell,
   faEdit,
   faTrashAlt,
-  faMoneyBillAlt,
+  faCreditCard,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
@@ -37,9 +37,9 @@ import {
   faPen,
   faShippingFast,
   faMoneyBillWave,
-  faMoneyCheck,
   faUserEdit,
   faSpinner,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -78,10 +78,11 @@ const icons = [
   faPen,
   faShippingFast,
   faMoneyBillWave,
-  faMoneyBillAlt,
-  faMoneyCheck,
   faUserEdit,
   faSpinner,
+  faFilter,
+  faCcVisa,
+  faCreditCard,
 ];
 
 library.add(...icons);

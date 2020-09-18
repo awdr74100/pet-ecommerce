@@ -1,37 +1,27 @@
 <template>
-  <div class="product-panel text-secondary p-md-2 p-0">
-    <div
-      class="product-panel__tab ml-md-2"
+  <ul class="product-panel text-secondary d-flex align-items-center p-md-2 p-0 ">
+    <li class="align-items-center ml-2 mr-1 d-md-flex d-none">
+      <span><font-awesome-icon :icon="['fas', 'filter']"/></span>
+      <p class="ml-2">篩選</p>
+    </li>
+    <li
+      class="product-panel__tab d-flex align-items-center justify-content-center ml-md-2"
       :class="{ 'product-panel__tab--active': sortTarget === 'created_at' }"
       @click="sortToggle('created_at')"
     >
       最新
-    </div>
-    <div
-      class="product-panel__tab ml-md-2"
+    </li>
+    <li
+      class="product-panel__tab d-flex align-items-center justify-content-center ml-md-2"
       :class="{ 'product-panel__tab--active': sortTarget === 'sales' }"
       @click="sortToggle('sales')"
     >
       最熱銷
-    </div>
-    <div
-      class="product-panel__tab ml-md-2 d-md-none d-flex"
-      :class="{ 'product-panel__tab--active': sortTarget === 'price' }"
-      @click="
-        sortToggle('price', sortTarget !== 'price' ? 'down' : sortMode === 'down' ? 'up' : 'down')
-      "
-    >
-      價格
-      <span
-        class="icon ml-1"
-        :class="{ 'icon--rotate': sortTarget === 'price' && sortMode === 'up' }"
-      >
-        <font-awesome-icon :icon="['fas', 'angle-down']" size="sm" />
-      </span>
-    </div>
-    <div
-      class="product-panel__dropdown bg-white ml-md-2 py-2 d-md-flex d-none"
+    </li>
+    <li
+      class="product-panel__dropdown align-items-center ml-md-2 py-2 d-md-flex d-none"
       @click="dropdownToggle"
+      data-dropdown="true"
     >
       <p class="ml-3" :class="{ 'text-primary': sortTarget === 'price' }">
         {{
@@ -45,18 +35,34 @@
         <li
           class="list__item px-3 py-2"
           :class="{ 'list__item--active': sortTarget === 'price' && sortMode === 'up' }"
+          data-dropdownItem="true"
         >
           價格：低到高
         </li>
         <li
           class="list__item px-3 py-2"
           :class="{ 'list__item--active': sortTarget === 'price' && sortMode === 'down' }"
+          data-dropdownItem="true"
         >
           價格：高到低
         </li>
       </ul>
-    </div>
-  </div>
+    </li>
+    <li
+      class="product-panel__tab d-md-none d-flex align-items-center justify-content-center ml-md-2"
+      :class="{ 'product-panel__tab--active': sortTarget === 'price' }"
+      @click="
+        sortToggle('price', sortTarget !== 'price' ? 'down' : sortMode === 'down' ? 'up' : 'down')
+      "
+    >
+      <p>價格</p>
+      <span
+        class="icon ml-1"
+        :class="{ 'icon--rotate': sortTarget === 'price' && sortMode === 'up' }"
+        ><font-awesome-icon :icon="['fas', 'angle-down']" size="sm"
+      /></span>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -70,10 +76,10 @@ export default {
   },
   methods: {
     dropdownToggle(e) {
-      if (e.target.tagName === 'DIV') {
+      if (e.target.dataset.dropdown) {
         this.dropdownActive = !this.dropdownActive;
       }
-      if (e.target.tagName !== 'LI') return;
+      if (!e.target.dataset.dropdownitem) return;
       const text = e.target.textContent.trim();
       if (text === '價格：低到高') {
         this.sortToggle('price', 'up');
