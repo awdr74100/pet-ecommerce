@@ -95,5 +95,10 @@ export default {
       state.total = total;
       state.final_total = finalTotal;
     },
+    CLEARCART(state) {
+      state.cart = [];
+      state.total = 0;
+      state.final_total = 0;
+    },
   },
 };

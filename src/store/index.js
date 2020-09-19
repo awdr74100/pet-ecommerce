@@ -8,6 +8,7 @@ import image from './modules/image';
 import products from './modules/products';
 import coupons from './modules/coupons';
 import cart from './modules/cart';
+import orders from './modules/orders';
 
 Vue.use(Vuex);
 
@@ -33,5 +34,6 @@ export default new Vuex.Store({
     products,
     coupons,
     cart,
+    orders,
   },
 });

@@ -26,7 +26,7 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async signout({ dispatch, commit }) {
+    async signout({ dispatch, commit }, { requiresAuth }) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/user/signout`;
       const root = { root: true };
       try {
@@ -37,6 +37,9 @@ export default {
         }
         localStorage.removeItem('user');
         commit('ISSIGNIN', false);
+        if (requiresAuth) {
+          router.push({ path: '/signin' });
+        }
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);

@@ -17,3 +17,8 @@ extend('include', {
   validate: (value) => !value.includes('@'),
   message: '禁止包含 @ 符號',
 });
+
+extend('tel', {
+  validate: (value) => /((?=(09))[0-9]{10})$/.test(value),
+  message: '請輸入有效電話號碼',
+});

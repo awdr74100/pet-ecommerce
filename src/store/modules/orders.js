@@ -4,12 +4,19 @@ export default {
   strict: true,
   namespaced: true,
   state: {
-    orders: {},
+    order: {},
+    orders: [],
+    orderId: '',
   },
   actions: {
-    async createOrder({ dispatch }, { user, message }) {
+    async createOrder({ dispatch, commit }, orderData) {
       const url = `${process.env.VUE_APP_BASE_URL}/api/user/orders`;
-      const payload = { user, message };
+      const payload = {
+        user: orderData.user,
+        message: orderData.message,
+        shipping_method: orderData.shipping_method,
+        payment_method: orderData.payment_method,
+      };
       const root = { root: true };
       try {
         const { data } = await axios.post(url, payload);
@@ -17,7 +24,7 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getOrders', { role: 'guest' });
+        commit('GETORDERID', data.orderId);
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -32,7 +39,7 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getOrders', { role: 'guest' });
+        dispatch('getOrders', { role: 'user' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
@@ -47,17 +54,29 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
-        dispatch('getOrders', { role: 'guest' });
+        dispatch('getOrders', { role: 'user' });
+        dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
+      } catch (error) {
+        dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
+      }
+    },
+    async shipOrder({ dispatch }, { orderId }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/orders/${orderId}/ship`;
+      const root = { root: true };
+      try {
+        const { data } = await axios.patch(url);
+        if (!data.success) {
+          dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
+          return;
+        }
+        dispatch('getOrders', { role: 'admin' });
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
     async getOrders({ dispatch, commit }, { role }) {
-      let url = `${process.env.VUE_APP_BASE_URL}/api/user/orders`;
-      if (role === 'admin') {
-        url = `${process.env.VUE_APP_BASE_URL}/api/admin/orders`;
-      }
+      const url = `${process.env.VUE_APP_BASE_URL}/api/${role}/orders`;
       const root = { root: true };
       commit('SKELETONACTIVE', 'orders', root);
       try {
@@ -72,10 +91,34 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
+    async getOrder({ dispatch, commit }, { orderId }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/user/orders/${orderId}`;
+      const root = { root: true };
+      try {
+        const { data } = await axios.get(url);
+        if (!data.success) {
+          dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
+          return;
+        }
+        commit('GETORDER', data.order);
+      } catch (error) {
+        dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
+      }
+    },
   },
   mutations: {
-    GETORDERS(state, ordersData) {
-      state.orders = ordersData;
+    GETORDER(state, order) {
+      state.order = order;
+    },
+    GETORDERS(state, orders) {
+      state.orders = orders;
+    },
+    GETORDERID(state, orderId) {
+      state.orderId = orderId;
+    },
+    CLEARORDER(state) {
+      state.order = {};
+      state.orderId = '';
     },
   },
 };

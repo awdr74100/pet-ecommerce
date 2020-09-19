@@ -1,5 +1,5 @@
 <template>
-  <div class="checkout-form">
+  <div class="checkout-detail">
     <!-- stepper -->
     <div class="p-3 mt-3">
       <Stepper :step="step" :stepFinsh="stepFinsh" />
@@ -77,7 +77,7 @@
                   <span class="text-primary">{{ item.final_total | currency | dollar }}</span>
                 </td>
                 <td class="text-center">
-                  <p class="cursor-pointer text-center">
+                  <p class="text-center">
                     <span>無</span>
                   </p>
                 </td>
@@ -105,7 +105,7 @@
       <div class="row">
         <!-- steps -->
         <div class="col-md-8 order-md-1 order-2 text-secondary">
-          <!-- write step -->
+          <!-- write step(1) -->
           <template v-if="step === 'write'">
             <div class="row">
               <div class="col-md-6">
@@ -224,68 +224,82 @@
               <span class="d-block mr-2"><font-awesome-icon :icon="['fas', 'user-edit']"/></span>
               <p>填寫收件人資訊</p>
             </div>
-            <form class="form ml-3">
-              <div class="row">
-                <div class="col-md-6">
-                  <label for="name" class="form__label d-block mb-1 mt-3">姓名*</label>
-                  <div class="form__group">
-                    <input
-                      type="text"
-                      class="form__input"
-                      id="name"
-                      placeholder="請輸入"
-                      v-model="user.name"
-                    />
-                    <small class="form__error" v-if="false">此欄位不可空白</small>
+            <ValidationObserver ref="create-order-form" slim>
+              <form class="form ml-3">
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="name" class="form__label d-block mb-1 mt-3">姓名*</label>
+                    <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                      <div class="form__group">
+                        <input
+                          type="text"
+                          class="form__input"
+                          id="name"
+                          placeholder="請輸入"
+                          :class="{ 'form__input--error': failed }"
+                          v-model="user.name"
+                        />
+                        <small class="form__error" v-if="failed">{{ errors[0] }}</small>
+                      </div>
+                    </ValidationProvider>
+                    <label for="tel" class="form__label d-block mb-1">連絡電話*</label>
+                    <ValidationProvider rules="required|tel" v-slot="{ errors, failed }" slim>
+                      <div class="form__group">
+                        <input
+                          type="tel"
+                          class="form__input"
+                          id="tel"
+                          placeholder="請輸入"
+                          :class="{ 'form__input--error': failed }"
+                          v-model="user.tel"
+                        />
+                        <small class="form__error" v-if="failed">{{ errors[0] }}</small>
+                      </div>
+                    </ValidationProvider>
+                    <label for="email" class="form__label d-block mb-1">電子郵件*</label>
+                    <ValidationProvider rules="required|email" v-slot="{ errors, failed }" slim>
+                      <div class="form__group">
+                        <input
+                          type="email"
+                          class="form__input"
+                          id="email"
+                          placeholder="請輸入"
+                          :class="{ 'form__input--error': failed }"
+                          v-model="user.email"
+                        />
+                        <small class="form__error" v-if="failed">{{ errors[0] }}</small>
+                      </div>
+                    </ValidationProvider>
+                    <label for="address" class="form__label d-block mb-1">收件地址*</label>
+                    <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
+                      <div class="form__group">
+                        <input
+                          type="text"
+                          class="form__input"
+                          id="address"
+                          placeholder="請輸入"
+                          :class="{ 'form__input--error': failed }"
+                          v-model="user.address"
+                        />
+                        <small class="form__error" v-if="failed">{{ errors[0] }}</small>
+                      </div>
+                    </ValidationProvider>
                   </div>
-                  <label for="tel" class="form__label d-block mb-1">連絡電話*</label>
-                  <div class="form__group">
-                    <input
-                      type="tel"
-                      class="form__input"
-                      id="tel"
-                      placeholder="請輸入"
-                      v-model="user.tel"
-                    />
-                    <small class="form__error" v-if="false">此欄位不可空白</small>
-                  </div>
-                  <label for="email" class="form__label d-block mb-1">電子郵件*</label>
-                  <div class="form__group">
-                    <input
-                      type="email"
-                      class="form__input"
-                      id="email"
-                      placeholder="請輸入"
-                      v-model="user.email"
-                    />
-                    <small class="form__error" v-if="false">此欄位不可空白</small>
-                  </div>
-                  <label for="address" class="form__label d-block mb-1">收件地址*</label>
-                  <div class="form__group">
-                    <input
-                      type="text"
-                      class="form__input"
-                      id="address"
-                      placeholder="請輸入"
-                      v-model="user.address"
-                    />
-                    <small class="form__error" v-if="false">此欄位不可空白</small>
+                  <div class="col-md-6">
+                    <label for="remarks" class="form__label d-block mb-1 mt-md-3 mt-0">留言</label>
+                    <textarea
+                      class="form__textarea"
+                      cols="30"
+                      rows="6"
+                      id="remarks"
+                      v-model="message"
+                    ></textarea>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="remarks" class="form__label d-block mb-1 mt-md-3 mt-0">備註</label>
-                  <textarea
-                    class="form__textarea"
-                    cols="30"
-                    rows="6"
-                    id="remarks"
-                    v-model="message"
-                  ></textarea>
-                </div>
-              </div>
-            </form>
+              </form>
+            </ValidationObserver>
           </template>
-          <!-- created step -->
+          <!-- created step(2) -->
           <template v-if="step === 'created'">
             <div class="window text-secondary mt-md-0 mt-5">
               <h2 class="bg-primary window__header text-white p-3">結帳資訊</h2>
@@ -294,54 +308,64 @@
                   <div class="col-md-7">
                     <div class="d-flex">
                       <p class="text-gray white-nowrap">姓名：</p>
-                      <span class="ml-2">藍奕濡</span>
+                      <span class="ml-2">{{ order.user.name }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">連絡電話：</p>
-                      <span class="ml-2">0972791303</span>
+                      <span class="ml-2">{{ order.user.tel }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">電子郵件：</p>
-                      <span class="ml-2">a78945612385238@gmail.com</span>
+                      <span class="ml-2">{{ order.user.email }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">收件地址：</p>
-                      <span class="ml-2">台中市大里區東南路162巷8號12樓</span>
+                      <span class="ml-2">{{ order.user.address }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">留言：</p>
-                      <span class="ml-2">請用紙箱將其包裝，謝謝請用紙箱將其包裝</span>
+                      <span class="ml-2">{{ order.message }}</span>
                     </div>
                   </div>
                   <div class="col-md-5">
                     <div class="d-flex mt-md-0 mt-3">
                       <p class="text-gray white-nowrap">運送方式：</p>
-                      <span class="ml-2">7-11 純取貨</span>
+                      <span class="ml-2">{{ order.shipping_method | translate }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">付款方式：</p>
-                      <span class="ml-2">ATM 轉帳</span>
+                      <span class="ml-2">{{ order.payment_method | translate }}</span>
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="d-flex mt-3 pt-3 border-top">
                       <p class="text-gray white-nowrap">訂單建立時間：</p>
-                      <span class="ml-2">2020/09/17 13:22:35</span>
+                      <span class="ml-2">{{ order.created_at | datetime }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">訂單編號：</p>
-                      <span class="ml-2">-MHMZ6o6Q7uA_S1MuxhO</span>
+                      <span class="ml-2">{{ order.id }}</span>
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">付款狀態：</p>
-                      <span class="ml-2 text-danger">尚未付款</span>
+                      <span class="ml-2 text-danger" v-if="order.status === 'unpaid'"
+                        >尚未付款</span
+                      >
+                      <span class="ml-2 text-danger" v-if="order.status === 'toship'"
+                        >已完成付款</span
+                      >
+                      <span class="ml-2 text-danger" v-if="order.status === 'cancelled'"
+                        >已取消訂單</span
+                      >
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="window text-secondary mt-5">
-              <h2 class="bg-primary window__header text-white p-3">ATM 轉帳</h2>
+              <h2 class="bg-primary window__header text-white p-3">
+                {{ order.payment_method | translate }}
+              </h2>
               <div class="p-3 window__body">
                 <div class="d-flex align-items-center justify-content-center">
                   <button class="btn btn--primary px-5">確認並付款</button>
@@ -358,7 +382,10 @@
             <div class="p-3 window__body">
               <div class="d-flex align-items-center">
                 <p class="text-gray white-nowrap">購買總金額</p>
-                <span class="ml-auto">{{ final_total | currency | dollar }}</span>
+                <span class="ml-auto" v-if="order.final_total">{{
+                  order.final_total | currency | dollar
+                }}</span>
+                <span class="ml-auto" v-else>{{ final_total | currency | dollar }}</span>
               </div>
               <div class="d-flex align-items-center mt-3">
                 <p class="text-gray white-nowrap">運費</p>
@@ -366,7 +393,10 @@
               </div>
               <div class="d-flex align-items-center mt-3">
                 <p class="text-gray white-nowrap">總計</p>
-                <span class="ml-auto text-primary">{{
+                <span class="ml-auto text-primary" v-if="order.final_total">{{
+                  (order.final_total + shippingFee) | currency | dollar
+                }}</span>
+                <span class="ml-auto text-primary" v-else>{{
                   (final_total + shippingFee) | currency | dollar
                 }}</span>
               </div>
@@ -375,11 +405,17 @@
         </div>
       </div>
     </div>
-    <!-- send order -->
+    <!-- create order -->
     <div class="mb-3" v-if="step === 'write'">
       <div class="d-flex flex-column align-items-center justify-content-center">
-        <button class="btn btn--primary btn--xl" @click.prevent="nextStep('created')">
-          送出訂單
+        <button
+          class="btn btn--primary btn--xl d-flex align-items-center"
+          @click.prevent="createOrder"
+        >
+          <p>建立訂單</p>
+          <span class="ml-2" v-if="iconLoadingTarget === 'create'">
+            <font-awesome-icon :icon="['fas', 'spinner']" spin />
+          </span>
         </button>
       </div>
     </div>
@@ -409,30 +445,61 @@ export default {
         address: '',
       },
       message: '',
+      iconLoadingTarget: '',
     };
   },
   methods: {
-    nextStep(step) {
+    async createOrder() {
+      const valid = await this.$refs['create-order-form'].validate();
+      if (!valid) return;
+      this.iconLoadingTarget = 'create';
+      const orderData = {
+        user: this.user,
+        message: this.message,
+        shipping_method: this.shipping_method,
+        payment_method: this.payment_method,
+      };
+      // 建立訂單
+      await this.$store.dispatch('orders/createOrder', orderData);
+      // 取得訂單
+      await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
+      // 清空購物車
+      this.$store.commit('cart/CLEARCART');
+      // 下個步驟
       this.stepFinsh.push(this.step);
-      this.step = step;
+      this.step = 'created';
+      this.iconLoadingTarget = '';
     },
   },
   computed: {
     collapseCart() {
-      if (this.collapse) return this.cart.slice(0, 2);
-      return this.cart;
+      const target = this.order.cart || this.cart;
+      if (this.collapse) return target.slice(0, 2);
+      return target;
     },
     shippingFee() {
-      if (this.shipping_method === '7-11') return 60;
-      if (this.shipping_method === 'family') return 60;
+      const target = this.order.shipping_method || this.shipping_method;
+      if (target === '7-11') return 60;
+      if (target === 'family') return 60;
       return 120;
     },
     ...mapState('cart', ['cart', 'total', 'final_total']),
     ...mapState(['skeletonTarget']),
+    ...mapState('orders', ['order', 'orderId']),
+  },
+  filters: {
+    translate(value) {
+      if (value === '7-11') return '7-11 純取貨';
+      if (value === 'family') return '全家純取貨';
+      if (value === 't-cat') return '黑貓宅急便';
+      if (value === 'atm') return 'ATM 轉帳';
+      if (value === 'credit_card') return '信用卡一次付清';
+      return value;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/scss-scoped/components/Layout/checkout-form.scss';
+@import '~@/assets/scss-scoped/components/Layout/checkout-detail.scss';
 </style>

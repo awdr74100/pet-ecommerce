@@ -27,29 +27,33 @@
         <p class="stepper__text">已取消訂單</p>
       </li>
     </template>
-    <!-- // -->
-    <li class="stepper__line"></li>
-    <li
-      class="stepper__item mx-2"
-      :class="{ 'stepper__item--active': step === 'paid' || stepFinsh.includes('paid') }"
-    >
-      <span v-if="stepFinsh.includes('paid')"><font-awesome-icon :icon="['fas', 'check']"/></span>
-      <span v-else><font-awesome-icon :icon="['fas', 'money-bill-wave']"/></span>
-      <p class="stepper__text">付款成功</p>
-    </li>
-    <li class="stepper__line">
-      <span class="loading" v-if="step === 'paid'">
-        <font-awesome-icon :icon="['fas', 'spinner']" spin />
-      </span>
-    </li>
-    <li
-      class="stepper__item ml-2"
-      :class="{ 'stepper__item--active': step === 'toship' || stepFinsh.includes('toship') }"
-    >
-      <span v-if="stepFinsh.includes('toship')"><font-awesome-icon :icon="['fas', 'check']"/></span>
-      <span v-else><font-awesome-icon :icon="['fas', 'shipping-fast']"/></span>
-      <p class="stepper__text">準備出貨中</p>
-    </li>
+    <!-- is_paid -->
+    <template v-if="step !== 'cancelled'">
+      <li class="stepper__line"></li>
+      <li
+        class="stepper__item mx-2"
+        :class="{ 'stepper__item--active': step === 'paid' || stepFinsh.includes('paid') }"
+      >
+        <span v-if="stepFinsh.includes('paid')"><font-awesome-icon :icon="['fas', 'check']"/></span>
+        <span v-else><font-awesome-icon :icon="['fas', 'money-bill-wave']"/></span>
+        <p class="stepper__text">付款成功</p>
+      </li>
+      <li class="stepper__line">
+        <span class="loading" v-if="step === 'paid'">
+          <font-awesome-icon :icon="['fas', 'spinner']" spin />
+        </span>
+      </li>
+      <li
+        class="stepper__item ml-2"
+        :class="{ 'stepper__item--active': step === 'toship' || stepFinsh.includes('toship') }"
+      >
+        <span v-if="stepFinsh.includes('toship')"
+          ><font-awesome-icon :icon="['fas', 'check']"
+        /></span>
+        <span v-else><font-awesome-icon :icon="['fas', 'shipping-fast']"/></span>
+        <p class="stepper__text">準備出貨中</p>
+      </li>
+    </template>
   </ul>
 </template>
 

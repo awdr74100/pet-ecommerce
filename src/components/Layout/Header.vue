@@ -22,7 +22,7 @@
         </a>
       </li>
       <!-- 購物車 -->
-      <li class="list__item ml-md-1">
+      <li class="list__item ml-md-1" v-if="showCart">
         <router-link to="/cart" class="list__link px-3">
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
           <p><span class="d-md-inline d-none">購物車</span> ({{ isSignin ? cart.length : 0 }})</p>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 import Hamburger from '@/components/common/Hamburger.vue';
 import Popover from '@/components/Layout/Popover.vue';
@@ -70,9 +70,15 @@ export default {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
     },
-    ...mapActions('user', ['signout']),
+    signout() {
+      const { requiresAuth = false } = this.$route.meta;
+      this.$store.dispatch('user/signout', { requiresAuth });
+    },
   },
   computed: {
+    showCart() {
+      return this.$route.name !== 'Checkout';
+    },
     ...mapState('user', ['isSignin']),
     ...mapState('cart', ['cart']),
   },

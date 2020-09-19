@@ -25,10 +25,7 @@ export default {
       }
     },
     async getProducts({ dispatch, commit }, { role }) {
-      let url = `${process.env.VUE_APP_BASE_URL}/api/products`;
-      if (role === 'admin') {
-        url = `${process.env.VUE_APP_BASE_URL}/api/admin/products`;
-      }
+      const url = `${process.env.VUE_APP_BASE_URL}/api${role === 'admin' ? '/admin' : ''}/products`;
       const root = { root: true };
       commit('SKELETONACTIVE', 'products', root);
       try {

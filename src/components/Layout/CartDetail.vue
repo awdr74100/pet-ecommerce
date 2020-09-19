@@ -222,6 +222,11 @@ export default {
       this.selectReset();
     },
     async applyCoupon() {
+      if (this.code === '') {
+        const message = '禁止輸入為空';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+        return;
+      }
       this.iconLoadingTarget = 'apply';
       await this.$store.dispatch('coupons/applyCoupon', { code: this.code });
       this.iconLoadingTarget = '';
