@@ -146,7 +146,7 @@
               <div class="d-flex align-items-center mb-5">
                 <button
                   class="btn btn--transparent btn-md--xl btn--lg d-flex align-items-center"
-                  @click.prevent="addToCart(undefined)"
+                  @click.prevent="addToCart(false)"
                 >
                   <p>加入購物車</p>
                   <span class="ml-2" v-if="iconLoadingTarget === 'add'">
@@ -201,6 +201,7 @@ export default {
         return;
       }
       if (this.qty > this.product.stock) {
+        console.log(12);
         const message = '庫存不足';
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
@@ -209,6 +210,8 @@ export default {
         this.iconLoadingTarget = 'push';
         await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
         this.iconLoadingTarget = '';
+        // 後端判斷庫存不足
+        if (this.$store.state.notification.messages.length > 0) return;
         this.$router.push('/cart');
         return;
       }

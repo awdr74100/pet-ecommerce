@@ -6,99 +6,7 @@
     </div>
     <!-- table -->
     <div class="p-3">
-      <div class="table-responsive">
-        <table class="table text-secondary">
-          <thead class="thead">
-            <tr>
-              <th style="min-width:320px" class="w-100">商品</th>
-              <th style="min-width:140px">單價</th>
-              <th style="min-width:200px">數量</th>
-              <th style="min-width:140px">總計</th>
-              <th style="min-width:95px" class="text-center">備註</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- 骨架屏 -->
-            <template v-if="skeletonTarget === 'cart'">
-              <tr v-for="index in 2" :key="index">
-                <td class="d-flex align-items-center">
-                  <div style="flex: 0 0 70px"><PuSkeleton height="70px" /></div>
-                  <div class="ml-3 w-100">
-                    <p class="mb-1"><PuSkeleton /></p>
-                    <p style="max-width:160px"><PuSkeleton /></p>
-                  </div>
-                </td>
-                <td><PuSkeleton /></td>
-                <td><PuSkeleton /></td>
-                <td><PuSkeleton /></td>
-                <td><PuSkeleton /></td>
-              </tr>
-            </template>
-            <!-- 實體 -->
-            <template v-else>
-              <tr v-for="(item, index) in collapseCart" :key="index">
-                <td>
-                  <div class="product">
-                    <div
-                      class="product__img"
-                      :style="{ 'background-image': `url('${item.product.imgUrl}')` }"
-                    ></div>
-                    <div class="product__content text-gray ml-3 mr-2">
-                      <p class="product__title">
-                        {{ item.product.title }}
-                      </p>
-                      <p class="mt-1">{{ item.product.category }}</p>
-                      <div class="d-flex align-items-center mt-auto" v-if="item.coupon">
-                        <span><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
-                        <p class="ml-1">{{ item.coupon.percent / 10 }} 折</p>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ item.product.price | currency | dollar }}</td>
-                <td>
-                  <div class="d-flex align-items-center text-secondary btn-group">
-                    <button class="btn btn-group__btn left" disabled>
-                      <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
-                    </button>
-                    <input type="number" class="btn-group__input" :value="item.qty" disabled />
-                    <button class="btn btn-group__btn right" disabled>
-                      <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
-                    </button>
-                  </div>
-                  <span class="stock d-block mt-1 text-primary" v-if="item.product.stock <= 5"
-                    >剩下 {{ item.product.stock }} 個商品</span
-                  >
-                </td>
-                <td>
-                  <span class="mr-2 line-through" v-if="item.coupon">{{
-                    item.total | currency | dollar
-                  }}</span>
-                  <span class="text-primary">{{ item.final_total | currency | dollar }}</span>
-                </td>
-                <td class="text-center">
-                  <p class="text-center">
-                    <span>無</span>
-                  </p>
-                </td>
-              </tr>
-              <tr v-if="cart.length > 2">
-                <td class="text-center" colspan="5">
-                  <button class="btn btn--primary btn--xl" @click.prevent="collapse = !collapse">
-                    <div class="d-flex align-items-center">
-                      <p v-if="collapse">查看其餘 {{ cart.length - 2 }} 件商品</p>
-                      <p v-if="!collapse">摺疊購物車</p>
-                      <span class="icon ml-2" :class="{ 'icon--rotate': !collapse }">
-                        <font-awesome-icon :icon="['fas', 'angle-down']" />
-                      </span>
-                    </div>
-                  </button>
-                </td>
-              </tr>
-            </template>
-          </tbody>
-        </table>
-      </div>
+      <CartTable :readonly="true" />
     </div>
     <!-- form / window -->
     <div class="p-3">
@@ -300,7 +208,7 @@
             </ValidationObserver>
           </template>
           <!-- created step(2) -->
-          <template v-if="step === 'created'">
+          <template v-if="step !== 'write'">
             <div class="window text-secondary mt-md-0 mt-5">
               <h2 class="bg-primary window__header text-white p-3">結帳資訊</h2>
               <div class="p-3 window__body">
@@ -348,10 +256,10 @@
                     </div>
                     <div class="d-flex mt-3">
                       <p class="text-gray white-nowrap">付款狀態：</p>
-                      <span class="ml-2 text-danger" v-if="order.status === 'unpaid'"
+                      <span class="ml-2 text-warning" v-if="order.status === 'unpaid'"
                         >尚未付款</span
                       >
-                      <span class="ml-2 text-danger" v-if="order.status === 'toship'"
+                      <span class="ml-2 text-primary" v-if="order.status === 'toship'"
                         >已完成付款</span
                       >
                       <span class="ml-2 text-danger" v-if="order.status === 'cancelled'"
@@ -362,14 +270,22 @@
                 </div>
               </div>
             </div>
-            <div class="window text-secondary mt-5">
+            <div class="window text-secondary mt-5" v-if="step === 'created'">
               <h2 class="bg-primary window__header text-white p-3">
                 {{ order.payment_method | translate }}
               </h2>
               <div class="p-3 window__body">
                 <div class="d-flex align-items-center justify-content-center">
                   <button class="btn btn--primary px-5">確認並付款</button>
-                  <button class="btn btn--danger px-5 ml-3">取消訂單</button>
+                  <button
+                    class="btn btn--danger px-5 ml-3 d-flex align-items-center"
+                    @click.prevent="cancelOrder"
+                  >
+                    <p>取消訂單</p>
+                    <span class="ml-2" v-if="iconLoadingTarget === 'cancel'">
+                      <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                    </span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -405,7 +321,7 @@
         </div>
       </div>
     </div>
-    <!-- create order -->
+    <!-- button -->
     <div class="mb-3" v-if="step === 'write'">
       <div class="d-flex flex-column align-items-center justify-content-center">
         <button
@@ -426,16 +342,17 @@
 import { mapState } from 'vuex';
 
 import Stepper from '@/components/Layout/Stepper.vue';
+import CartTable from '@/components/Layout/CartTable.vue';
 
 export default {
   components: {
     Stepper,
+    CartTable,
   },
   data() {
     return {
       step: 'write',
       stepFinsh: [],
-      collapse: true,
       shipping_method: '7-11',
       payment_method: 'atm',
       user: {
@@ -470,22 +387,25 @@ export default {
       this.step = 'created';
       this.iconLoadingTarget = '';
     },
+    async cancelOrder() {
+      this.iconLoadingTarget = 'cancel';
+      await this.$store.dispatch('orders/cancelOrder', { orderId: this.orderId });
+      await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
+      this.stepFinsh.push(this.step);
+      this.step = 'cancelled';
+      this.iconLoadingTarget = '';
+    },
   },
   computed: {
-    collapseCart() {
-      const target = this.order.cart || this.cart;
-      if (this.collapse) return target.slice(0, 2);
-      return target;
-    },
     shippingFee() {
       const target = this.order.shipping_method || this.shipping_method;
       if (target === '7-11') return 60;
       if (target === 'family') return 60;
       return 120;
     },
-    ...mapState('cart', ['cart', 'total', 'final_total']),
-    ...mapState(['skeletonTarget']),
+    ...mapState('cart', ['total', 'final_total']),
     ...mapState('orders', ['order', 'orderId']),
+    ...mapState(['skeletonTarget']),
   },
   filters: {
     translate(value) {

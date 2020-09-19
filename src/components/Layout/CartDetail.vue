@@ -4,99 +4,8 @@
     <template v-if="cart.length > 0">
       <!-- table -->
       <div class="p-3">
-        <div class="table-responsive">
-          <table class="table text-secondary">
-            <thead class="thead">
-              <tr>
-                <th style="min-width:40px">
-                  <input type="checkbox" class="checkbox m-0" v-model="selectAll" />
-                </th>
-                <th style="min-width:320px" class="w-100">商品</th>
-                <th style="min-width:140px">單價</th>
-                <th style="min-width:200px">數量</th>
-                <th style="min-width:140px">總計</th>
-                <th style="min-width:95px" class="text-center">操作</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- 骨架屏 -->
-              <template v-if="skeletonTarget === 'cart'">
-                <tr v-for="index in 4" :key="index">
-                  <td><PuSkeleton height="16px" /></td>
-                  <td class="d-flex align-items-center">
-                    <div style="flex: 0 0 70px"><PuSkeleton height="70px" /></div>
-                    <div class="ml-3 w-100">
-                      <p class="mb-1"><PuSkeleton /></p>
-                      <p style="max-width:160px"><PuSkeleton /></p>
-                    </div>
-                  </td>
-                  <td><PuSkeleton /></td>
-                  <td><PuSkeleton /></td>
-                  <td><PuSkeleton /></td>
-                  <td><PuSkeleton /></td>
-                </tr>
-              </template>
-              <!-- 實體 -->
-              <template v-else>
-                <tr v-for="(item, index) in cart" :key="index">
-                  <td>
-                    <input type="checkbox" class="checkbox m-0" :value="item" v-model="selected" />
-                  </td>
-                  <td>
-                    <div class="product">
-                      <div
-                        class="product__img"
-                        :style="{ 'background-image': `url('${item.product.imgUrl}')` }"
-                      ></div>
-                      <div class="product__content text-gray ml-3 mr-2">
-                        <p class="product__title">
-                          {{ item.product.title }}
-                        </p>
-                        <p class="mt-1">{{ item.product.category }}</p>
-                        <div class="d-flex align-items-center mt-auto" v-if="item.coupon">
-                          <span><font-awesome-icon :icon="['fas', 'tag']" size="sm"/></span>
-                          <p class="ml-1">{{ item.coupon.percent / 10 }} 折</p>
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{{ item.product.price | currency | dollar }}</td>
-                  <td>
-                    <div class="d-flex align-items-center text-secondary btn-group">
-                      <button class="btn btn-group__btn left">
-                        <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
-                      </button>
-                      <input type="number" class="btn-group__input" :value="item.qty" />
-                      <button class="btn btn-group__btn right">
-                        <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
-                      </button>
-                    </div>
-                    <span class="stock d-block mt-1 text-primary" v-if="item.product.stock <= 5"
-                      >剩下 {{ item.product.stock }} 個商品</span
-                    >
-                  </td>
-                  <td>
-                    <span class="mr-2 line-through" v-if="item.coupon">{{
-                      item.total | currency | dollar
-                    }}</span>
-                    <span class="text-primary">{{ item.final_total | currency | dollar }}</span>
-                  </td>
-                  <td class="text-center">
-                    <p
-                      class="text-danger cursor-pointer text-center"
-                      @click="removeFromCart(item.id)"
-                    >
-                      <span v-if="iconLoadingTarget === item.id">
-                        <font-awesome-icon :icon="['fas', 'spinner']" spin />
-                      </span>
-                      <span v-else>刪除</span>
-                    </p>
-                  </td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
-        </div>
+        <!-- can't use v-model -->
+        <CartTable :selected="selected" @change="putSelected" @callSelectToggle="selectToggle" />
       </div>
       <!-- info -->
       <div class="info mt-3">
@@ -167,7 +76,7 @@
                 <p class="d-md-inline d-none">已選擇 {{ selected.length }} 件商品</p>
                 <button
                   class="btn btn--primary btn--sm ml-3 d-flex align-items-center"
-                  @click="removeFromCart(undefined)"
+                  @click="removeFromCart"
                 >
                   <p>刪除</p>
                   <span class="ml-2" v-if="iconLoadingTarget === 'remove'">
@@ -198,7 +107,12 @@
 <script>
 import { mapState } from 'vuex';
 
+import CartTable from '@/components/Layout/CartTable.vue';
+
 export default {
+  components: {
+    CartTable,
+  },
   data() {
     return {
       code: '',
@@ -207,19 +121,12 @@ export default {
     };
   },
   methods: {
-    async removeFromCart(id) {
-      if (id) {
-        this.iconLoadingTarget = id;
-        await this.$store.dispatch('cart/removeFromCart', { cartProductId: id });
-        this.iconLoadingTarget = '';
-        this.selectReset();
-        return;
-      }
-      const ids = this.selected.map((item) => item.id).join(',');
+    async removeFromCart() {
+      const ids = this.selected.join(',');
       this.iconLoadingTarget = 'remove';
       await this.$store.dispatch('cart/removeFromCart', { cartProductId: ids });
       this.iconLoadingTarget = '';
-      this.selectReset();
+      this.selectToggle(false);
     },
     async applyCoupon() {
       if (this.code === '') {
@@ -231,8 +138,20 @@ export default {
       await this.$store.dispatch('coupons/applyCoupon', { code: this.code });
       this.iconLoadingTarget = '';
     },
-    selectReset() {
-      this.selected = [];
+    putSelected(id) {
+      const index = this.selected.indexOf(id);
+      if (index < 0) {
+        this.selected.push(id);
+      } else {
+        this.selected.splice(index, 1);
+      }
+    },
+    selectToggle(status) {
+      if (status) {
+        this.selected = this.cart.map((item) => item.id);
+      } else {
+        this.selected = [];
+      }
     },
   },
   computed: {
@@ -242,7 +161,7 @@ export default {
       },
       set(value) {
         if (value) {
-          this.selected = this.cart;
+          this.selected = this.cart.map((item) => item.id);
         } else {
           this.selected = [];
         }
