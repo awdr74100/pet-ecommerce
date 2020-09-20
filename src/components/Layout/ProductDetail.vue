@@ -201,7 +201,6 @@ export default {
         return;
       }
       if (this.qty > this.product.stock) {
-        console.log(12);
         const message = '庫存不足';
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
@@ -210,8 +209,8 @@ export default {
         this.iconLoadingTarget = 'push';
         await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
         this.iconLoadingTarget = '';
-        // 後端判斷庫存不足
-        if (this.$store.state.notification.messages.length > 0) return;
+        // 從後端判斷庫存不足
+        if (this.messages[this.messages.length - 1].status === 'danger') return;
         this.$router.push('/cart');
         return;
       }
@@ -245,6 +244,7 @@ export default {
     ...mapState('user', ['isSignin']),
     ...mapState('products', ['product']),
     ...mapState(['skeletonTarget']),
+    ...mapState('notification', ['messages']),
   },
   created() {
     const { id } = this.$route.params;

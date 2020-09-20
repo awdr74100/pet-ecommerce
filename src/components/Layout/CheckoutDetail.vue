@@ -8,16 +8,15 @@
     <div class="p-3">
       <CartTable :readonly="true" />
     </div>
-    <!-- form / window -->
+    <!-- steps -->
     <div class="p-3">
       <div class="row">
-        <!-- steps -->
         <div class="col-md-8 order-md-1 order-2 text-secondary">
-          <!-- write step(1) -->
+          <!-- write -->
           <template v-if="step === 'write'">
             <div class="row">
               <div class="col-md-6">
-                <!-- transport -->
+                <!-- radio (shipping_method) -->
                 <div class="d-flex align-items-center pb-3 tab-name mt-md-0 mt-5">
                   <span class="d-block mr-2">
                     <font-awesome-icon :icon="['fas', 'shipping-fast']" />
@@ -82,7 +81,7 @@
                 </form>
               </div>
               <div class="col-md-6">
-                <!-- pay -->
+                <!-- radio (payment_method) -->
                 <div class="d-flex align-items-center pb-3 tab-name mt-md-0 mt-5">
                   <span class="d-block mr-2">
                     <font-awesome-icon :icon="['fas', 'money-bill-wave']" />
@@ -127,7 +126,6 @@
                 </form>
               </div>
             </div>
-            <!-- write -->
             <div class="d-flex align-items-center pb-3 tab-name mt-5">
               <span class="d-block mr-2"><font-awesome-icon :icon="['fas', 'user-edit']"/></span>
               <p>填寫收件人資訊</p>
@@ -207,7 +205,7 @@
               </form>
             </ValidationObserver>
           </template>
-          <!-- created step(2) -->
+          <!-- created -->
           <template v-if="step !== 'write'">
             <div class="window text-secondary mt-md-0 mt-5">
               <h2 class="bg-primary window__header text-white p-3">結帳資訊</h2>
@@ -276,7 +274,15 @@
               </h2>
               <div class="p-3 window__body">
                 <div class="d-flex align-items-center justify-content-center">
-                  <button class="btn btn--primary px-5">確認並付款</button>
+                  <button
+                    class="btn btn--primary px-5 d-flex align-items-center"
+                    @click.prevent="payment"
+                  >
+                    <p>確認並付款</p>
+                    <span class="ml-2" v-if="iconLoadingTarget === 'payment'">
+                      <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                    </span>
+                  </button>
                   <button
                     class="btn btn--danger px-5 ml-3 d-flex align-items-center"
                     @click.prevent="cancelOrder"
@@ -321,7 +327,7 @@
         </div>
       </div>
     </div>
-    <!-- button -->
+    <!-- next step button -->
     <div class="mb-3" v-if="step === 'write'">
       <div class="d-flex flex-column align-items-center justify-content-center">
         <button
@@ -378,9 +384,9 @@ export default {
       };
       // 建立訂單
       await this.$store.dispatch('orders/createOrder', orderData);
-      // 取得訂單
+      // 重新取得訂單
       await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
-      // 清空購物車
+      // 清空客戶端購物車
       this.$store.commit('cart/CLEARCART');
       // 下個步驟
       this.stepFinsh.push(this.step);
@@ -389,11 +395,30 @@ export default {
     },
     async cancelOrder() {
       this.iconLoadingTarget = 'cancel';
+      // 取消訂單
       await this.$store.dispatch('orders/cancelOrder', { orderId: this.orderId });
+      // 重新取得訂單
       await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
+      // 下個步驟
       this.stepFinsh.push(this.step);
       this.step = 'cancelled';
       this.iconLoadingTarget = '';
+    },
+    async payment() {
+      this.iconLoadingTarget = 'payment';
+      // 付款
+      await this.$store.dispatch('payment/payment', { orderId: this.orderId });
+      // 重新取得訂單
+      await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
+      // 下個步驟
+      this.stepFinsh.push(this.step);
+      this.step = 'paid';
+      this.iconLoadingTarget = '';
+      // 模擬系統處理中
+      setTimeout(() => {
+        this.stepFinsh.push(this.step);
+        this.step = 'toship';
+      }, 5000);
     },
   },
   computed: {
