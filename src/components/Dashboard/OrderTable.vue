@@ -102,7 +102,7 @@
                 <th style="min-width:300px;width:100%">
                   <div class="d-flex align-items-center">
                     <span class="avatar"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
-                    <p class="ml-2">{{ item.uid }}</p>
+                    <p class="ml-2">{{ item.username }}</p>
                   </div>
                 </th>
                 <th style="min-width:120px;max-width:140px" class="text-center"></th>
