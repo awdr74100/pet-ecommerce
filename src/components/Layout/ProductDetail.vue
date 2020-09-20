@@ -146,7 +146,7 @@
               <div class="d-flex align-items-center mb-5">
                 <button
                   class="btn btn--transparent btn-md--xl btn--lg d-flex align-items-center"
-                  @click.prevent="addToCart(false)"
+                  @click.prevent="addToCart('add')"
                 >
                   <p>加入購物車</p>
                   <span class="ml-2" v-if="iconLoadingTarget === 'add'">
@@ -155,7 +155,7 @@
                 </button>
                 <button
                   class="btn btn--primary btn-md--xl btn--lg ml-3 d-flex align-items-center"
-                  @click="addToCart(true)"
+                  @click="addToCart('push')"
                 >
                   <p>直接購買</p>
                   <span class="ml-2" v-if="iconLoadingTarget === 'push'">
@@ -195,28 +195,26 @@ export default {
     dropdownToggle() {
       this.dropdownActive = !this.dropdownActive;
     },
-    async addToCart(push) {
+    async addToCart(action) {
+      this.iconLoadingTarget = action;
+      // 在每次動作時驗證
+      await this.$store.dispatch('user/check');
+      // 檢查是否登入
       if (!this.isSignin) {
         this.$router.push({ path: '/signin' });
         return;
       }
+      // 檢查是否庫存不足
       if (this.qty > this.product.stock) {
         const message = '庫存不足';
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
       }
-      if (push) {
-        this.iconLoadingTarget = 'push';
-        await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
-        this.iconLoadingTarget = '';
-        // 從後端判斷庫存不足
-        if (this.messages[this.messages.length - 1].status === 'danger') return;
-        this.$router.push('/cart');
-        return;
-      }
-      this.iconLoadingTarget = 'add';
+      // 加入購物車
       await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
       this.iconLoadingTarget = '';
+      if (this.messages[this.messages.length - 1].status === 'danger' || action === 'add') return;
+      this.$router.push('/cart');
     },
   },
   computed: {

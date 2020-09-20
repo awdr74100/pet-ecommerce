@@ -102,7 +102,7 @@
                 <th style="min-width:300px;width:100%">
                   <div class="d-flex align-items-center">
                     <span class="avatar"><font-awesome-icon :icon="['fas', 'user-circle']"/></span>
-                    <p class="ml-2">{{ item.uid }}</p>
+                    <p class="ml-2">{{ account.username }}</p>
                   </div>
                 </th>
                 <th style="min-width:120px;max-width:140px" class="text-center"></th>
@@ -192,6 +192,37 @@
                         <p>新訂單</p>
                         <span>{{ item.created_at | datetime }}</span>
                       </li>
+                      <li class="timeline__item mt-2" v-if="item.status === 'unpaid'">
+                        <div class="d-flex align-items-center">
+                          <p>完成付款</p>
+                          <button
+                            class="btn btn--primary py-0 px-1 ml-2 d-flex align-items-center"
+                            @click.prevent="payment(item.id)"
+                          >
+                            <p>確定</p>
+                            <span
+                              class="text-white ml-1"
+                              v-if="
+                                iconLoadingTarget === item.id && iconLoadingAction === 'payment'
+                              "
+                            >
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                            </span>
+                          </button>
+                          <button
+                            class="btn btn--danger py-0 px-1 ml-1 d-flex align-items-center"
+                            @click.prevent="cancelOrder(item.id)"
+                          >
+                            <p>取消</p>
+                            <span
+                              class="text-white ml-1"
+                              v-if="iconLoadingTarget === item.id && iconLoadingAction === 'cancel'"
+                            >
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                            </span>
+                          </button>
+                        </div>
+                      </li>
                       <li
                         class="timeline__item mt-2"
                         :class="{ 'timeline__item--cancel': item.status === 'cancelled' }"
@@ -208,23 +239,6 @@
                         <p>買家已完成付款</p>
                         <span>{{ item.paid_date | datetime }}</span>
                       </li>
-                      <li class="timeline__item mt-2" v-if="item.status === 'toship'">
-                        <div class="d-flex align-items-center">
-                          <p>完成出貨</p>
-                          <button
-                            class="btn btn--primary py-0 px-1 ml-2 d-flex align-items-center"
-                            @click.prevent="shipOrder(item.uid, item.id)"
-                          >
-                            <p>確定</p>
-                            <span
-                              class="text-white ml-1"
-                              v-if="iconLoadingTarget === item.id && iconLoadingAction === 'ship'"
-                            >
-                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
-                            </span>
-                          </button>
-                        </div>
-                      </li>
                       <li
                         class="timeline__item mt-2"
                         :class="{ 'timeline__item--active': item.status === 'shipping' }"
@@ -240,6 +254,29 @@
                       >
                         <p>商品以送達</p>
                         <span>{{ item.arrival_date | datetime }}</span>
+                      </li>
+                      <li
+                        class="timeline__item mt-2"
+                        :class="{ 'timeline__item--active': item.status === 'arrived' }"
+                        v-if="item.status === 'arrived'"
+                      >
+                        <div class="d-flex align-items-center">
+                          <p>完成訂單</p>
+                          <button
+                            class="btn btn--primary py-0 px-1 ml-2 d-flex align-items-center"
+                            @click.prevent="completeOrder(item.id)"
+                          >
+                            <p>確定</p>
+                            <span
+                              class="text-white ml-1"
+                              v-if="
+                                iconLoadingTarget === item.id && iconLoadingAction === 'complete'
+                              "
+                            >
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                            </span>
+                          </button>
+                        </div>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -286,7 +323,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import OrderPanel from '@/components/Dashboard/OrderPanel.vue';
+import OrderPanel from '@/components/Layout/OrderPanel.vue';
 import Dropdown from '@/components/common/Dropdown.vue';
 import Pagination from '@/components/common/Pagination.vue';
 
@@ -330,10 +367,25 @@ export default {
       this.resetKey = Date.now();
       this.page = 1;
     },
-    async shipOrder(uid, orderId) {
+    async cancelOrder(orderId) {
       this.iconLoadingTarget = orderId;
-      this.iconLoadingAction = 'ship';
-      await this.$store.dispatch('orders/shipOrder', { uid, orderId });
+      this.iconLoadingAction = 'cencel';
+      await this.$store.dispatch('orders/cancelOrder', { orderId });
+      this.iconLoadingTarget = '';
+      this.iconLoadingAction = '';
+    },
+    async completeOrder(orderId) {
+      this.iconLoadingTarget = orderId;
+      this.iconLoadingAction = 'complete';
+      await this.$store.dispatch('orders/completeOrder', { orderId });
+      this.iconLoadingTarget = '';
+      this.iconLoadingAction = '';
+    },
+    async payment(orderId) {
+      this.iconLoadingTarget = orderId;
+      this.iconLoadingAction = 'payment';
+      await this.$store.dispatch('payment/payment', { orderId });
+      await this.$store.dispatch('orders/getOrders', { role: 'user' });
       this.iconLoadingTarget = '';
       this.iconLoadingAction = '';
     },
@@ -372,6 +424,9 @@ export default {
         .sort((a, b) => (a.created_at > b.created_at ? sortA : sortB))
         .slice(startItem, endItem);
     },
+    account() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
     ...mapState('orders', ['orders']),
     ...mapState(['skeletonTarget']),
   },
@@ -391,11 +446,11 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('orders/getOrders', { role: 'admin' });
+    this.$store.dispatch('orders/getOrders', { role: 'user' });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/scss-scoped/components/Dashboard/order-table.scss';
+@import '~@/assets/scss-scoped/components/Layout/order-table.scss';
 </style>

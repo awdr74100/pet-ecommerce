@@ -60,8 +60,8 @@ export default {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
-    async shipOrder({ dispatch }, { orderId }) {
-      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/orders/${orderId}/ship`;
+    async shipOrder({ dispatch }, { uid, orderId }) {
+      const url = `${process.env.VUE_APP_BASE_URL}/api/admin/orders/${uid}/${orderId}/ship`;
       const root = { root: true };
       try {
         const { data } = await axios.patch(url);

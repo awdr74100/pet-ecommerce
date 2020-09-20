@@ -89,11 +89,25 @@ export default {
     },
     async removeFromCart(cartProductId) {
       this.iconLoadingTarget = cartProductId;
+      // 在每次動作前驗證
+      await this.$store.dispatch('user/check');
+      // 檢查是否登入
+      if (!this.isSignin) {
+        this.$router.push({ path: '/signin' });
+        return;
+      }
       await this.$store.dispatch('cart/removeFromCart', { cartProductId });
       this.iconLoadingTarget = '';
     },
     async clearCart() {
       this.iconLoadingTarget = 'all';
+      // 在每次動作前驗證
+      await this.$store.dispatch('user/check');
+      // 檢查是否登入
+      if (!this.isSignin) {
+        this.$router.push({ path: '/signin' });
+        return;
+      }
       await this.$store.dispatch('cart/clearCart');
       this.iconLoadingTarget = '';
     },

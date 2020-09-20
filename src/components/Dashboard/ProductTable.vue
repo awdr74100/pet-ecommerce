@@ -371,7 +371,7 @@ export default {
     sortAndSliceProducts() {
       const vm = this;
       vm.selectReset(); // reset this.selected
-      const products = [...vm.filterProducts]; /// fix call by reference
+      const products = [...vm.filterProducts]; // fix call by reference
       const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
       const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
       if (vm.sortTarget) {

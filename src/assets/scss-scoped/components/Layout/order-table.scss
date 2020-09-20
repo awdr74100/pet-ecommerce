@@ -152,6 +152,17 @@
           color: theme-color('primary') !important;
         }
       }
+      &--cancel {
+        color: theme-color('danger');
+
+        &::before {
+          background-color: theme-color('danger');
+          box-shadow: 0px 0px 6px 1.5px lighten(theme-color('danger'), 16%);
+        }
+        span {
+          color: theme-color('danger') !important;
+        }
+      }
     }
     span {
       display: inline-block;
