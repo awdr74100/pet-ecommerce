@@ -61,7 +61,10 @@
 export default {
   props: {
     step: String,
-    stepFinsh: Array,
+    stepFinsh: {
+      type: Array,
+      default: () => [],
+    },
   },
 };
 </script>

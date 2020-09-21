@@ -68,16 +68,29 @@
               <td>{{ item.product.price | currency | dollar }}</td>
               <td>
                 <div class="d-flex align-items-center text-secondary btn-group">
-                  <button class="btn btn-group__btn left" :disabled="readonly">
+                  <button
+                    class="btn btn-group__btn left"
+                    :class="{ 'btn-group__btn--overlay': overlay.id === item.id }"
+                    :disabled="readonly || item.qty <= 1 || overlay.id === item.id"
+                    @click.prevent="updateCartItemQty('reduce', item)"
+                  >
                     <span><font-awesome-icon :icon="['fas', 'minus']"/></span>
                   </button>
                   <input
                     type="number"
                     class="btn-group__input"
-                    :disabled="readonly"
+                    :ref="item.id"
+                    :class="{ 'btn-group__input--overlay': overlay.id === item.id }"
+                    :disabled="readonly || overlay.id === item.id"
                     :value="item.qty"
+                    @blur="blurUpdateCartItemQty(item, $event)"
                   />
-                  <button class="btn btn-group__btn right" :disabled="readonly">
+                  <button
+                    class="btn btn-group__btn right"
+                    :class="{ 'btn-group__btn--overlay': overlay.id === item.id }"
+                    :disabled="readonly || item.qty >= item.product.stock || overlay.id === item.id"
+                    @click.prevent="updateCartItemQty('add', item)"
+                  >
                     <span><font-awesome-icon :icon="['fas', 'plus']"/></span>
                   </button>
                 </div>
@@ -100,7 +113,7 @@
                   v-else
                   @click="removeFromCart(item.id)"
                 >
-                  <span v-if="iconLoadingTarget === item.id">
+                  <span v-if="spinner.id === item.id">
                     <font-awesome-icon :icon="['fas', 'spinner']" spin />
                   </span>
                   <span v-else>刪除</span>
@@ -144,21 +157,50 @@ export default {
   data() {
     return {
       collapse: true,
-      iconLoadingTarget: '',
+      sortMode: 'down',
+      sortTarget: 'created_at',
+      spinner: { id: '', action: '' },
+      overlay: { id: '' },
     };
   },
   methods: {
     async removeFromCart(cartProductId) {
-      this.iconLoadingTarget = cartProductId;
+      this.spinner.id = cartProductId;
       await this.$store.dispatch('cart/removeFromCart', { cartProductId });
-      this.iconLoadingTarget = '';
+      this.spinner.id = '';
+    },
+    async updateCartItemQty(action, cartProduct) {
+      const { id } = cartProduct;
+      let { qty } = cartProduct;
+      this.overlay.id = id;
+      const newQty = action === 'add' ? (qty += 1) : (qty -= 1);
+      await this.$store.dispatch('cart/updateCartItemQty', { cartProductId: id, qty: newQty });
+      this.overlay.id = '';
+    },
+    async blurUpdateCartItemQty(cartPorduct, e) {
+      const { id, qty, product } = cartPorduct;
+      const newQty = parseInt(e.target.value, 10);
+      if (newQty === qty) return;
+      // 從前端做驗證
+      if (newQty > product.stock) {
+        const message = '庫存不足';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+        this.$refs[id][0].value = qty;
+        return;
+      }
+      this.overlay.id = id;
+      await this.$store.dispatch('cart/updateCartItemQty', { cartProductId: id, qty: newQty });
+      this.overlay.id = '';
     },
   },
   computed: {
     collapseCart() {
+      const vm = this;
       const cart = this.order.cart || this.cart;
-      if (this.readonly && this.collapse) return cart.slice(0, 2);
-      return cart;
+      const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
+      const sortCart = cart.sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB));
+      if (this.readonly && this.collapse) return sortCart.slice(0, 2);
+      return sortCart;
     },
     selectAll: {
       get() {

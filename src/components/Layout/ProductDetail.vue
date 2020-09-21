@@ -101,21 +101,30 @@
                         <p>7-11 純取貨</p>
                         <span class="ml-auto">$60</span>
                       </div>
-                      <p class="text-gray date">預計到貨時間9月15日 - 9月17日</p>
+                      <small class="text-gray date">
+                        預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日
+                      </small>
                     </li>
                     <li class="pt-1 pb-2">
                       <div class="d-flex align-items-center mb-2">
                         <p>全家純取貨</p>
                         <span class="ml-auto">$60</span>
                       </div>
-                      <p class="text-gray date">預計到貨時間9月15日 - 9月17日</p>
+                      <small class="text-gray date">
+                        預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日
+                      </small>
                     </li>
                     <li class="pt-1">
                       <div class="d-flex align-items-center mb-2">
                         <p>黑貓宅急便</p>
                         <span class="ml-auto">$120</span>
                       </div>
-                      <p class="text-gray date">預計到貨時間9月15日 - 9月17日</p>
+                      <small class="text-gray date">
+                        預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日
+                      </small>
                     </li>
                   </ul>
                 </div>
@@ -149,7 +158,7 @@
                   @click.prevent="addToCart('add')"
                 >
                   <p>加入購物車</p>
-                  <span class="ml-2" v-if="iconLoadingTarget === 'add'">
+                  <span class="ml-2" v-if="spinner.action === 'add'">
                     <font-awesome-icon :icon="['fas', 'spinner']" spin />
                   </span>
                 </button>
@@ -158,7 +167,7 @@
                   @click="addToCart('push')"
                 >
                   <p>直接購買</p>
-                  <span class="ml-2" v-if="iconLoadingTarget === 'push'">
+                  <span class="ml-2" v-if="spinner.action === 'push'">
                     <font-awesome-icon :icon="['fas', 'spinner']" spin />
                   </span>
                 </button>
@@ -186,9 +195,9 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      dropdownActive: false,
       qty: 1,
-      iconLoadingTarget: '',
+      dropdownActive: false,
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
@@ -196,7 +205,6 @@ export default {
       this.dropdownActive = !this.dropdownActive;
     },
     async addToCart(action) {
-      this.iconLoadingTarget = action;
       // 在每次動作時驗證
       await this.$store.dispatch('user/check');
       // 檢查是否登入
@@ -211,8 +219,9 @@ export default {
         return;
       }
       // 加入購物車
+      this.spinner.action = action;
       await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
-      this.iconLoadingTarget = '';
+      this.spinner.action = '';
       if (this.messages[this.messages.length - 1].status === 'danger' || action === 'add') return;
       this.$router.push('/cart');
     },
@@ -228,6 +237,19 @@ export default {
         return this.product.description.split('\n') || [];
       }
       return [];
+    },
+    arrivalDate() {
+      const day = 2; // 兩天到達
+      const date = new Date();
+      date.setDate(date.getDate() + day);
+      let mm = date.getMonth() + 1;
+      let dd = date.getDate();
+      const date1 = { mm, dd };
+      date.setDate(date.getDate() + 1);
+      mm = date.getMonth() + 1;
+      dd = date.getDate();
+      const date2 = { mm, dd };
+      return { date1, date2 };
     },
     inputQty: {
       get() {

@@ -38,7 +38,8 @@
                         <span class="ml-auto mr-3">$60</span>
                       </div>
                       <small class="form__message text-gray mt-2"
-                        >預計到貨時間9月15日 - 9月17日</small
+                        >預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日</small
                       >
                     </label>
                   </div>
@@ -56,7 +57,8 @@
                         <span class="ml-auto mr-3">$60</span>
                       </div>
                       <small class="form__message text-gray mt-2"
-                        >預計到貨時間9月15日 - 9月17日</small
+                        >預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日</small
                       >
                     </label>
                   </div>
@@ -74,7 +76,8 @@
                         <span class="ml-auto mr-3">$120</span>
                       </div>
                       <small class="form__message text-gray mt-2"
-                        >預計到貨時間9月15日 - 9月17日</small
+                        >預計到貨時間{{ arrivalDate.date1.mm }}月{{ arrivalDate.date1.dd }}日 -
+                        {{ arrivalDate.date2.mm }}月{{ arrivalDate.date2.dd }}日</small
                       >
                     </label>
                   </div>
@@ -279,7 +282,7 @@
                     @click.prevent="payment"
                   >
                     <p>確認並付款</p>
-                    <span class="ml-2" v-if="iconLoadingTarget === 'payment'">
+                    <span class="ml-2" v-if="spinner.action === 'payment'">
                       <font-awesome-icon :icon="['fas', 'spinner']" spin />
                     </span>
                   </button>
@@ -288,7 +291,7 @@
                     @click.prevent="cancelOrder"
                   >
                     <p>取消訂單</p>
-                    <span class="ml-2" v-if="iconLoadingTarget === 'cancel'">
+                    <span class="ml-2" v-if="spinner.action === 'cancel'">
                       <font-awesome-icon :icon="['fas', 'spinner']" spin />
                     </span>
                   </button>
@@ -335,7 +338,7 @@
           @click.prevent="createOrder"
         >
           <p>建立訂單</p>
-          <span class="ml-2" v-if="iconLoadingTarget === 'create'">
+          <span class="ml-2" v-if="spinner.action === 'create'">
             <font-awesome-icon :icon="['fas', 'spinner']" spin />
           </span>
         </button>
@@ -368,14 +371,14 @@ export default {
         address: '',
       },
       message: '',
-      iconLoadingTarget: '',
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
     async createOrder() {
       const valid = await this.$refs['create-order-form'].validate();
       if (!valid) return;
-      this.iconLoadingTarget = 'create';
+      this.spinner.action = 'create';
       const orderData = {
         user: this.user,
         message: this.message,
@@ -389,36 +392,34 @@ export default {
       // 清空客戶端購物車
       this.$store.commit('cart/CLEARCART');
       // 下個步驟
-      this.stepFinsh.push(this.step);
-      this.step = 'created';
-      this.iconLoadingTarget = '';
+      this.nextStep('created');
     },
     async cancelOrder() {
-      this.iconLoadingTarget = 'cancel';
+      this.spinner.action = 'cancel';
       // 取消訂單
       await this.$store.dispatch('orders/cancelOrder', { orderId: this.orderId });
       // 重新取得訂單
       await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
       // 下個步驟
-      this.stepFinsh.push(this.step);
-      this.step = 'cancelled';
-      this.iconLoadingTarget = '';
+      this.nextStep('cancelled');
     },
     async payment() {
-      this.iconLoadingTarget = 'payment';
+      this.spinner.action = 'payment';
       // 付款
       await this.$store.dispatch('payment/payment', { orderId: this.orderId });
       // 重新取得訂單
       await this.$store.dispatch('orders/getOrder', { orderId: this.orderId });
       // 下個步驟
-      this.stepFinsh.push(this.step);
-      this.step = 'paid';
-      this.iconLoadingTarget = '';
-      // 模擬系統處理中
+      this.nextStep('paid');
+      // 模擬準備出貨中
       setTimeout(() => {
-        this.stepFinsh.push(this.step);
-        this.step = 'toship';
+        this.nextStep('toship');
       }, 5000);
+    },
+    nextStep(step) {
+      this.stepFinsh.push(this.step);
+      this.step = step;
+      this.spinner.action = '';
     },
   },
   computed: {
@@ -427,6 +428,19 @@ export default {
       if (target === '7-11') return 60;
       if (target === 'family') return 60;
       return 120;
+    },
+    arrivalDate() {
+      const day = 2; // 兩天到達
+      const date = new Date();
+      date.setDate(date.getDate() + day);
+      let mm = date.getMonth() + 1;
+      let dd = date.getDate();
+      const date1 = { mm, dd };
+      date.setDate(date.getDate() + 1);
+      mm = date.getMonth() + 1;
+      dd = date.getDate();
+      const date2 = { mm, dd };
+      return { date1, date2 };
     },
     ...mapState('cart', ['total', 'final_total']),
     ...mapState('orders', ['order', 'orderId']),

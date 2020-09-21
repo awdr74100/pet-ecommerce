@@ -8,7 +8,7 @@
           <p>最近加入的商品</p>
         </div>
         <ul class="overflow px-3 my-1">
-          <li class="product py-2" v-for="(item, index) in cart" :key="index">
+          <li class="product py-2" v-for="(item, index) in sortCart" :key="index">
             <div
               class="product__img"
               :style="{ 'background-image': `url('${item.product.imgUrl}')` }"
@@ -31,7 +31,7 @@
                 class="mt-auto text-danger cursor-pointer product__delete text-center"
                 @click="removeFromCart(item.id)"
               >
-                <span v-if="iconLoadingTarget === item.id">
+                <span v-if="spinner.id === item.id && spinner.action === 'deleteSingle'">
                   <font-awesome-icon :icon="['fas', 'spinner']" spin />
                 </span>
                 <p v-else>刪除</p>
@@ -49,7 +49,7 @@
             @click.prevent="clearCart"
           >
             <p>清空</p>
-            <span class="ml-2" v-if="iconLoadingTarget === 'all'">
+            <span class="ml-2" v-if="spinner.action === 'deleteAll'">
               <font-awesome-icon :icon="['fas', 'spinner']" spin />
             </span>
           </a>
@@ -77,7 +77,9 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      iconLoadingTarget: '',
+      sortMode: 'down',
+      sortTarget: 'created_at',
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
@@ -88,7 +90,8 @@ export default {
       }
     },
     async removeFromCart(cartProductId) {
-      this.iconLoadingTarget = cartProductId;
+      this.spinner.id = cartProductId;
+      this.spinner.action = 'deleteSingle';
       // 在每次動作前驗證
       await this.$store.dispatch('user/check');
       // 檢查是否登入
@@ -97,10 +100,11 @@ export default {
         return;
       }
       await this.$store.dispatch('cart/removeFromCart', { cartProductId });
-      this.iconLoadingTarget = '';
+      this.spinner.id = '';
+      this.spinner.action = '';
     },
     async clearCart() {
-      this.iconLoadingTarget = 'all';
+      this.spinner.action = 'deleteAll';
       // 在每次動作前驗證
       await this.$store.dispatch('user/check');
       // 檢查是否登入
@@ -109,10 +113,16 @@ export default {
         return;
       }
       await this.$store.dispatch('cart/clearCart');
-      this.iconLoadingTarget = '';
+      this.spinner.action = '';
     },
   },
   computed: {
+    sortCart() {
+      const vm = this;
+      const cart = [...vm.cart]; /// fix call by reference
+      const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
+      return cart.sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB));
+    },
     ...mapState('user', ['isSignin']),
     ...mapState('cart', ['cart', 'total', 'final_total']),
   },

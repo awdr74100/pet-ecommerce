@@ -1,16 +1,18 @@
 <template>
   <div class="order-table w-100">
-    <!-- order panel -->
+    <!-- panel -->
     <div class="p-4">
       <OrderPanel @callSearch="search" @callSearchReset="searchReset" />
     </div>
-    <!-- section -->
+    <!-- info -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">{{ filterOrders.length }} 筆訂單</p>
+      <p class="font-l font-weight-semi-bold text-secondary mr-auto ">
+        {{ filterOrders.length }} 筆訂單
+      </p>
     </div>
-    <!-- table section -->
+    <!-- table -->
     <div class="p-4">
-      <!-- table header -->
+      <!-- table(header) -->
       <div class="table-header">
         <table class="table text-secondary">
           <thead class="thead">
@@ -32,7 +34,7 @@
           </thead>
         </table>
       </div>
-      <!-- table list (骨架屏) -->
+      <!-- table(list) - (骨架屏) -->
       <template v-if="skeletonTarget === 'orders'">
         <div class="table-responsive mt-3" v-for="index in 3" :key="index + 300">
           <table class="table text-secondary">
@@ -93,7 +95,7 @@
           </table>
         </div>
       </template>
-      <!-- table list (實體) -->
+      <!-- table(list) - (實體) -->
       <template v-else>
         <div class="table-responsive mt-3" v-for="item in sortAndSliceOrders" :key="item.id">
           <table class="table text-secondary">
@@ -158,24 +160,24 @@
                 </td>
                 <td style="min-width:215px">
                   <template v-if="index === 0">
-                    <ul class="info">
-                      <li class="info__item">
+                    <ul class="list">
+                      <li class="list__item">
                         <p>購買人</p>
                         <span>{{ item.user.name }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="list__item mt-2">
                         <p>收件地址</p>
                         <span>{{ item.user.address }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="list__item mt-2">
                         <p>連絡電話</p>
                         <span>{{ item.user.tel }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="list__item mt-2">
                         <p>電子信箱</p>
                         <span>{{ item.user.email }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="list__item mt-2">
                         <p>備註</p>
                         <span>{{ item.message }}</span>
                       </li>
@@ -218,7 +220,7 @@
                             <p>確定</p>
                             <span
                               class="text-white ml-1"
-                              v-if="iconLoadingTarget === item.id && iconLoadingAction === 'ship'"
+                              v-if="spinner.id === item.id && spinner.action === 'ship'"
                             >
                               <font-awesome-icon :icon="['fas', 'spinner']" spin />
                             </span>
@@ -263,18 +265,18 @@
           </table>
         </div>
       </template>
-      <!-- table footer -->
+      <!-- table(footer) -->
       <div class="table-footer d-flex align-items-center justify-content-end px-3 py-2 mt-3">
-        <!-- dropdown component -->
+        <!-- dropdown -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />
         </div>
-        <!-- pagination component -->
+        <!-- pagination -->
         <div class="ml-3">
           <Pagination
             :length="filterOrders.length"
             :row="row"
-            :resetKey="resetKey"
+            :forceResetKey="forceResetKey"
             @callPageToggle="pageToggle"
           />
         </div>
@@ -300,12 +302,13 @@ export default {
     return {
       row: 12,
       page: 1,
+      sortMode: 'down',
+      sortTarget: 'created_at',
       searchTarget: '',
       searchTargetValue: '',
       searchDateRange: [],
-      resetKey: Date.now(),
-      iconLoadingTarget: '',
-      iconLoadingAction: '',
+      forceResetKey: Date.now(),
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
@@ -327,15 +330,15 @@ export default {
       this.searchDateRange = [];
     },
     paginationReset() {
-      this.resetKey = Date.now();
+      this.forceResetKey = Date.now();
       this.page = 1;
     },
     async shipOrder(uid, orderId) {
-      this.iconLoadingTarget = orderId;
-      this.iconLoadingAction = 'ship';
+      this.spinner.id = orderId;
+      this.spinner.action = 'ship';
       await this.$store.dispatch('orders/shipOrder', { uid, orderId });
-      this.iconLoadingTarget = '';
-      this.iconLoadingAction = '';
+      this.spinner.id = '';
+      this.spinner.action = '';
     },
   },
   computed: {
@@ -343,13 +346,13 @@ export default {
       const vm = this;
       vm.paginationReset(); // reset pagination page
       const orders = [...vm.orders]; // fix call by reference
-      const needSearch = vm.searchTargetValue || vm.searchDateRange.length > 0;
-      if (needSearch) {
+      const needFilter = vm.searchTargetValue || vm.searchDateRange.length > 0;
+      if (needFilter) {
         return orders
           .filter((item) => {
             if (vm.searchTargetValue) {
               const [key, value] = [vm.searchTarget, vm.searchTargetValue];
-              return item[key === '訂單編號' ? 'id' : ''].match(value);
+              return item[key === '訂單編號' ? 'id' : 'username'].match(value);
             }
             return item;
           })
@@ -366,10 +369,10 @@ export default {
     sortAndSliceOrders() {
       const vm = this;
       const orders = [...vm.filterOrders]; // fix call by reference
-      const [sortA, sortB] = [-1, 1];
+      const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
       const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
       return orders
-        .sort((a, b) => (a.created_at > b.created_at ? sortA : sortB))
+        .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
         .slice(startItem, endItem);
     },
     ...mapState('orders', ['orders']),
@@ -377,9 +380,9 @@ export default {
   },
   filters: {
     shippingFee(value) {
-      if (value === '7-11') return '60';
-      if (value === 'family') return '60';
-      return '120';
+      if (value === '7-11') return 60;
+      if (value === 'family') return 60;
+      return 120;
     },
     translate(value) {
       if (value === '7-11') return '7-11 純取貨';

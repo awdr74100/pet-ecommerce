@@ -1,8 +1,10 @@
 <template>
   <div class="coupon-table w-100">
-    <!-- section -->
+    <!-- info -->
     <div class="d-flex align-items-center p-4 pb-1">
-      <p class="font-l text-secondary mr-auto">{{ filterCoupons.length }} 張優惠卷</p>
+      <p class="font-l font-weight-semi-bold text-secondary mr-auto">
+        {{ filterCoupons.length }} 張優惠卷
+      </p>
       <button
         class="btn btn--primary btn--lg"
         @click.prevent="openModal('add-edit-coupon-modal', undefined, undefined, undefined)"
@@ -147,23 +149,23 @@
       </div>
       <!-- (foot) - fix scroll problem -->
       <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
-        <!-- dropdown component -->
+        <!-- dropdown -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />
         </div>
-        <!-- pagination component -->
+        <!-- pagination -->
         <div class="ml-3">
           <Pagination
             :length="filterCoupons.length"
             :row="row"
-            :resetKey="resetKey"
+            :forceResetKey="forceResetKey"
             @callPageToggle="pageToggle"
           />
         </div>
       </div>
     </div>
-    <!-- batch action -->
-    <div class="batch mt-3" v-if="showBatchAction">
+    <!-- footer -->
+    <div class="coupon-table__footer mt-3" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
         <div class="d-flex align-items-center ml-3">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
@@ -201,7 +203,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 import Dropdown from '@/components/common/Dropdown.vue';
 import Pagination from '@/components/common/Pagination.vue';
@@ -216,9 +218,9 @@ export default {
       row: 12,
       page: 1,
       sortMode: 'down',
-      sortTarget: '',
+      sortTarget: 'created_at',
       selected: [],
-      resetKey: Date.now(),
+      forceResetKey: Date.now(),
     };
   },
   methods: {
@@ -241,7 +243,7 @@ export default {
       this.selected = [];
     },
     paginationReset() {
-      this.resetKey = Date.now();
+      this.forceResetKey = Date.now();
       this.page = 1;
     },
     openModal(modal, cache = {}, caches = [], isEnabled) {
@@ -258,7 +260,6 @@ export default {
         caches: cachesFilter.length > 0 ? cachesFilter : caches,
       });
     },
-    ...mapActions('coupons', ['getCoupons']),
   },
   computed: {
     selectAll: {
@@ -307,18 +308,15 @@ export default {
       const coupons = [...vm.filterCoupons]; // fix call by reference
       const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
       const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
-      if (vm.sortTarget) {
-        return coupons
-          .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
-          .slice(startItem, endItem);
-      }
-      return coupons.slice(startItem, endItem);
+      return coupons
+        .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
+        .slice(startItem, endItem);
     },
     ...mapState('coupons', ['coupons']),
     ...mapState(['skeletonTarget']),
   },
   created() {
-    this.getCoupons();
+    this.$store.dispatch('coupons/getCoupons');
   },
 };
 </script>

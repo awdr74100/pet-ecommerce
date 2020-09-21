@@ -1,12 +1,14 @@
 <template>
   <div class="product-table w-100">
-    <!-- product panel -->
+    <!-- panel -->
     <div class="p-4">
       <ProductPanel @callSearch="search" @callSearchReset="searchReset" />
     </div>
-    <!-- section -->
+    <!-- info -->
     <div class="d-flex align-items-center px-4 pt-4 pb-1">
-      <p class="font-l text-secondary mr-auto ">{{ filterProducts.length }} 件商品</p>
+      <p class="font-l font-weight-semi-bold text-secondary mr-auto ">
+        {{ filterProducts.length }} 件商品
+      </p>
       <button
         class="btn btn--primary btn--lg"
         @click.prevent="openModal('add-edit-product-modal', undefined, undefined, undefined)"
@@ -164,23 +166,23 @@
       </div>
       <!-- (foot) - fix scroll problem -->
       <div class="tfoot d-flex align-items-center justify-content-end px-3 py-2">
-        <!-- dropdown component -->
+        <!-- dropdown -->
         <div>
           <Dropdown @callRowToggle="rowToggle" />
         </div>
-        <!-- pagination component -->
+        <!-- pagination -->
         <div class="ml-3">
           <Pagination
             :length="filterProducts.length"
             :row="row"
-            :resetKey="resetKey"
+            :forceResetKey="forceResetKey"
             @callPageToggle="pageToggle"
           />
         </div>
       </div>
     </div>
-    <!-- batch action -->
-    <div class="batch mt-3" v-if="showBatchAction">
+    <!-- footer -->
+    <div class="product-table__footer mt-3" v-if="showBatchAction">
       <div class="d-flex align-items-center text-secondary">
         <div class="d-flex align-items-center ml-3">
           <input type="checkbox" class="checkbox m-0" id="selectAll" v-model="selectAll" />
@@ -235,14 +237,14 @@ export default {
       row: 12,
       page: 1,
       sortMode: 'down',
-      sortTarget: '',
+      sortTarget: 'created_at',
       searchTarget: '',
       searchTargetValue: '',
       searchCategory: '',
       searchStockRange: [],
       searchSalesRange: [],
       selected: [],
-      resetKey: Date.now(),
+      forceResetKey: Date.now(),
     };
   },
   methods: {
@@ -279,7 +281,7 @@ export default {
       this.selected = [];
     },
     paginationReset() {
-      this.resetKey = Date.now();
+      this.forceResetKey = Date.now();
       this.page = 1;
     },
     openModal(modal, cache = {}, caches = [], isEnabled) {
@@ -328,7 +330,7 @@ export default {
       const { tab } = vm.$route.params;
       const products = [...vm.products]; // fix call by reference
       // prettier-ignore
-      const needSearch = vm.searchTargetValue
+      const needFilter = vm.searchTargetValue
         || vm.searchCategory
         || vm.searchStockRange.length > 0
         || vm.searchSalesRange.length > 0;
@@ -338,7 +340,7 @@ export default {
         if (tab === 'unlisted') return !item.is_enabled;
         return item;
       });
-      if (needSearch) {
+      if (needFilter) {
         return statusFilter
           .filter((item) => {
             if (vm.searchTargetValue) {
@@ -374,12 +376,9 @@ export default {
       const products = [...vm.filterProducts]; // fix call by reference
       const [sortA, sortB] = vm.sortMode === 'down' ? [-1, 1] : [1, -1];
       const [startItem, endItem] = [(vm.page - 1) * vm.row, vm.page * vm.row];
-      if (vm.sortTarget) {
-        return products
-          .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
-          .slice(startItem, endItem);
-      }
-      return products.slice(startItem, endItem);
+      return products
+        .sort((a, b) => (a[vm.sortTarget] > b[vm.sortTarget] ? sortA : sortB))
+        .slice(startItem, endItem);
     },
     ...mapState('products', ['products']),
     ...mapState(['skeletonTarget']),

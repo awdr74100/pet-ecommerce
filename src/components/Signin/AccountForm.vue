@@ -54,7 +54,12 @@
               v-model="account.password"
             />
             <small class="account-form__error" v-if="failed">{{ errors[0] }}</small>
-            <button type="button" class="btn p-0 hide-btn" @click="showPassword = !showPassword">
+            <button
+              type="button"
+              tabindex="-1"
+              class="btn p-0 hide-btn"
+              @click="showPassword = !showPassword"
+            >
               <span class="text-secondary" v-if="showPassword">
                 <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
               </span>
@@ -105,7 +110,12 @@
               v-model="account.password"
             />
             <small class="account-form__error" v-if="failed">{{ errors[0] }}</small>
-            <button type="button" class="btn p-0 hide-btn" @click="showPassword = !showPassword">
+            <button
+              type="button"
+              tabindex="-1"
+              class="btn p-0 hide-btn"
+              @click="showPassword = !showPassword"
+            >
               <span class="text-secondary" v-if="showPassword">
                 <font-awesome-icon :icon="['far', 'eye']" v-if="showPassword" />
               </span>

@@ -34,7 +34,7 @@
                 @keypress.enter="applyCoupon"
               />
               <button class="btn btn--secondary info__btn" @click.prevent="applyCoupon">
-                <span style="min-width:28px" v-if="iconLoadingTarget === 'apply'" class="d-block">
+                <span style="min-width:28px" class="d-block" v-if="spinner.action === 'apply'">
                   <font-awesome-icon :icon="['fas', 'spinner']" spin />
                 </span>
                 <p v-else>套用</p>
@@ -79,7 +79,7 @@
                   @click="removeFromCart"
                 >
                   <p>刪除</p>
-                  <span class="ml-2" v-if="iconLoadingTarget === 'remove'">
+                  <span class="ml-2" v-if="spinner.action === 'remove'">
                     <font-awesome-icon :icon="['fas', 'spinner']" spin />
                   </span>
                 </button>
@@ -117,15 +117,15 @@ export default {
     return {
       code: '',
       selected: [],
-      iconLoadingTarget: '',
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
     async removeFromCart() {
+      this.spinner.action = 'remove';
       const ids = this.selected.join(',');
-      this.iconLoadingTarget = 'remove';
       await this.$store.dispatch('cart/removeFromCart', { cartProductId: ids });
-      this.iconLoadingTarget = '';
+      this.spinner.action = '';
       this.selectToggle(false);
     },
     async applyCoupon() {
@@ -134,9 +134,9 @@ export default {
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
       }
-      this.iconLoadingTarget = 'apply';
+      this.spinner.action = 'apply';
       await this.$store.dispatch('coupons/applyCoupon', { code: this.code });
-      this.iconLoadingTarget = '';
+      this.spinner.action = '';
     },
     putSelected(id) {
       const index = this.selected.indexOf(id);

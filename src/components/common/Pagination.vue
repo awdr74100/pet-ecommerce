@@ -39,7 +39,7 @@ export default {
   props: {
     length: Number,
     row: Number,
-    resetKey: Number,
+    forceResetKey: Number,
   },
   data() {
     return {
@@ -61,7 +61,7 @@ export default {
     row() {
       this.page = 1;
     },
-    resetKey() {
+    forceResetKey() {
       this.page = 1;
     },
   },

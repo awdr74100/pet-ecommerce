@@ -1,10 +1,10 @@
 <template>
   <div class="product-list text-secondary">
-    <!-- product panel -->
+    <!-- panel -->
     <div class="p-3 pb-2">
       <ProductPanel @callSortToggle="sortToggle" />
     </div>
-    <!-- product list -->
+    <!-- list -->
     <div class="p-3 pt-0">
       <ul class="row-sm">
         <!-- 骨架屏 -->
@@ -21,12 +21,12 @@
         </template>
       </ul>
     </div>
-    <!-- helpers -->
+    <!-- footer -->
     <div class="p-3 mt-3 d-flex align-items-center justify-content-center">
       <Pagination
         :length="filterProducts.length"
         :row="row"
-        :resetKey="resetKey"
+        :forceResetKey="forceResetKey"
         @callPageToggle="pageToggle"
       />
     </div>
@@ -52,9 +52,9 @@ export default {
     return {
       row: 12, // use with the dropdown component
       page: 1,
-      sortTarget: 'created_at',
       sortMode: 'down',
-      resetKey: Date.now(),
+      sortTarget: 'created_at',
+      forceResetKey: Date.now(),
     };
   },
   methods: {
@@ -66,7 +66,7 @@ export default {
       this.sortMode = sortMode;
     },
     paginationReset() {
-      this.resetKey = Date.now();
+      this.forceResetKey = Date.now();
       this.page = 1;
     },
   },
