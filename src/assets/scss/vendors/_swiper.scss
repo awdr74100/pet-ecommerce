@@ -1,0 +1,20 @@
+$themeColor: theme-color('primary');
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  --swiper-navigation-size: 24px;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  padding: 20px;
+  border-radius: 4px;
+  color: theme-color('white') !important;
+  background-color: rgba(theme-color('gray'), 0.3);
+}
+
+@import '~swiper/components/pagination/pagination.scss';
+@import '~swiper/components/navigation/navigation.scss';
+@import '~swiper/components/effect-fade/effect-fade.scss';
+@import '~swiper/swiper.scss';

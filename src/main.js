@@ -1,4 +1,5 @@
 import Vue from 'vue';
+// Global Component
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VModal from 'vue-js-modal';
@@ -8,12 +9,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import DatePicker from 'vue2-datepicker';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import 'vue2-datepicker/locale/zh-cn';
+// Core
 import App from './App.vue';
-import './registerServiceWorker';
 import router from './router';
 import store from './store';
+// Other Component
+import './registerServiceWorker';
 import './fontAwesome';
 import './validation';
+import './swiper';
+// Global Filter
 import datetime from './filter/datetime';
 import currency from './filter/currency';
 import dollar from './filter/dollar';
