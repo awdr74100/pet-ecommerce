@@ -64,49 +64,14 @@
                   >全部商品</router-link
                 >
               </li>
-              <li>
+              <!-- 產品種類 -->
+              <li v-for="(item, index) in categorys" :key="index">
                 <router-link
-                  to="/category/品牌貓飼料"
+                  :to="{ path: `/category/${item}` }"
                   class="sidebar__link"
-                  :class="{ 'sidebar__link--active': path === '/category/品牌貓飼料' }"
+                  :class="{ 'sidebar__link--active': path === `/category/${item}` }"
                   @click.native="sidebarToggle"
-                  >品牌貓飼料</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  to="/category/品牌狗飼料"
-                  class="sidebar__link"
-                  :class="{ 'sidebar__link--active': path === '/category/品牌狗飼料' }"
-                  @click.native="sidebarToggle"
-                  >品牌狗飼料</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  to="/category/寵物營養品"
-                  class="sidebar__link"
-                  :class="{ 'sidebar__link--active': path === '/category/寵物營養品' }"
-                  @click.native="sidebarToggle"
-                  >寵物營養品</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  to="/category/貓砂與貓砂盆"
-                  class="sidebar__link"
-                  :class="{ 'sidebar__link--active': path === '/category/貓砂與貓砂盆' }"
-                  @click.native="sidebarToggle"
-                  >貓砂與貓砂盆</router-link
-                >
-              </li>
-              <li>
-                <router-link
-                  to="/category/寵物戶外用品"
-                  class="sidebar__link"
-                  :class="{ 'sidebar__link--active': path === '/category/寵物戶外用品' }"
-                  @click.native="sidebarToggle"
-                  >寵物戶外用品</router-link
+                  >{{ item }}</router-link
                 >
               </li>
             </ul>
@@ -171,6 +136,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {
@@ -191,6 +158,16 @@ export default {
     path() {
       return this.$route.path;
     },
+    categorys() {
+      return this.products.reduce((arr, { category }) => {
+        if (arr.includes(category)) return arr;
+        return arr.concat(category);
+      }, []);
+    },
+    ...mapState('products', ['products']),
+  },
+  created() {
+    this.$store.dispatch('products/getProducts', { role: 'guest' });
   },
 };
 </script>

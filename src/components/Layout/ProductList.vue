@@ -77,13 +77,9 @@ export default {
       const { category } = vm.$route.params; // fix call by reference
       const products = [...vm.products];
       return products.filter((item) => {
-        if (category === '品牌貓飼料') return item.category === '品牌貓飼料';
-        if (category === '品牌狗飼料') return item.category === '品牌狗飼料';
-        if (category === '寵物營養品') return item.category === '寵物營養品';
-        if (category === '貓砂與貓砂盆') return item.category === '貓砂與貓砂盆';
-        if (category === '寵物戶外用品') return item.category === '寵物戶外用品';
         if (category === '優惠商品') return item.origin_price !== item.price;
-        return item;
+        if (category === '全部商品') return item;
+        return item.category === category;
       });
     },
     sortAndSliceProducts() {
@@ -97,9 +93,6 @@ export default {
     },
     ...mapState('products', ['products']),
     ...mapState(['skeletonTarget']),
-  },
-  created() {
-    this.$store.dispatch('products/getProducts', { role: 'guest' });
   },
 };
 </script>

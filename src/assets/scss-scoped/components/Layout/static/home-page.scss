@@ -45,86 +45,58 @@
     }
   }
 }
-.prompt {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  z-index: 1;
-
-  .chevron {
-    position: relative;
-    width: 24px;
-    height: 24px;
-
-    &__item {
-      position: absolute;
-      width: 22px;
-      height: 6px;
-      opacity: 0;
-      transform: scale3d(0.5, 0.5, 0.5);
-      animation: move 3s ease-out infinite;
-
-      &:first-child {
-        animation: move 3s ease-out 1s infinite;
-      }
-      &:nth-child(2) {
-        animation: move 3s ease-out 2s infinite;
-      }
-      &::before,
-      &::after {
-        content: ' ';
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: 51%;
-        background-color: darken(theme-color('white'), 40%);
-      }
-      &::before {
-        left: 0;
-        transform: skew(0deg, 30deg);
-      }
-      &::after {
-        right: 0;
-        width: 50%;
-        transform: skew(0deg, -30deg);
-      }
-    }
-  }
-  .text {
-    color: darken(theme-color('white'), 40%);
-    font-size: 10px;
-    opacity: 0.25;
-    animation: pulse 1.5s linear alternate infinite;
-  }
-}
-.br {
-  width: 46px;
+.line {
+  width: 48px;
   height: 1px;
-  background-color: theme-color('secondary');
 }
 .news {
-  width: 100%;
-  height: 240px;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('https://awdr74100.github.io/petStore/static/img/news1.b781bfe.jpg');
-}
-.text-block {
-  position: absolute;
-  bottom: 0px;
-  color: theme-color('white');
+  position: relative;
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
 
-  .title {
-    font-weight: 600;
-    font-size: 20px;
+  &:hover &__img {
+    transform: scale(1.1);
   }
-  .date {
-    font-size: 14px;
+
+  &__img {
+    width: 100%;
+    height: 240px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    transition: all 0.3s;
+
+    &--img1 {
+      background-image: url('~@img/news1.jpg');
+    }
+    &--img2 {
+      background-image: url('~@img/news2.jpg');
+    }
+    &--img3 {
+      background-image: url('~@img/news3.jpg');
+    }
+    &--img4 {
+      background-image: url('~@img/news4.jpg');
+    }
   }
-  .content {
-    font-size: 15px;
-    line-height: 1.3;
+  &__text-block {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    color: theme-color('white');
+
+    .title {
+      font-weight: 600;
+      font-size: 20px;
+    }
+    .date {
+      font-size: 14px;
+    }
+    .content {
+      font-size: 15px;
+      line-height: 1.3;
+    }
   }
 }
 .subscribe {
@@ -159,29 +131,5 @@
     min-height: 40px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-  }
-}
-
-@keyframes move {
-  25% {
-    opacity: 1;
-  }
-  33% {
-    opacity: 1;
-    transform: translateY(30px);
-  }
-  67% {
-    opacity: 1;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
-  }
-}
-
-@keyframes pulse {
-  to {
-    opacity: 1;
   }
 }
