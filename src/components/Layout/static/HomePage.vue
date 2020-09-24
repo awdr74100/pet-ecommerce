@@ -154,7 +154,7 @@
     </section>
     <!-- subscribe -->
     <div class="subscribe text-secondary mx-2 mt-5 mb-4">
-      <div class="row">
+      <div class="row no-gutters">
         <div class="col-md-6 py-4">
           <div class="subscribe__text text-center">
             <p>想要接收最即時的優惠資訊？</p>
@@ -162,9 +162,37 @@
           </div>
         </div>
         <div class="col-md-6 pt-md-4 pb-4 pt-0">
-          <div class="d-flex align-items-center justify-content-center mx-3 h-100">
-            <input type="email" class="subscribe__input p-2" placeholder="請輸入 email" />
-            <button class="btn btn--primary subscribe__btn">訂閱</button>
+          <div class="mx-md-6 mx-0 px-md-5 px-3 h-100 d-flex align-items-center">
+            <ValidationObserver ref="subscribe-form" slim>
+              <form class="d-flex align-items-cneter w-100" @submit.prevent="subscribe">
+                <ValidationProvider rules="required|email" v-slot="{ errors, failed }" slim>
+                  <div class="position-relative w-100">
+                    <input
+                      type="email"
+                      class="subscribe__input p-2"
+                      placeholder="請輸入 email"
+                      :class="{ 'subscribe__input--error': failed }"
+                      v-model="email"
+                    />
+                    <small class="subscribe__error" v-if="failed">{{ errors[0] }}</small>
+                  </div>
+                </ValidationProvider>
+                <button
+                  type="submit"
+                  class="btn btn--primary subscribe__btn"
+                  @click.prevent="subscribe"
+                >
+                  <span
+                    class="d-block"
+                    style="min-width:30px"
+                    v-if="spinner.action === 'subscribe'"
+                  >
+                    <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                  </span>
+                  <p v-else>訂閱</p>
+                </button>
+              </form>
+            </ValidationObserver>
           </div>
         </div>
       </div>
@@ -222,7 +250,21 @@ export default {
         },
         loop: true,
       },
+      email: '',
+      spinner: { id: '', action: '' },
     };
+  },
+  methods: {
+    async subscribe() {
+      const valid = await this.$refs['subscribe-form'].validate();
+      if (!valid) return;
+      this.spinner.action = 'subscribe';
+      setTimeout(() => {
+        const message = '成功訂閱';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+        this.spinner.action = '';
+      }, 800);
+    },
   },
   computed: {
     hotProducts() {

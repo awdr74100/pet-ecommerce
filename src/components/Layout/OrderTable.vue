@@ -161,25 +161,25 @@
                 <td style="min-width:215px">
                   <template v-if="index === 0">
                     <ul class="info">
-                      <li class="info__item">
+                      <li>
                         <p>購買人</p>
-                        <span>{{ item.user.name }}</span>
+                        <span class="info__data">{{ item.user.name }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="mt-2">
                         <p>收件地址</p>
-                        <span>{{ item.user.address }}</span>
+                        <span class="info__data">{{ item.user.address }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="mt-2">
                         <p>連絡電話</p>
-                        <span>{{ item.user.tel }}</span>
+                        <span class="info__data">{{ item.user.tel }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="mt-2">
                         <p>電子信箱</p>
-                        <span>{{ item.user.email }}</span>
+                        <span class="info__data">{{ item.user.email }}</span>
                       </li>
-                      <li class="info__item mt-2">
+                      <li class="mt-2">
                         <p>備註</p>
-                        <span>{{ item.message }}</span>
+                        <span class="info__data">{{ item.message }}</span>
                       </li>
                     </ul>
                   </template>
@@ -192,7 +192,7 @@
                         :class="{ 'timeline__item--active': item.status === 'unpaid' }"
                       >
                         <p>新訂單</p>
-                        <span>{{ item.created_at | datetime }}</span>
+                        <span class="datetime">{{ item.created_at | datetime }}</span>
                       </li>
                       <li class="timeline__item mt-2" v-if="item.status === 'unpaid'">
                         <div class="d-flex align-items-center">
@@ -203,10 +203,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="text-white ml-1"
+                              class="ml-1"
                               v-if="spinner.id === item.id && spinner.action === 'payment'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
                             </span>
                           </button>
                           <button
@@ -215,10 +215,10 @@
                           >
                             <p>取消</p>
                             <span
-                              class="text-white ml-1"
+                              class="ml-1"
                               v-if="spinner.id === item.id && spinner.action === 'cancel'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
                             </span>
                           </button>
                         </div>
@@ -229,7 +229,7 @@
                         v-if="item.cancel_date"
                       >
                         <p>訂單已取消</p>
-                        <span>{{ item.cancel_date | datetime }}</span>
+                        <span class="datetime">{{ item.cancel_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -237,7 +237,7 @@
                         v-if="item.paid_date"
                       >
                         <p>買家已完成付款</p>
-                        <span>{{ item.paid_date | datetime }}</span>
+                        <span class="datetime">{{ item.paid_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -245,7 +245,7 @@
                         v-if="item.shipping_date"
                       >
                         <p>賣家已完成出貨</p>
-                        <span>{{ item.shipping_date | datetime }}</span>
+                        <span class="datetime">{{ item.shipping_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -253,13 +253,9 @@
                         v-if="item.arrival_date"
                       >
                         <p>商品以送達</p>
-                        <span>{{ item.arrival_date | datetime }}</span>
+                        <span class="datetime">{{ item.arrival_date | datetime }}</span>
                       </li>
-                      <li
-                        class="timeline__item mt-2"
-                        :class="{ 'timeline__item--active': item.status === 'arrived' }"
-                        v-if="item.status === 'arrived'"
-                      >
+                      <li class="timeline__item mt-2" v-if="item.status === 'arrived'">
                         <div class="d-flex align-items-center">
                           <p>完成訂單</p>
                           <button
@@ -268,10 +264,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="text-white ml-1"
+                              class="ml-1"
                               v-if="spinner.id === item.id && spinner.action === 'complete'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
                             </span>
                           </button>
                         </div>
@@ -282,7 +278,7 @@
                         v-if="item.complete_date"
                       >
                         <p>訂單已完成</p>
-                        <span>{{ item.complete_date | datetime }}</span>
+                        <span class="datetime">{{ item.complete_date | datetime }}</span>
                       </li>
                     </ul>
                   </template>
@@ -367,23 +363,20 @@ export default {
       this.page = 1;
     },
     async cancelOrder(orderId) {
-      this.spinner.id = orderId;
-      this.spinner.action = 'cencel';
+      this.spinner = { id: orderId, action: 'cancel' };
       await this.$store.dispatch('orders/cancelOrder', { orderId });
-      this.spinner.action = '';
+      this.spinner = { id: '', action: '' };
     },
     async completeOrder(orderId) {
-      this.spinner.id = orderId;
-      this.spinner.action = 'complete';
+      this.spinner = { id: orderId, action: 'complete' };
       await this.$store.dispatch('orders/completeOrder', { orderId });
-      this.spinner.action = '';
+      this.spinner = { id: '', action: '' };
     },
     async payment(orderId) {
-      this.spinner.id = orderId;
-      this.spinner.action = 'payment';
+      this.spinner = { id: orderId, action: 'payment' };
       await this.$store.dispatch('payment/payment', { orderId });
       await this.$store.dispatch('orders/getOrders', { role: 'user' });
-      this.spinner.action = '';
+      this.spinner = { id: '', action: '' };
     },
   },
   computed: {

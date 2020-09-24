@@ -5,13 +5,16 @@
       <div class="row no-gutters">
         <div class="col-md-4">
           <div class="d-flex flex-column p-5">
-            <h5 class="title font-weight-semi-bold mt-3">聯絡我們</h5>
+            <h5 class="title font-weight-semi-bold mt-3">聯絡資訊</h5>
             <span class="highlight bg-primary my-3"></span>
             <p class="text mt-3">地址：台北市南港區三重路19之6號7樓(南港軟體園區C棟)</p>
             <p class="text mt-3">電話：02-0000-0000</p>
             <p class="text mt-3">傳真：02-0000-0000</p>
             <p class="text mt-3">手機：0912-345678</p>
-            <p class="text mt-3 mb-3">郵箱：service@gmail.com</p>
+            <p class="text mt-3">郵箱：service@gmail.com</p>
+            <p class="text mt-3 mb-3">
+              營業時間：週一至周五 10:00~21:30，週六週日 11:00~ 21:00(例假日無提供電話客服)
+            </p>
           </div>
         </div>
         <div class="col-md-8">
@@ -31,7 +34,7 @@
     <!-- form -->
     <section class="text-secondary">
       <div class="d-flex flex-column align-items-center justify-content-center mt-5">
-        <h2 class="font-m font-weight-semi-bold text-center text-secondary">意見回饋</h2>
+        <h2 class="font-m font-weight-semi-bold text-center text-secondary">聯絡表單</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
       <div class="d-flex flex-column align-items-center mt-4">
@@ -90,7 +93,7 @@
                 >訊息內容*</label
               >
               <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
-                <div class="flex-1">
+                <div class="flex-1 position-relative">
                   <textarea
                     id="message"
                     rows="8"
@@ -99,18 +102,34 @@
                     :class="{ 'form__textarea--error': failed }"
                     v-model="user.message"
                   ></textarea>
-                  <small class="form__error" style="position:relative" v-if="failed">{{
+                  <small class="form__error" style="bottom:-14px" v-if="failed">{{
                     errors[0]
                   }}</small>
                 </div>
               </ValidationProvider>
             </div>
-            <div class="w-100 mt-3 d-md-flex d-none">
+            <div class="w-100 mt-4 d-md-flex d-none">
               <label class="form__hidden white-nowrap mr-3 d-md-inline d-none">填充文字*</label>
-              <button class="btn btn--primary btn--md" @click.prevent="send">送出訊息</button>
+              <button
+                class="btn btn--primary btn--md d-flex align-items-center"
+                @click.prevent="send"
+              >
+                <p>送出訊息</p>
+                <span class="ml-2" v-if="spinner.action === 'send'">
+                  <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                </span>
+              </button>
             </div>
-            <div class="text-center mt-3 d-md-none d-block">
-              <button class="btn btn--primary btn--md" @click.prevent="send">送出訊息</button>
+            <div class="mt-4 d-md-none d-flex justify-content-center">
+              <button
+                class="btn btn--primary btn--md d-flex align-items-center"
+                @click.prevent="send"
+              >
+                <p>送出訊息</p>
+                <span class="ml-2" v-if="spinner.action === 'send'">
+                  <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                </span>
+              </button>
             </div>
           </form>
         </ValidationObserver>
@@ -129,14 +148,19 @@ export default {
         email: '',
         message: '',
       },
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
     async send() {
       const valid = await this.$refs['send-form'].validate();
       if (!valid) return;
-      const message = '成功送出';
-      this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+      this.spinner.action = 'send';
+      setTimeout(() => {
+        const message = '成功送出';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+        this.spinner.action = '';
+      }, 800);
     },
   },
 };

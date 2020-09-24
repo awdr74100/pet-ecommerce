@@ -160,26 +160,26 @@
                 </td>
                 <td style="min-width:215px">
                   <template v-if="index === 0">
-                    <ul class="list">
-                      <li class="list__item">
+                    <ul class="info">
+                      <li>
                         <p>購買人</p>
-                        <span>{{ item.user.name }}</span>
+                        <span class="info__data">{{ item.user.name }}</span>
                       </li>
-                      <li class="list__item mt-2">
+                      <li class="mt-2">
                         <p>收件地址</p>
-                        <span>{{ item.user.address }}</span>
+                        <span class="info__data">{{ item.user.address }}</span>
                       </li>
-                      <li class="list__item mt-2">
+                      <li class="mt-2">
                         <p>連絡電話</p>
-                        <span>{{ item.user.tel }}</span>
+                        <span class="info__data">{{ item.user.tel }}</span>
                       </li>
-                      <li class="list__item mt-2">
+                      <li class="mt-2">
                         <p>電子信箱</p>
-                        <span>{{ item.user.email }}</span>
+                        <span class="info__data">{{ item.user.email }}</span>
                       </li>
-                      <li class="list__item mt-2">
+                      <li class="mt-2">
                         <p>備註</p>
-                        <span>{{ item.message }}</span>
+                        <span class="info__data">{{ item.message }}</span>
                       </li>
                     </ul>
                   </template>
@@ -192,7 +192,7 @@
                         :class="{ 'timeline__item--active': item.status === 'unpaid' }"
                       >
                         <p>新訂單</p>
-                        <span>{{ item.created_at | datetime }}</span>
+                        <span class="datetime">{{ item.created_at | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -200,7 +200,7 @@
                         v-if="item.cancel_date"
                       >
                         <p>訂單已取消</p>
-                        <span>{{ item.cancel_date | datetime }}</span>
+                        <span class="datetime">{{ item.cancel_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -208,7 +208,7 @@
                         v-if="item.paid_date"
                       >
                         <p>買家已完成付款</p>
-                        <span>{{ item.paid_date | datetime }}</span>
+                        <span class="datetime">{{ item.paid_date | datetime }}</span>
                       </li>
                       <li class="timeline__item mt-2" v-if="item.status === 'toship'">
                         <div class="d-flex align-items-center">
@@ -219,10 +219,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="text-white ml-1"
+                              class="ml-1"
                               v-if="spinner.id === item.id && spinner.action === 'ship'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
                             </span>
                           </button>
                         </div>
@@ -233,7 +233,7 @@
                         v-if="item.shipping_date"
                       >
                         <p>賣家已完成出貨</p>
-                        <span>{{ item.shipping_date | datetime }}</span>
+                        <span class="datetime">{{ item.shipping_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -241,7 +241,7 @@
                         v-if="item.arrival_date"
                       >
                         <p>商品以送達</p>
-                        <span>{{ item.arrival_date | datetime }}</span>
+                        <span class="datetime">{{ item.arrival_date | datetime }}</span>
                       </li>
                       <li
                         class="timeline__item mt-2"
@@ -249,7 +249,7 @@
                         v-if="item.complete_date"
                       >
                         <p>訂單已完成</p>
-                        <span>{{ item.complete_date | datetime }}</span>
+                        <span class="datetime">{{ item.complete_date | datetime }}</span>
                       </li>
                     </ul>
                   </template>
@@ -334,11 +334,9 @@ export default {
       this.page = 1;
     },
     async shipOrder(uid, orderId) {
-      this.spinner.id = orderId;
-      this.spinner.action = 'ship';
+      this.spinner = { id: orderId, action: 'ship' };
       await this.$store.dispatch('orders/shipOrder', { uid, orderId });
-      this.spinner.id = '';
-      this.spinner.action = '';
+      this.spinner = { id: '', action: '' };
     },
   },
   computed: {

@@ -183,10 +183,16 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="validateProduct('add-edit-product-modal')"
             >
-              確認
+              <p>確認</p>
+              <span
+                class="ml-2"
+                v-if="spinner.action === 'addProduct' && spinner.action === 'editProduct'"
+              >
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -235,10 +241,13 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="deleteProduct('delete-product-modal')"
             >
-              確認
+              <p>確認</p>
+              <span class="ml-2" v-if="spinner.action === 'deleteProduct'">
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -302,10 +311,13 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="changeProductStatus('change-status-product-modal')"
             >
-              確認
+              <p>確認</p>
+              <span class="ml-2" v-if="spinner.action === 'changeProductStatus'">
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -409,10 +421,16 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="validateCoupon('add-edit-coupon-modal')"
             >
-              確認
+              <p>確認</p>
+              <span
+                class="ml-2"
+                v-if="spinner.action === 'addCoupon' && spinner.action === 'editCoupon'"
+              >
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -460,10 +478,13 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="deleteCoupon('delete-coupon-modal')"
             >
-              確認
+              <p>確認</p>
+              <span class="ml-2" v-if="spinner.action === 'deleteCoupon'">
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -527,10 +548,13 @@
         <div class="row no-gutters">
           <div class="modal__footer p-4">
             <button
-              class="btn btn--primary btn--md ml-auto"
+              class="btn btn--primary btn--md ml-auto d-flex align-items-center"
               @click.prevent="changeCouponStatus('change-status-coupon-modal')"
             >
-              確認
+              <p>確認</p>
+              <span class="ml-2" v-if="spinner.action === 'changeCouponStatus'">
+                <font-awesome-icon :icon="['fas', 'spinner']" spin />
+              </span>
             </button>
             <button
               class="btn btn--transparent btn--md ml-3"
@@ -563,6 +587,7 @@ export default {
         new Date(new Date().toDateString()).getTime(),
         new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).toDateString()).getTime(),
       ],
+      spinner: { id: '', action: '' },
     };
   },
   methods: {
@@ -597,9 +622,11 @@ export default {
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
       }
+      this.spinner = { id: '', action: 'addProduct' };
       await this.$store.dispatch('image/uploadImage', { file: this.file });
       const productData = { ...this.product, imgUrl: this.imgUrl };
       await this.$store.dispatch('products/addProduct', { productData });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 編輯商品
@@ -610,20 +637,26 @@ export default {
       const productId = this.product.id;
       const productData = { ...this.product, imgUrl: this.imgUrl };
       delete productData.id;
+      this.spinner = { id: '', action: 'editProduct' };
       await this.$store.dispatch('products/editProduct', { productId, productData });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 刪除商品
     async deleteProduct(modal) {
       const ids = this.caches.map((item) => item.id).join(',');
+      this.spinner = { id: '', action: 'deleteProduct' };
       await this.$store.dispatch('products/deleteProduct', { productId: ids });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 更改商品狀態
     async changeProductStatus(modal) {
       const ids = this.caches[2].map((item) => item.id).join(',');
       const status = this.caches[0] === 'enable';
+      this.spinner = { id: '', action: 'changeProductStatus' };
       await this.$store.dispatch('products/changeProductStatus', { productId: ids, status });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 驗證表單 - Coupon
@@ -643,7 +676,9 @@ export default {
         effective_date: this.couponRange[0],
         due_date: this.couponRange[1],
       };
+      this.spinner = { id: '', action: 'addCoupon' };
       await this.$store.dispatch('coupons/addCoupon', { couponData });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 編輯優惠卷
@@ -655,20 +690,26 @@ export default {
         due_date: this.couponRange[1],
       };
       delete couponData.id;
+      this.spinner = { id: '', action: 'editCoupon' };
       await this.$store.dispatch('coupons/editCoupon', { couponId, couponData });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 刪除優惠卷
     async deleteCoupon(modal) {
       const ids = this.caches.map((item) => item.id).join(',');
+      this.spinner = { id: '', action: 'deleteCoupon' };
       await this.$store.dispatch('coupons/deleteCoupon', { couponId: ids });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 更改優惠卷狀態
     async changeCouponStatus(modal) {
       const ids = this.caches[2].map((item) => item.id).join(',');
       const status = this.caches[0] === 'enable';
+      this.spinner = { id: '', action: 'changeCouponStatus' };
       await this.$store.dispatch('coupons/changeCouponStatus', { couponId: ids, status });
+      this.spinner = { id: '', action: '' };
       this.closeModal(modal);
     },
     // 重置日期

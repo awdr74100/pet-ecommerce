@@ -102,11 +102,11 @@
     top: 15px;
     z-index: 1;
 
-    span {
+    &__data {
       display: inline-block;
       font-size: 12px;
-      color: theme-color('gray');
       margin-top: 3px;
+      color: lighten(theme-color('gray'), 10%);
       @include text-ellipsis(2);
     }
   }
@@ -115,6 +115,12 @@
     top: 15px;
     z-index: 1;
 
+    .datetime {
+      display: inline-block;
+      font-size: 12px;
+      color: lighten(theme-color('gray'), 10%);
+      margin-top: 3px;
+    }
     &__item {
       position: relative;
 
@@ -148,8 +154,8 @@
           background-color: theme-color('primary');
           box-shadow: 0px 0px 6px 1.5px lighten(theme-color('primary'), 16%);
         }
-        span {
-          color: theme-color('primary') !important;
+        .datetime {
+          color: theme-color('primary');
         }
       }
       &--cancel {
@@ -159,16 +165,10 @@
           background-color: theme-color('danger');
           box-shadow: 0px 0px 6px 1.5px lighten(theme-color('danger'), 16%);
         }
-        span {
-          color: theme-color('danger') !important;
+        .datetime {
+          color: theme-color('danger');
         }
       }
-    }
-    span {
-      display: inline-block;
-      font-size: 12px;
-      color: lighten(theme-color('gray'), 10%);
-      margin-top: 3px;
     }
   }
 }
