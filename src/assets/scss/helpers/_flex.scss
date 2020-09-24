@@ -26,29 +26,22 @@
   justify-content: space-between;
 }
 
-.flex-1 {
-  flex: 1;
-}
-.flex-2 {
-  flex: 2;
-}
-
-.order-1 {
-  order: 1;
-}
-
-.order-2 {
-  order: 2;
-}
-
-.order-md-1 {
-  @include desktop() {
-    order: 1;
+@for $var from 1 through 2 {
+  .flex-#{$var} {
+    flex: $var;
   }
 }
 
-.order-md-2 {
-  @include desktop() {
-    order: 2;
+@for $var from 1 through 8 {
+  .order-#{$var} {
+    order: $var;
+  }
+}
+
+@for $var from 1 through 8 {
+  .order-md-#{$var} {
+    @include desktop() {
+      order: $var;
+    }
   }
 }

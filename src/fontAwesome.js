@@ -41,6 +41,12 @@ import {
   faUserEdit,
   faSpinner,
   faFilter,
+  faMap,
+  faClock,
+  faPhone,
+  faExternalLinkAlt,
+  faArrowCircleRight,
+  faCartPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
 const icons = [
@@ -85,6 +91,12 @@ const icons = [
   faCcVisa,
   faCreditCard,
   faCalendarAlt,
+  faMap,
+  faClock,
+  faPhone,
+  faExternalLinkAlt,
+  faArrowCircleRight,
+  faCartPlus,
 ];
 
 library.add(...icons);

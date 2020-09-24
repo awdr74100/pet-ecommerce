@@ -19,18 +19,30 @@
       <p class="ml-1" v-else-if="item.stock <= 5 && item.stock > 0">庫存較少</p>
       <p class="ml-1" v-else>庫存不足</p>
     </div>
-    <div class="d-flex align-items-end justify-content-end mt-2">
-      <p class="product-card__origin-price" v-if="item.origin_price !== item.price">
-        {{ item.origin_price | currency | dollar }}
-      </p>
-      <p class="product-card__price text-primary ml-2">
+    <div class="d-flex align-items-end mt-2">
+      <p class="product-card__price text-primary">
         <span class="dollar">$</span>{{ item.price | currency }}
       </p>
+      <p class="product-card__origin-price ml-2" v-if="item.origin_price !== item.price">
+        {{ item.origin_price | currency | dollar }}
+      </p>
+      <div
+        class="product-card__circle ml-auto cursor-pointer"
+        :class="{ 'product-card__circle--disabled': item.stock === 0 }"
+        @click.prevent.stop="addToCart(item.id, item.stock)"
+      >
+        <span v-if="spinner.id === item.id">
+          <font-awesome-icon :icon="['fas', 'spinner']" spin />
+        </span>
+        <div class="icon" v-else></div>
+      </div>
     </div>
   </router-link>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   props: {
     item: {
@@ -38,6 +50,28 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      spinner: { id: '', action: '' },
+    };
+  },
+  methods: {
+    async addToCart(productId, productStock) {
+      if (productStock === 0) return;
+      // 驗證身分
+      await this.$store.dispatch('user/check');
+      // 檢查是否登入
+      if (!this.isSignin) {
+        this.$router.push({ path: '/signin' });
+        return;
+      }
+      // 加入購物車
+      this.spinner = { id: productId, action: '' };
+      await this.$store.dispatch('cart/addToCart', { productId, qty: 1 });
+      this.spinner = { id: '', action: '' };
+    },
+  },
+  computed: mapState('user', ['isSignin']),
 };
 </script>
 

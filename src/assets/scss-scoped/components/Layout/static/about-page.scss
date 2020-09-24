@@ -1,0 +1,51 @@
+.big-img {
+  filter: blur(5px);
+  width: 100%;
+  height: 500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('~@img/about-big.jpg');
+}
+.title {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  @include desktop() {
+    font-size: 50px;
+  }
+}
+.description {
+  line-height: 1.5;
+  max-width: 580px;
+}
+.img {
+  width: 100%;
+  height: 260px;
+  background-image: url('~@img/about1.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+  @include desktop() {
+    height: 340px;
+  }
+
+  &--about1 {
+    background-image: url('~@img/about1.jpg');
+  }
+  &--about2 {
+    background-image: url('~@img/about2.jpg');
+  }
+  &--about3 {
+    background-image: url('~@img/about3.jpg');
+  }
+  &--about4 {
+    background-image: url('~@img/about4.jpg');
+  }
+}
+.content {
+  line-height: 1.3;
+  text-align: center;
+}

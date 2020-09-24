@@ -29,6 +29,34 @@
   &__stock {
     font-size: 14px;
   }
+  &__circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: theme-color('primary');
+    transition: all 0.3s;
+    color: theme-color('white');
+
+    &--disabled {
+      cursor: not-allowed;
+      background-color: lighten(theme-color('gray'), 36%);
+    }
+    &:not(&--disabled):hover {
+      background-color: darken(theme-color('primary'), 8%);
+    }
+    .icon {
+      width: 66%;
+      height: 66%;
+      mask-position: center center;
+      mask-repeat: no-repeat;
+      mask-size: cover;
+      mask-image: url('~@img/shopping-cart.svg');
+      background-color: theme-color('white');
+    }
+  }
   &__origin-price {
     color: lighten(theme-color('gray'), 10%);
     font-size: 14px;
