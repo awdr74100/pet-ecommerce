@@ -1,6 +1,6 @@
 <template>
   <div class="w-100 h-100">
-    <!-- list -->
+    <!-- adopt list -->
     <section class="text-secondary">
       <ul class="list">
         <li class="list__item py-4">

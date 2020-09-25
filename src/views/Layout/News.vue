@@ -2,7 +2,7 @@
   <div class="container h-100 d-flex flex-column">
     <div class="row no-gutters bg-white shadow mb-auto mt-3">
       <main class="w-100">
-        <!-- Static Filer -->
+        <!-- Static File -->
         <NewsPage />
       </main>
     </div>

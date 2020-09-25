@@ -37,5 +37,6 @@
   background-color: lighten(theme-color('gray'), 30%);
 }
 .description {
+  font-size: 15px;
   @include text-ellipsis(3);
 }

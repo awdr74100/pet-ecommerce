@@ -26,16 +26,16 @@
       <p class="product-card__origin-price ml-2" v-if="item.origin_price !== item.price">
         {{ item.origin_price | currency | dollar }}
       </p>
-      <div
-        class="product-card__circle ml-auto cursor-pointer"
-        :class="{ 'product-card__circle--disabled': item.stock === 0 }"
+      <button
+        class="btn p-0 product-card__btn ml-auto d-flex align-items-center justify-content-center"
+        :class="{ 'product-card__btn--disabled': item.stock === 0 }"
         @click.prevent.stop="addToCart(item.id, item.stock)"
       >
-        <span v-if="spinner.id === item.id">
+        <span class="spinner text-white" v-if="spinner.id === item.id">
           <font-awesome-icon :icon="['fas', 'spinner']" spin />
         </span>
         <div class="icon" v-else></div>
-      </div>
+      </button>
     </div>
   </router-link>
 </template>
