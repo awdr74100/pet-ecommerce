@@ -21,7 +21,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.459);
+  background-color: rgba(theme-color('white'), 0.45);
   border-radius: 4px;
   @include desktop() {
     left: 70px;

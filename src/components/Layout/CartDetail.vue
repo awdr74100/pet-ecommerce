@@ -23,7 +23,7 @@
         <template v-else>
           <div class="d-flex align-items-center justify-content-end py-3">
             <p class="info__message text-info d-md-inline d-none mr-4">
-              慶祝開幕，輸入折扣碼「ALCRE88045」，即享有全館商品 75 折優惠
+              慶祝開幕，輸入折扣碼「ALCRE88045」，即享有全館商品 95 折優惠
             </p>
             <div class="d-flex align-items-center info__group">
               <input
@@ -136,6 +136,7 @@ export default {
       }
       this.spinner.action = 'apply';
       await this.$store.dispatch('coupons/applyCoupon', { code: this.code });
+      await this.$store.dispatch('cart/getCart');
       this.spinner.action = '';
     },
     putSelected(id) {

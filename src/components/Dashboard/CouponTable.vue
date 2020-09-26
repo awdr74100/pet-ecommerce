@@ -316,7 +316,7 @@ export default {
     ...mapState(['skeletonTarget']),
   },
   created() {
-    this.$store.dispatch('coupons/getCoupons');
+    this.$store.dispatch('coupons/getCoupons', { role: 'admin' });
   },
 };
 </script>
