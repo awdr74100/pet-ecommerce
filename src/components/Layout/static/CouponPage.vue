@@ -37,11 +37,8 @@
         <p class="p-2 bg-secondary text-white font-xs">說明</p>
         <p class="mt-3">每位顧客在每次活動有三次轉取優惠卷的機會</p>
         <p class="mt-2">優惠卷可立即套用至購物車上</p>
-        <p class="mt-3 font-xs text-info">
+        <p class="mt-3 font-xs text-info" v-if="isSignin">
           剩餘抽獎次數：<span>{{ draws }}</span>
-        </p>
-        <p class="mt-3 font-xs bg-danger text-white px-3 py-2" v-if="coupon.code && showResult">
-          代碼：{{ coupon.code }}
         </p>
         <div class="canvas w-100 h-100 p-3 mt-3">
           <LuckyWheel
@@ -67,7 +64,6 @@ export default {
   data() {
     return {
       showCoupon: false,
-      showResult: true,
       LuckyWheelOptions: {
         blocks: [
           { padding: '10px', background: '#4bb36e' },
@@ -108,7 +104,6 @@ export default {
         return;
       }
       // 先從前端處理
-      this.showResult = false;
       this.$store.commit('coupons/SETDRAWS', this.draws - 1);
       this.$refs.LuckDraw.play();
       await this.$store.dispatch('coupons/getCoupon');
@@ -116,16 +111,15 @@ export default {
       this.$refs.LuckDraw.stop(index);
     },
     endCallBack() {
-      if (this.coupon.percent === 100) {
-        const message = this.coupon.title;
-        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+      if (this.coupon.title === '謝謝參與') {
+        this.$store.commit('modal/OPENMODAL', { modal: 'lucky-wheel-modal', cache: {} });
       } else {
-        const message = `${(this.coupon.percent / 10)
-          .toString()
-          .replace('.', '')} 折優惠卷，代碼為 ${this.coupon.code}`;
-        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+        const cache = {
+          code: this.coupon.code,
+          discount: (this.coupon.percent / 10).toString().replace('.', ''),
+        };
+        this.$store.commit('modal/OPENMODAL', { modal: 'lucky-wheel-modal', cache });
       }
-      this.showResult = true;
     },
   },
   computed: {

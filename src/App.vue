@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Notification />
+    <Modal />
     <vue-progress-bar></vue-progress-bar>
     <router-view></router-view>
   </div>
@@ -8,10 +9,12 @@
 
 <script>
 import Notification from '@/components/common/Notification.vue';
+import Modal from '@/components/common/Modal.vue';
 
 export default {
   components: {
     Notification,
+    Modal,
   },
 };
 </script>

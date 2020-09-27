@@ -118,4 +118,20 @@
       @include text-ellipsis(1);
     }
   }
+  .celebrate {
+    width: 100px;
+    height: 100px;
+    background-image: url('~@img/celebrate.svg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .disappointed {
+    width: 100px;
+    height: 100px;
+    background-image: url('~@img/disappointed.svg');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }

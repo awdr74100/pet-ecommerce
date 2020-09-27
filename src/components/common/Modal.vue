@@ -10,6 +10,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -214,6 +215,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -269,6 +271,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -339,6 +342,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -452,6 +456,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -506,6 +511,7 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role === 'admin'"
     >
       <div class="container-fluid modal px-0">
         <div class="row no-gutters">
@@ -566,6 +572,74 @@
         </div>
       </div>
     </modal>
+    <!-- Lucky Wheel Modal -->
+    <modal
+      name="lucky-wheel-modal"
+      height="auto"
+      :adaptive="true"
+      :shiftY="0.2"
+      :width="340"
+      :maxWidth="maxWidth"
+      @before-open="beforeOpen"
+      @before-close="closeModal(null)"
+    >
+      <div class="container-fluid modal px-0">
+        <template v-if="cache.code">
+          <div class="row no-gutters">
+            <div class="modal__body px-4 py-1">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="celebrate mt-3"></div>
+                <p class="mt-4 font-l font-weight-semi-bold">恭喜獲得</p>
+                <span class="mt-2">{{ cache.discount }} 折優惠卷一張</span>
+                <div class="bg-danger text-white px-4 py-2 mt-2">
+                  <span>{{ cache.code }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="modal__footer justify-content-center px-4 py-3">
+              <button
+                class="btn btn--primary btn--md d-flex align-items-center"
+                @click.prevent="applyCoupon('lucky-wheel-modal')"
+              >
+                <p>立即套用</p>
+                <span class="ml-2" v-if="spinner.action === 'apply'">
+                  <font-awesome-icon :icon="['fas', 'spinner']" spin />
+                </span>
+              </button>
+              <button
+                class="btn btn--transparent btn--md ml-5"
+                @click.prevent="closeModal('lucky-wheel-modal')"
+              >
+                再轉一次
+              </button>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="row no-gutters">
+            <div class="modal__body px-4 py-1">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="disappointed mt-3"></div>
+                <p class="mt-4 font-l font-weight-semi-bold">沒抽到ㄟ！</p>
+                <span class="mt-2">要不在試一次看看？</span>
+              </div>
+            </div>
+          </div>
+          <div class="row no-gutters">
+            <div class="modal__footer justify-content-center px-4 py-3">
+              <button
+                class="btn btn--transparent btn--md"
+                @click.prevent="closeModal('lucky-wheel-modal')"
+              >
+                再轉一次
+              </button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -594,10 +668,12 @@ export default {
     // 開啟前處理
     beforeOpen({ name }) {
       this.maxWidth = window.innerWidth - 30;
-      this[name.split('-')[2]] = { ...this.cache }; // product or coupon
-      if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
-      if (this.cache.effective_date) {
-        this.couponRange = [this.cache.effective_date, this.cache.due_date];
+      if (this.role === 'admin') {
+        this[name.split('-')[2]] = { ...this.cache }; // product or coupon
+        if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
+        if (this.cache.effective_date) {
+          this.couponRange = [this.cache.effective_date, this.cache.due_date];
+        }
       }
     },
     // 關閉後處理
@@ -723,8 +799,19 @@ export default {
         new Date(new Date(new Date().setMonth(new Date().getMonth() + 1)).toDateString()).getTime(),
       ];
     },
+    // 立即套用優惠卷
+    async applyCoupon(modal) {
+      this.spinner = { id: '', action: 'apply' };
+      await this.$store.dispatch('coupons/applyCoupon', { code: this.cache.code });
+      await this.$store.dispatch('cart/getCart');
+      this.spinner = { id: '', action: '' };
+      this.closeModal(modal);
+    },
   },
   computed: {
+    role() {
+      return this.$route.meta.role;
+    },
     ...mapState('image', ['file', 'imgUrl']),
     ...mapState('modal', ['cache', 'caches']),
   },
@@ -732,5 +819,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@/assets/scss-scoped/components/Dashboard/modal.scss';
+@import '~@/assets/scss-scoped/components/common/modal.scss';
 </style>
