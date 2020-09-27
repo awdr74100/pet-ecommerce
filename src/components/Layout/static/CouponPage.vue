@@ -40,12 +40,12 @@
         <p class="mt-3 font-xs text-info" v-if="isSignin">
           剩餘抽獎次數：<span>{{ draws }}</span>
         </p>
-        <div class="canvas w-100 h-100 p-3 mt-3">
+        <div class="canvas w-100 h-100 p-3 mt-3" v-if="true">
           <LuckyWheel
             ref="LuckDraw"
             @start="startCallBack"
             @end="endCallBack"
-            style="width: 100%"
+            style="width:100%; height:100%;max-height:350px"
             :blocks="LuckyWheelOptions.blocks"
             :prizes="LuckyWheelPrizes"
             :buttons="LuckyWheelOptions.buttons"

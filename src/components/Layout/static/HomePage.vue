@@ -25,13 +25,13 @@
     </div>
     <!-- news -->
     <section class="position-relative">
-      <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+      <div class="d-flex flex-column align-items-center justify-content-center my-5">
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">最新消息</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
       <div class="px-2">
         <div class="row-sm">
-          <div class="col-md-8 px-2 pt-5">
+          <div class="col-md-8 px-2 mt-md-0 mt-4">
             <router-link to="/news" class="news text-secondary">
               <div class="news__img news__img--img1"></div>
               <div class="news__text-block d-flex flex-column p-3">
@@ -46,7 +46,7 @@
               </div></router-link
             >
           </div>
-          <div class="col-md-4 px-2 pt-5">
+          <div class="col-md-4 px-2 mt-md-0 mt-4">
             <router-link to="/news" class="news text-secondary">
               <div class="news__img news__img--img2"></div>
               <div class="news__text-block d-flex flex-column p-3">
@@ -61,7 +61,7 @@
               </div></router-link
             >
           </div>
-          <div class="col-md-4 px-2 pt-5">
+          <div class="col-md-4 px-2 mt-4">
             <router-link to="/news" class="news text-secondary">
               <div class="news__img news__img--img3"></div>
               <div class="news__text-block d-flex flex-column p-3">
@@ -76,7 +76,7 @@
               </div></router-link
             >
           </div>
-          <div class="col-md-8 px-2 pt-5">
+          <div class="col-md-8 px-2 mt-4">
             <router-link to="/news" class="news text-secondary">
               <div class="news__img news__img--img4"></div>
               <div class="news__text-block d-flex flex-column p-3">

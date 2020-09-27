@@ -4,7 +4,13 @@
       <router-link to="/" class="sidebar__logo" @click.native="sidebarToggle"></router-link>
     </div>
     <div class="py-2 px-5 shadow d-block d-md-none">
-      <input type="text" class="sidebar__input px-2 py-1" placeholder="找商品" />
+      <input
+        type="text"
+        class="sidebar__input px-2 py-1"
+        placeholder="找商品"
+        v-model.trim="productTitle"
+        @keypress.enter="searchProduct"
+      />
     </div>
     <nav class="sidebar__nav w-100 flex-1">
       <div class="py-2 shadow">
@@ -142,6 +148,7 @@ export default {
   data() {
     return {
       dropdownActive: false,
+      productTitle: '',
     };
   },
   methods: {
@@ -153,10 +160,16 @@ export default {
       const status = this.$store.state.openSidebar;
       this.$store.commit('SIDEBARTOGGLE', !status);
     },
+    searchProduct() {
+      if (!this.productTitle) return;
+      this.$router.push({ path: `/category/全部商品?title=${this.productTitle}` });
+      this.productTitle = '';
+      this.sidebarToggle();
+    },
   },
   computed: {
     path() {
-      return this.$route.path;
+      return this.$route.fullPath;
     },
     categorys() {
       return this.products.reduce((arr, { category }) => {

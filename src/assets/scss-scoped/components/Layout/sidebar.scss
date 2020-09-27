@@ -37,6 +37,10 @@
     font-size: 15px;
     color: theme-color('secondary');
     border-radius: 4px;
+
+    &:focus {
+      border-color: lighten(theme-color('gray'), 4%);
+    }
   }
   &__link {
     position: relative;

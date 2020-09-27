@@ -118,7 +118,7 @@
       @include text-ellipsis(1);
     }
   }
-  .celebrate {
+  .celebrate-img {
     width: 100px;
     height: 100px;
     background-image: url('~@img/celebrate.svg');
@@ -126,7 +126,7 @@
     background-size: cover;
     background-repeat: no-repeat;
   }
-  .disappointed {
+  .disappointed-img {
     width: 100px;
     height: 100px;
     background-image: url('~@img/disappointed.svg');

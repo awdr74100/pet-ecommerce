@@ -2,8 +2,11 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: calc(100vh - 42px - 15px);
+  height: calc(100vh - 36px - 15px);
   width: 100%;
+  @include desktop() {
+    height: calc(100vh - 42px - 15px);
+  }
 
   &--img1 {
     background-image: url('~@img/banner1.jpg');

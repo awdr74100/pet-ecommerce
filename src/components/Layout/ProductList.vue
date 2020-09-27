@@ -1,11 +1,11 @@
 <template>
   <div class="product-list text-secondary">
     <!-- panel -->
-    <div class="p-3 pb-2">
+    <div class="p-2 pb-2">
       <ProductPanel @callSortToggle="sortToggle" />
     </div>
     <!-- list -->
-    <div class="p-3 pt-0">
+    <div class="p-2 pt-0">
       <ul class="row-sm">
         <!-- 骨架屏 -->
         <template v-if="skeletonTarget === 'products'">
@@ -14,15 +14,29 @@
           </li>
         </template>
         <!-- 實體 -->
-        <template v-else>
+        <template v-else-if="filterProducts.length > 0">
           <li class="col-md-3 px-2 mt-4" v-for="(item, index) in sortAndSliceProducts" :key="index">
             <ProductCard :item="item" />
+          </li>
+        </template>
+        <!-- 未找到商品 -->
+        <template v-else>
+          <li class="col-md-12 px-2 mt-4">
+            <div class="d-flex flex-column align-items-center justify-content-center py-6 my-6">
+              <span class="text-gray">
+                <font-awesome-icon :icon="['fas', 'search']" size="3x" />
+              </span>
+              <p class="mt-4">未找到商品</p>
+            </div>
           </li>
         </template>
       </ul>
     </div>
     <!-- footer -->
-    <div class="p-3 mt-3 d-flex align-items-center justify-content-center">
+    <div
+      class="p-2 mt-3 mb-2 d-flex align-items-center justify-content-center"
+      v-if="filterProducts.length > 0"
+    >
       <Pagination
         :length="filterProducts.length"
         :row="row"
@@ -74,13 +88,16 @@ export default {
     filterProducts() {
       const vm = this;
       vm.paginationReset(); // reset pagination page
-      const { category } = vm.$route.params; // fix call by reference
-      const products = [...vm.products];
-      return products.filter((item) => {
+      const { category } = vm.$route.params;
+      const { title } = vm.$route.query;
+      const products = [...vm.products]; // fix call by reference
+      const filterProducts = products.filter((item) => {
         if (category === '優惠商品') return item.origin_price !== item.price;
         if (category === '全部商品') return item;
         return item.category === category;
       });
+      if (title) return filterProducts.filter((item) => item.title.match(title)); // 透過 query 查詢
+      return filterProducts;
     },
     sortAndSliceProducts() {
       const vm = this;

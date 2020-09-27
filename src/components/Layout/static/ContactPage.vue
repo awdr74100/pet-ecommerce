@@ -33,11 +33,11 @@
     </section>
     <!-- form -->
     <section class="text-secondary">
-      <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+      <div class="d-flex flex-column align-items-center justify-content-center my-5">
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">聯絡表單</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
-      <div class="d-flex flex-column align-items-center mt-4">
+      <div class="d-flex flex-column align-items-center">
         <span class="text-gray text-center text mb-4 px-3"
           >如果您有任何疑問，或想回饋反映的意見，歡迎與我們聯繫。</span
         >

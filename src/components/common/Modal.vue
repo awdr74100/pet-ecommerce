@@ -582,13 +582,14 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
+      v-if="role !== 'admin'"
     >
       <div class="container-fluid modal px-0">
         <template v-if="cache.code">
           <div class="row no-gutters">
             <div class="modal__body px-4 py-1">
               <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="celebrate mt-3"></div>
+                <div class="celebrate-img mt-3"></div>
                 <p class="mt-4 font-l font-weight-semi-bold">恭喜獲得</p>
                 <span class="mt-2">{{ cache.discount }} 折優惠卷一張</span>
                 <div class="bg-danger text-white px-4 py-2 mt-2">
@@ -600,7 +601,8 @@
           <div class="row no-gutters">
             <div class="modal__footer justify-content-center px-4 py-3">
               <button
-                class="btn btn--primary btn--md d-flex align-items-center"
+                class="btn btn--primary btn--md d-flex align-items-center mr-3"
+                v-if="cart.length > 0"
                 @click.prevent="applyCoupon('lucky-wheel-modal')"
               >
                 <p>立即套用</p>
@@ -609,7 +611,7 @@
                 </span>
               </button>
               <button
-                class="btn btn--transparent btn--md ml-5"
+                class="btn btn--transparent btn--md"
                 @click.prevent="closeModal('lucky-wheel-modal')"
               >
                 再轉一次
@@ -621,9 +623,9 @@
           <div class="row no-gutters">
             <div class="modal__body px-4 py-1">
               <div class="d-flex flex-column align-items-center justify-content-center">
-                <div class="disappointed mt-3"></div>
-                <p class="mt-4 font-l font-weight-semi-bold">沒抽到ㄟ！</p>
-                <span class="mt-2">要不在試一次看看？</span>
+                <div class="disappointed-img mt-3"></div>
+                <p class="mt-4 font-l font-weight-semi-bold">很遺憾！未能中獎</p>
+                <span class="mt-2">要不再試一次看看吧？</span>
               </div>
             </div>
           </div>
@@ -676,7 +678,7 @@ export default {
         }
       }
     },
-    // 關閉後處理
+    // 關閉前處理
     closeModal(modal) {
       this.$store.commit('modal/CLOSEMODAL', { modal });
       this.$store.commit('image/DATACLEAR');
@@ -814,6 +816,7 @@ export default {
     },
     ...mapState('image', ['file', 'imgUrl']),
     ...mapState('modal', ['cache', 'caches']),
+    ...mapState('cart', ['cart']),
   },
 };
 </script>

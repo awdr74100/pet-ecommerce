@@ -154,7 +154,7 @@
             <input
               type="text"
               class="account-form__input text-secondary"
-              placeholder="電郵地址"
+              placeholder="電子郵件"
               :class="{ 'account-form__input--error': failed }"
               v-model="account.email"
             />

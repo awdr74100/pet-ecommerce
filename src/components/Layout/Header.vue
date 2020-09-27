@@ -39,12 +39,20 @@
       </li>
       <!-- 搜尋 -->
       <li class="list__item ml-md-1 d-md-flex d-none">
-        <a href="#" class="list__link search-link pl-3">
-          <span class="icon"><font-awesome-icon :icon="['fas', 'search']"/></span>
-          <input class="search p-0 pl-3" type="text" placeholder="找商品" />
-        </a>
+        <div class="list__link search-link">
+          <span class="icon cursor-pointer px-3" @click="searchProduct">
+            <font-awesome-icon :icon="['fas', 'search']" />
+          </span>
+          <input
+            class="search p-0"
+            type="text"
+            placeholder="找商品"
+            v-model.trim="productTitle"
+            @keypress.enter="searchProduct"
+          />
+        </div>
       </li>
-      <!-- Sidebar 開關 -->
+      <!-- 側邊欄 -->
       <li class="list__item ml-md-1">
         <a href="#" class="list__link menu-link px-3" @click.prevent="sidebarToggle">
           <Hamburger />
@@ -65,6 +73,11 @@ export default {
     Hamburger,
     Popover,
   },
+  data() {
+    return {
+      productTitle: '',
+    };
+  },
   methods: {
     sidebarToggle() {
       const status = this.$store.state.openSidebar;
@@ -73,6 +86,11 @@ export default {
     signout() {
       const { requiresAuth = false } = this.$route.meta;
       this.$store.dispatch('user/signout', { requiresAuth });
+    },
+    searchProduct() {
+      if (!this.productTitle) return;
+      this.$router.push({ path: `/category/全部商品?title=${this.productTitle}` });
+      this.productTitle = '';
     },
   },
   computed: {
