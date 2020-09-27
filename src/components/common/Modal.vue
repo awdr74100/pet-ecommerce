@@ -604,7 +604,7 @@
                 @click.prevent="applyCoupon('lucky-wheel-modal')"
               >
                 <p>立即套用</p>
-                <span class="ml-2" v-if="spinner.action === 'apply'">
+                <span class="ml-2" v-if="spinner.action === 'applyCoupon'">
                   <font-awesome-icon :icon="['fas', 'spinner']" spin />
                 </span>
               </button>
@@ -801,7 +801,7 @@ export default {
     },
     // 立即套用優惠卷
     async applyCoupon(modal) {
-      this.spinner = { id: '', action: 'apply' };
+      this.spinner = { id: '', action: 'applyCoupon' };
       await this.$store.dispatch('coupons/applyCoupon', { code: this.cache.code });
       await this.$store.dispatch('cart/getCart');
       this.spinner = { id: '', action: '' };
