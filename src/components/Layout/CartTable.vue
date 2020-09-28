@@ -179,9 +179,18 @@ export default {
     },
     async blurUpdateCartItemQty(cartPorduct, e) {
       const { id, qty, product } = cartPorduct;
-      const newQty = parseInt(e.target.value, 10);
-      if (newQty === qty) return;
-      // 從前端做驗證
+      const strQty = e.target.value; // String
+      const newQty = parseInt(e.target.value, 10); // Number
+      // 數量是否存在變化
+      if (newQty === qty && !strQty.includes('e') && !strQty.includes('.')) return;
+      // 檢查是否為有效數字
+      if (newQty <= 0 || Number.isNaN(newQty) || strQty.includes('.') || strQty.includes('e')) {
+        const message = '數量異常';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+        this.$refs[id][0].value = qty;
+        return;
+      }
+      // 檢查是否庫存不足
       if (newQty > product.stock) {
         const message = '庫存不足';
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });

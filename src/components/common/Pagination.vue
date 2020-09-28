@@ -11,15 +11,20 @@
         </span>
       </button>
     </li>
-    <li v-for="(item, index) in pages" :key="index">
-      <button
-        class="btn pagination__item"
-        :class="{ 'pagination__item--active': item === page }"
-        @click.prevent="pageToggle(item)"
-      >
-        {{ item }}
-      </button>
-    </li>
+    <template v-if="shortMode">
+      <li class="text-secondary mx-2">{{ page }}<span class="mx-1">/</span>{{ pages }}</li>
+    </template>
+    <template v-else>
+      <li v-for="(item, index) in pages" :key="index">
+        <button
+          class="btn pagination__item"
+          :class="{ 'pagination__item--active': item === page }"
+          @click.prevent="pageToggle(item)"
+        >
+          {{ item }}
+        </button>
+      </li>
+    </template>
     <li>
       <button
         class="btn pagination__next"
@@ -44,6 +49,7 @@ export default {
   data() {
     return {
       page: 1,
+      shortMode: window.innerWidth < 768,
     };
   },
   methods: {

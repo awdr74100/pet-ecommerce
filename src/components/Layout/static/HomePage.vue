@@ -29,7 +29,7 @@
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">最新消息</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
-      <div class="px-2">
+      <div class="px-3">
         <div class="row-sm">
           <div class="col-md-8 px-2 mt-md-0 mt-4">
             <router-link to="/news" class="news text-secondary">
@@ -100,7 +100,7 @@
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">熱銷商品</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
-      <div class="px-2">
+      <div class="px-3">
         <swiper ref="swiper2" :options="productsSwiperOptions">
           <!-- 骨架屏 -->
           <template v-if="skeletonTarget === 'products'">
@@ -129,7 +129,7 @@
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">限量折扣商品</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
-      <div class="px-2">
+      <div class="px-3">
         <swiper ref="swiper3" :options="productsSwiperOptions">
           <!-- 骨架屏 -->
           <template v-if="skeletonTarget === 'products'">
@@ -153,7 +153,7 @@
       </div>
     </section>
     <!-- subscribe -->
-    <div class="subscribe text-secondary mx-2 mt-5 mb-4">
+    <div class="subscribe text-secondary mx-3 mt-5 mb-3">
       <div class="row no-gutters">
         <div class="col-md-6 py-4">
           <div class="subscribe__text text-center">

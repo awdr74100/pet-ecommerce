@@ -190,7 +190,7 @@
               <p>確認</p>
               <span
                 class="ml-2"
-                v-if="spinner.action === 'addProduct' && spinner.action === 'editProduct'"
+                v-if="spinner.action === 'addProduct' || spinner.action === 'editProduct'"
               >
                 <font-awesome-icon :icon="['fas', 'spinner']" spin />
               </span>
@@ -431,7 +431,7 @@
               <p>確認</p>
               <span
                 class="ml-2"
-                v-if="spinner.action === 'addCoupon' && spinner.action === 'editCoupon'"
+                v-if="spinner.action === 'addCoupon' || spinner.action === 'editCoupon'"
               >
                 <font-awesome-icon :icon="['fas', 'spinner']" spin />
               </span>
@@ -582,7 +582,6 @@
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
       @before-close="closeModal(null)"
-      v-if="role !== 'admin'"
     >
       <div class="container-fluid modal px-0">
         <template v-if="cache.code">

@@ -343,10 +343,19 @@ export default {
     filterOrders() {
       const vm = this;
       vm.paginationReset(); // reset pagination page
+      const { tab } = vm.$route.params;
       const orders = [...vm.orders]; // fix call by reference
       const needFilter = vm.searchTargetValue || vm.searchDateRange.length > 0;
+      const statusFilter = orders.filter((item) => {
+        if (tab === 'unpaid') return item.status === 'unpaid';
+        if (tab === 'toship') return item.status === 'toship';
+        if (tab === 'shipping') return item.status === 'shipping' || item.status === 'arrived';
+        if (tab === 'completed') return item.status === 'completed';
+        if (tab === 'cancelled') return item.status === 'cancelled';
+        return item;
+      });
       if (needFilter) {
-        return orders
+        return statusFilter
           .filter((item) => {
             if (vm.searchTargetValue) {
               const [key, value] = [vm.searchTarget, vm.searchTargetValue];
@@ -362,7 +371,7 @@ export default {
             return item;
           });
       }
-      return orders;
+      return statusFilter;
     },
     sortAndSliceOrders() {
       const vm = this;

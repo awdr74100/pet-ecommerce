@@ -23,7 +23,7 @@
                   </span>
                   <p>選擇運送方式</p>
                 </div>
-                <form class="form ml-3">
+                <form class="form ml-md-3 ml-0">
                   <div class="d-flex mt-3">
                     <input
                       type="radio"
@@ -91,7 +91,7 @@
                   </span>
                   <p>選擇付款方式</p>
                 </div>
-                <form class="form ml-3">
+                <form class="form ml-md-3 ml-0">
                   <div class="d-flex align-items-center mt-3">
                     <input
                       type="radio"
@@ -134,7 +134,7 @@
               <p>填寫收件人資訊</p>
             </div>
             <ValidationObserver ref="create-order-form" slim>
-              <form class="form ml-3">
+              <form class="form ml-md-3 ml-0">
                 <div class="row">
                   <div class="col-md-6">
                     <label for="name" class="form__label d-block mb-1 mt-3">姓名*</label>

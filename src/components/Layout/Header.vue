@@ -27,7 +27,7 @@
           <span class="icon mr-1"><font-awesome-icon :icon="['fas', 'shopping-cart']"/></span>
           <p><span class="d-md-inline d-none">購物車</span> ({{ isSignin ? cart.length : 0 }})</p>
         </router-link>
-        <!-- popover -->
+        <!-- Shopping Cart -->
         <Popover />
       </li>
       <!-- 訂單管理 -->
@@ -48,11 +48,14 @@
             type="text"
             placeholder="找商品"
             v-model.trim="productTitle"
+            :class="{ 'search--active': searchToggle }"
+            @focus="searchToggle = true"
+            @blur="searchToggle = false"
             @keypress.enter="searchProduct"
           />
         </div>
       </li>
-      <!-- 側邊欄 -->
+      <!-- 側邊欄開關 -->
       <li class="list__item ml-md-1">
         <a href="#" class="list__link menu-link px-3" @click.prevent="sidebarToggle">
           <Hamburger />
@@ -75,6 +78,7 @@ export default {
   },
   data() {
     return {
+      searchToggle: false,
       productTitle: '',
     };
   },

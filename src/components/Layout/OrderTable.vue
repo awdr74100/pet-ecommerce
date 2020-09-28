@@ -1,7 +1,7 @@
 <template>
   <div class="order-table w-100">
     <!-- panel -->
-    <div class="p-4">
+    <div class="p-3">
       <OrderPanel @callSearch="search" @callSearchReset="searchReset" />
     </div>
     <!-- info -->
@@ -11,7 +11,7 @@
       </p>
     </div>
     <!-- table -->
-    <div class="p-4">
+    <div class="p-3">
       <!-- table(header) -->
       <div class="table-header">
         <table class="table text-secondary">

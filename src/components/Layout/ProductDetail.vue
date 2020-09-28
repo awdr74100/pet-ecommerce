@@ -140,8 +140,10 @@
                 <input
                   type="number"
                   class="product-detail__input"
+                  :ref="product.id"
                   :disabled="product.stock === 0"
-                  v-model.number="inputQty"
+                  @input="filterQty"
+                  :value="qty"
                 />
                 <button
                   class="btn product-detail__btn right"
@@ -204,8 +206,23 @@ export default {
     dropdownToggle() {
       this.dropdownActive = !this.dropdownActive;
     },
+    filterQty(e) {
+      const qty = parseInt(e.target.value, 10);
+      // 檢查是否為有效數字
+      if (qty <= 0 || Number.isNaN(qty) || e.target.value.includes('.')) {
+        this.$refs[this.product.id].value = this.qty;
+        return;
+      }
+      // 檢查是否庫存不足
+      if (qty > this.product.stock) {
+        this.$refs[this.product.id].value = this.qty;
+        return;
+      }
+      this.qty = qty;
+    },
     async addToCart(action) {
-      // 在每次動作時驗證
+      this.spinner.action = action;
+      // 在每次動作前驗證
       await this.$store.dispatch('user/check');
       // 檢查是否登入
       if (!this.isSignin) {
@@ -219,7 +236,6 @@ export default {
         return;
       }
       // 加入購物車
-      this.spinner.action = action;
       await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
       this.spinner.action = '';
       if (this.messages[this.messages.length - 1].status === 'danger' || action === 'add') return;
@@ -251,16 +267,16 @@ export default {
       const date2 = { mm, dd };
       return { date1, date2 };
     },
-    inputQty: {
-      get() {
-        return this.qty;
-      },
-      set(value) {
-        if (!value || typeof value === 'string') return;
-        if (value < 1 || value > this.product.stock) return;
-        this.qty = value;
-      },
-    },
+    // inputQty: {
+    //   get() {
+    //     return this.qty;
+    //   },
+    //   set(value) {
+    //     if (!value || typeof value === 'string') return;
+    //     if (value < 1 || value > this.product.stock) return;
+    //     this.qty = value;
+    //   },
+    // },
     ...mapState('user', ['isSignin']),
     ...mapState('products', ['product']),
     ...mapState(['skeletonTarget']),

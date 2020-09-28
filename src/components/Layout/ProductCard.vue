@@ -58,7 +58,8 @@ export default {
   methods: {
     async addToCart(productId, productStock) {
       if (productStock === 0) return;
-      // 驗證身分
+      this.spinner = { id: productId, action: '' };
+      // 在每次動作前驗證
       await this.$store.dispatch('user/check');
       // 檢查是否登入
       if (!this.isSignin) {
@@ -66,7 +67,6 @@ export default {
         return;
       }
       // 加入購物車
-      this.spinner = { id: productId, action: '' };
       await this.$store.dispatch('cart/addToCart', { productId, qty: 1 });
       this.spinner = { id: '', action: '' };
     },

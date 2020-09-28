@@ -1,11 +1,11 @@
 <template>
   <div class="product-list text-secondary">
     <!-- panel -->
-    <div class="p-2 pb-2">
+    <div class="p-3 pb-2">
       <ProductPanel @callSortToggle="sortToggle" />
     </div>
     <!-- list -->
-    <div class="p-2 pt-0">
+    <div class="p-3 pt-0">
       <ul class="row-sm">
         <!-- 骨架屏 -->
         <template v-if="skeletonTarget === 'products'">
@@ -96,7 +96,9 @@ export default {
         if (category === '全部商品') return item;
         return item.category === category;
       });
-      if (title) return filterProducts.filter((item) => item.title.match(title)); // 透過 query 查詢
+      if (title) {
+        return filterProducts.filter((item) => item.title.toLowerCase().match(title.toLowerCase()));
+      }
       return filterProducts;
     },
     sortAndSliceProducts() {
