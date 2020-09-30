@@ -33,9 +33,9 @@
     position: relative;
     background-color: theme-color('primary');
     border-radius: 50%;
-    width: 30px;
-    height: 30px;
     font-size: 16px;
+    min-width: 30px;
+    min-height: 30px;
 
     &:not(&--disabled):hover {
       background-color: darken(theme-color('primary'), 8%);
@@ -45,11 +45,14 @@
       background-color: lighten(theme-color('gray'), 36%);
     }
     .icon {
+      width: 20px; // fix ios svg problem
+      height: 20px;
+      display: inline-block;
       mask-position: center center;
       mask-repeat: no-repeat;
-      mask-size: cover;
+      mask-size: contain;
       mask-image: url('~@img/shopping-cart.svg');
-      z-index: 1;
+      background-color: theme-color('white');
     }
     .spinner {
       display: flex;
