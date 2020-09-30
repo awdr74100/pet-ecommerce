@@ -203,7 +203,10 @@ export default {
       if (!valid) return;
       const { username, password, email } = this.account;
       this.progressActive = true;
-      await this.$store.dispatch('user/signup', { username, password, email });
+      const success = await this.$store.dispatch('user/signup', { username, password, email });
+      if (success) {
+        this.toggleTab('signin');
+      }
       this.progressActive = false;
     },
     async resetPassword() {

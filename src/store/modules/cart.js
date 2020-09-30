@@ -17,12 +17,14 @@ export default {
         const { data } = await axios.post(url, payload);
         if (!data.success) {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
-          return;
+          return false;
         }
         dispatch('getCart');
         dispatch('notification/updateMessage', { message: data.message, status: 'success' }, root);
+        return true;
       } catch (error) {
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
+        return false;
       }
     },
     async getCart({ dispatch, commit }) {

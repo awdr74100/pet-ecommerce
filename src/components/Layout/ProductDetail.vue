@@ -236,10 +236,14 @@ export default {
         return;
       }
       // 加入購物車
-      await this.$store.dispatch('cart/addToCart', { productId: this.product.id, qty: this.qty });
+      const success = await this.$store.dispatch('cart/addToCart', {
+        productId: this.product.id,
+        qty: this.qty,
+      });
       this.spinner.action = '';
-      if (this.messages[this.messages.length - 1].status === 'danger' || action === 'add') return;
-      this.$router.push('/cart');
+      if (success && action === 'push') {
+        this.$router.push('/cart');
+      }
     },
   },
   computed: {
@@ -255,32 +259,21 @@ export default {
       return [];
     },
     arrivalDate() {
-      const day = 2; // 兩天到達
+      const day = 2; // 到貨天數
       const date = new Date();
       date.setDate(date.getDate() + day);
       let mm = date.getMonth() + 1;
       let dd = date.getDate();
       const date1 = { mm, dd };
-      date.setDate(date.getDate() + 1);
+      date.setDate(date.getDate() + 1); // 誤差天數
       mm = date.getMonth() + 1;
       dd = date.getDate();
       const date2 = { mm, dd };
       return { date1, date2 };
     },
-    // inputQty: {
-    //   get() {
-    //     return this.qty;
-    //   },
-    //   set(value) {
-    //     if (!value || typeof value === 'string') return;
-    //     if (value < 1 || value > this.product.stock) return;
-    //     this.qty = value;
-    //   },
-    // },
     ...mapState('user', ['isSignin']),
     ...mapState('products', ['product']),
     ...mapState(['skeletonTarget']),
-    ...mapState('notification', ['messages']),
   },
   created() {
     const { id } = this.$route.params;
