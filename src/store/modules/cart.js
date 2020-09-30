@@ -35,10 +35,14 @@ export default {
           dispatch('notification/updateMessage', { message: data.message, status: 'danger' }, root);
           return;
         }
+        // 產品遭下架或移除
+        if (data.message) {
+          const { message } = data;
+          dispatch('notification/updateMessage', { message, status: 'warning' }, root);
+        }
         commit('SKELETONACTIVE', '', root);
         commit('GETCART', { cart: data.cart, total: data.total, finalTotal: data.final_total });
       } catch (error) {
-        console.log(error);
         dispatch('notification/updateMessage', { message: error.message, status: 'danger' }, root);
       }
     },
