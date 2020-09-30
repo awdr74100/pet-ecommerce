@@ -30,6 +30,7 @@
     font-size: 14px;
   }
   &__btn {
+    position: relative;
     background-color: theme-color('primary');
     border-radius: 50%;
     width: 30px;
@@ -44,13 +45,11 @@
       background-color: lighten(theme-color('gray'), 36%);
     }
     .icon {
-      width: 66%;
-      height: 66%;
       mask-position: center center;
       mask-repeat: no-repeat;
       mask-size: cover;
       mask-image: url('~@img/shopping-cart.svg');
-      background-color: theme-color('white');
+      z-index: 1;
     }
     .spinner {
       display: flex;
