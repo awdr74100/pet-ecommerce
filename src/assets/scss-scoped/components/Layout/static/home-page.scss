@@ -2,11 +2,9 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: calc(100vh - 36px - 15px);
+  height: 500px;
   width: 100%;
-  @include desktop() {
-    height: calc(100vh - 42px - 15px);
-  }
+  // filter: blur(5px);
 
   &--img1 {
     background-image: url('~@img/banner1.jpg');
@@ -20,15 +18,13 @@
 }
 .message {
   position: absolute;
-  bottom: 60px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
-  background-color: rgba(theme-color('white'), 0.45);
-  border-radius: 4px;
+  background-color: rgba(theme-color('white'), 0.5);
   @include desktop() {
-    left: 70px;
-    bottom: 70px;
+    left: 90px;
     transform: translateX(0);
   }
 
@@ -84,7 +80,6 @@
     position: absolute;
     left: 0px;
     bottom: 0px;
-    color: theme-color('white');
 
     .title {
       font-weight: 600;

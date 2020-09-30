@@ -1,7 +1,7 @@
 <template>
   <div class="product-list text-secondary">
     <!-- panel -->
-    <div class="p-3 pb-2">
+    <div class="p-3 pb-0">
       <ProductPanel @callSortToggle="sortToggle" />
     </div>
     <!-- list -->
@@ -34,7 +34,7 @@
     </div>
     <!-- footer -->
     <div
-      class="p-2 mt-3 mb-2 d-flex align-items-center justify-content-center"
+      class="p-2 my-3 d-flex align-items-center justify-content-center"
       v-if="filterProducts.length > 0"
     >
       <Pagination

@@ -1,12 +1,12 @@
 <template>
-  <div class="container h-100 d-flex flex-column">
-    <div class="row no-gutters bg-white shadow mb-auto mt-3">
+  <div class="container px-0 h-100 d-flex flex-column">
+    <div class="row no-gutters bg-white shadow mb-auto">
       <main class="w-100">
         <!-- Static File -->
         <NewsPage />
       </main>
     </div>
-    <div class="row no-gutters bg-white shadow mt-3">
+    <div class="row no-gutters bg-white shadow-top">
       <Footer />
     </div>
   </div>

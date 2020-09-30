@@ -8,10 +8,16 @@ $themeColor: theme-color('primary');
 
 .swiper-button-prev,
 .swiper-button-next {
-  padding: 20px;
+  padding: 20px 16px;
   border-radius: 4px;
   color: theme-color('white') !important;
   background-color: rgba(theme-color('gray'), 0.3);
+}
+.swiper-button-prev {
+  left: 16px !important;
+}
+.swiper-button-next {
+  right: 16px !important;
 }
 
 @import '~swiper/components/pagination/pagination.scss';

@@ -29,68 +29,64 @@
         <h2 class="font-m font-weight-semi-bold text-center text-secondary">最新消息</h2>
         <span class="line bg-secondary mt-2"></span>
       </div>
-      <div class="px-3">
-        <div class="row-sm">
-          <div class="col-md-8 px-2 mt-md-0 mt-4">
-            <router-link to="/news" class="news text-secondary">
-              <div class="news__img news__img--img1"></div>
-              <div class="news__text-block d-flex flex-column p-3">
-                <h6 class="title">「毛孩百貨」9 月 24 日正式開幕</h6>
-                <span class="date d-flex align-items-center mt-3">
-                  <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
-                  <p class="ml-2">2020-09-24</p>
-                </span>
-                <span class="content mt-2"
-                  >毛孩百貨正式開幕，各種品牌寵物用品，應有盡有，滿足你對毛小孩用品的各種需求。</span
-                >
-              </div></router-link
-            >
-          </div>
-          <div class="col-md-4 px-2 mt-md-0 mt-4">
-            <router-link to="/news" class="news text-secondary">
-              <div class="news__img news__img--img2"></div>
-              <div class="news__text-block d-flex flex-column p-3">
-                <h6 class="title">慶開幕，全館商品9折起</h6>
-                <span class="date d-flex align-items-center mt-3">
-                  <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
-                  <p class="ml-2">2020-09-24</p>
-                </span>
-                <span class="content mt-2"
-                  >慶祝網站開幕，各項品牌商品9折起，優惠代碼請看結帳頁面，機會難得，請好好把握！</span
-                >
-              </div></router-link
-            >
-          </div>
-          <div class="col-md-4 px-2 mt-4">
-            <router-link to="/news" class="news text-secondary">
-              <div class="news__img news__img--img3"></div>
-              <div class="news__text-block d-flex flex-column p-3">
-                <h6 class="title">夏天到了，該來消暑一下了</h6>
-                <span class="date d-flex align-items-center mt-3">
-                  <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
-                  <p class="ml-2">2020-09-24</p>
-                </span>
-                <span class="content mt-2"
-                  >新增寵物洗澡用品以及戶外生活用品，詳情請看商品列表。</span
-                >
-              </div></router-link
-            >
-          </div>
-          <div class="col-md-8 px-2 mt-4">
-            <router-link to="/news" class="news text-secondary">
-              <div class="news__img news__img--img4"></div>
-              <div class="news__text-block d-flex flex-column p-3">
-                <h6 class="title">中秋節到來，寵物是否可以吃烤肉呢？</h6>
-                <span class="date d-flex align-items-center mt-3">
-                  <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
-                  <p class="ml-2">2020-09-24</p>
-                </span>
-                <span class="content mt-2"
-                  >中秋節到來，香噴噴的烤肉令人胃口大開，不過千萬要注意，寵物是不太能吃烤肉的，相關知識請看網路報導。</span
-                >
-              </div></router-link
-            >
-          </div>
+      <div class="row no-gutters">
+        <div class="col-md-8">
+          <router-link to="/news" class="news text-secondary">
+            <div class="news__img news__img--img1"></div>
+            <div class="news__text-block text-white d-flex flex-column p-3">
+              <h6 class="title">「毛孩百貨」9 月 24 日正式開幕</h6>
+              <span class="date d-flex align-items-center mt-3">
+                <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
+                <p class="ml-2">2020-09-24</p>
+              </span>
+              <span class="content mt-2"
+                >毛孩百貨正式開幕，各種品牌寵物用品，應有盡有，滿足你對毛小孩用品的各種需求。</span
+              >
+            </div>
+          </router-link>
+        </div>
+        <div class="col-md-4 pl-md-1 mt-md-0 mt-1">
+          <router-link to="/news" class="news text-secondary">
+            <div class="news__img news__img--img2"></div>
+            <div class="news__text-block text-white d-flex flex-column p-3">
+              <h6 class="title">慶開幕，全館商品9折起</h6>
+              <span class="date d-flex align-items-center mt-3">
+                <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
+                <p class="ml-2">2020-09-24</p>
+              </span>
+              <span class="content mt-2"
+                >慶祝網站開幕，各項品牌商品9折起，優惠代碼請看結帳頁面，機會難得，請好好把握！</span
+              >
+            </div>
+          </router-link>
+        </div>
+        <div class="col-md-4 pr-md-1 mt-1">
+          <router-link to="/news" class="news text-secondary">
+            <div class="news__img news__img--img3"></div>
+            <div class="news__text-block text-white d-flex flex-column p-3">
+              <h6 class="title">夏天到了，該來消暑一下了</h6>
+              <span class="date d-flex align-items-center mt-3">
+                <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
+                <p class="ml-2">2020-09-24</p>
+              </span>
+              <span class="content mt-2">新增寵物洗澡用品以及戶外生活用品，詳情請看商品列表。</span>
+            </div>
+          </router-link>
+        </div>
+        <div class="col-md-8 mt-1">
+          <router-link to="/news" class="news text-secondary">
+            <div class="news__img news__img--img4"></div>
+            <div class="news__text-block text-white d-flex flex-column p-3">
+              <h6 class="title">中秋節到來，寵物是否可以吃烤肉呢？</h6>
+              <span class="date d-flex align-items-center mt-3">
+                <span><font-awesome-icon :icon="['far', 'calendar-alt']"/></span>
+                <p class="ml-2">2020-09-24</p>
+              </span>
+              <span class="content mt-2"
+                >中秋節到來，香噴噴的烤肉令人胃口大開，不過千萬要注意，寵物是不太能吃烤肉的，相關知識請看網路報導。</span
+              >
+            </div>
+          </router-link>
         </div>
       </div>
     </section>

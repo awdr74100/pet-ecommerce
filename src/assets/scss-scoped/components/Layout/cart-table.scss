@@ -93,6 +93,8 @@
     &__input {
       max-width: 70px;
       min-width: 0px;
+      width: 70px; // fix ios problem
+      min-height: 30px; // fix ios problem
       border: 1px solid lighten(theme-color('gray'), 30%);
       color: theme-color('secondary');
       height: 30px;
