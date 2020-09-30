@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-6">
           <div class="order-panel__group mt-md-0 mt-3">
-            <p class="mr-3 white-nowrap">訂單成立時間 (單)</p>
+            <p class="mr-3 white-nowrap">訂單成立時間</p>
             <date-picker
               type="date"
               value-type="timestamp"

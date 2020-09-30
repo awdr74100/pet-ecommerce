@@ -17,6 +17,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import AboutPage from '@/components/Layout/static/AboutPage.vue';
 
 export default {
+  metaInfo: {
+    title: '關於我們',
+  },
   components: {
     Footer,
     AboutPage,

@@ -24,6 +24,9 @@ import Sidebar from '@/components/Dashboard/Sidebar.vue';
 
 export default {
   name: 'Dashboard',
+  metaInfo: {
+    title: '賣家管理後台',
+  },
   components: {
     Header,
     Sidebar,

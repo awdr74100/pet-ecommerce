@@ -17,6 +17,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import CouponPage from '@/components/Layout/static/CouponPage.vue';
 
 export default {
+  metaInfo: {
+    title: '優惠活動',
+  },
   components: {
     Footer,
     CouponPage,

@@ -16,6 +16,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import CartDetail from '@/components/Layout/CartDetail.vue';
 
 export default {
+  metaInfo: {
+    title: '購物車',
+  },
   components: {
     Footer,
     CartDetail,

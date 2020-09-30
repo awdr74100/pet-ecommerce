@@ -11,6 +11,9 @@ import AccountForm from '@/components/Signin/AccountForm.vue';
 
 export default {
   name: 'Signin',
+  metaInfo: {
+    title: '會員登入',
+  },
   components: {
     AccountForm,
   },

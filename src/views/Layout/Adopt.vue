@@ -17,6 +17,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import AdoptPage from '@/components/Layout/static/AdoptPage.vue';
 
 export default {
+  metaInfo: {
+    title: '領養專區',
+  },
   components: {
     Footer,
     AdoptPage,

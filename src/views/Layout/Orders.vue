@@ -16,6 +16,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import OrderTable from '@/components/Layout/OrderTable.vue';
 
 export default {
+  metaInfo: {
+    title: '訂單管理',
+  },
   components: {
     Footer,
     OrderTable,

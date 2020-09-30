@@ -17,6 +17,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import ContactPage from '@/components/Layout/static/ContactPage.vue';
 
 export default {
+  metaInfo: {
+    title: '聯絡我們',
+  },
   components: {
     Footer,
     ContactPage,

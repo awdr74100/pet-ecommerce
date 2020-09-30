@@ -16,6 +16,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import CheckoutDetail from '@/components/Layout/CheckoutDetail.vue';
 
 export default {
+  metaInfo: {
+    title: '訂單結帳',
+  },
   components: {
     Footer,
     CheckoutDetail,

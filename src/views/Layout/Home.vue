@@ -17,6 +17,10 @@ import Footer from '@/components/Layout/Footer.vue';
 import HomePage from '@/components/Layout/static/HomePage.vue';
 
 export default {
+  metaInfo: {
+    title: '毛孩百貨',
+    titleTemplate: null,
+  },
   components: {
     Footer,
     HomePage,

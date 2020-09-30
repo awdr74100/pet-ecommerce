@@ -16,6 +16,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import ProductList from '@/components/Layout/ProductList.vue';
 
 export default {
+  metaInfo: {
+    title: '商品分類',
+  },
   components: {
     Footer,
     ProductList,

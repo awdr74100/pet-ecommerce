@@ -17,6 +17,9 @@ import Footer from '@/components/Layout/Footer.vue';
 import NewsPage from '@/components/Layout/static/NewsPage.vue';
 
 export default {
+  metaInfo: {
+    title: '最新消息',
+  },
   components: {
     Footer,
     NewsPage,

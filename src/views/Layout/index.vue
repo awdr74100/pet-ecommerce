@@ -24,6 +24,9 @@ import Sidebar from '@/components/Layout/Sidebar.vue';
 
 export default {
   name: 'Layout',
+  metaInfo: {
+    titleTemplate: '%s - 毛孩百貨',
+  },
   components: {
     Header,
     Sidebar,

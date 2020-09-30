@@ -1,4 +1,10 @@
 module.exports = {
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      title: 'PetShop',
+    },
+  },
   devServer: {
     port: 3001,
     open: true,
@@ -19,6 +25,16 @@ module.exports = {
       alias: {
         '@img': '@/assets/img',
       },
+    },
+  },
+  pwa: {
+    name: 'PetShop',
+    themeColor: '#4bb36e',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black-translucent',
+    workboxOptions: {
+      exclude: [/\.map$/, /_redirects/],
     },
   },
 };
