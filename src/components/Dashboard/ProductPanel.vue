@@ -33,7 +33,7 @@
             />
           </div>
           <div class="product-panel__group mt-3">
-            <label class="product-panel__label mr-3" for="searchProductStock">庫存數量</label>
+            <label class="mr-3" for="searchProductStock">庫存量</label>
             <input
               class="product-panel__input"
               type="number"
@@ -54,7 +54,7 @@
         </div>
         <div class="col-md-6">
           <div class="product-panel__group mt-md-0 mt-3">
-            <label class="product-panel__label mr-3" for="searchProductCategory">類別</label>
+            <label class="mr-3 pr-resize" for="searchProductCategory">類別</label>
             <input
               class="product-panel__input"
               type="text"
@@ -63,8 +63,8 @@
               v-model="searchCategory"
             />
           </div>
-          <div class="product-panel__group mt-3 pr-6">
-            <label class="product-panel__label mr-3" for="searchProductSoldout">已售出</label>
+          <div class="product-panel__group mt-3">
+            <label class="mr-3" for="searchProductSoldout">已售出</label>
             <input
               class="product-panel__input"
               type="number"

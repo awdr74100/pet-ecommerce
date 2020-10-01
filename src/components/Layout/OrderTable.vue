@@ -203,10 +203,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="ml-1"
+                              class="ml-1 font-xxs"
                               v-if="spinner.id === item.id && spinner.action === 'payment'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
                             </span>
                           </button>
                           <button
@@ -215,10 +215,10 @@
                           >
                             <p>取消</p>
                             <span
-                              class="ml-1"
+                              class="ml-1 font-xxs"
                               v-if="spinner.id === item.id && spinner.action === 'cancel'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
                             </span>
                           </button>
                         </div>
@@ -264,10 +264,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="ml-1"
+                              class="ml-1 font-xxs"
                               v-if="spinner.id === item.id && spinner.action === 'complete'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
                             </span>
                           </button>
                         </div>

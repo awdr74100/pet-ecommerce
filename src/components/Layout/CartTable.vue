@@ -69,7 +69,7 @@
               <td>
                 <div class="d-flex align-items-center text-secondary btn-group">
                   <button
-                    class="btn btn-group__btn left"
+                    class="btn px-2 py-1 btn-group__btn left mr-0"
                     :class="{ 'btn-group__btn--overlay': overlay.id === item.id }"
                     :disabled="readonly || item.qty <= 1 || overlay.id === item.id"
                     @click.prevent="updateCartItemQty('reduce', item)"
@@ -78,7 +78,7 @@
                   </button>
                   <input
                     type="number"
-                    class="btn-group__input"
+                    class="btn-group__input py-1 mx-0"
                     :ref="item.id"
                     :class="{ 'btn-group__input--overlay': overlay.id === item.id }"
                     :disabled="readonly || overlay.id === item.id"
@@ -86,7 +86,7 @@
                     @blur="blurUpdateCartItemQty(item, $event)"
                   />
                   <button
-                    class="btn btn-group__btn right"
+                    class="btn px-2 py-1 btn-group__btn right ml-0"
                     :class="{ 'btn-group__btn--overlay': overlay.id === item.id }"
                     :disabled="readonly || item.qty >= item.product.stock || overlay.id === item.id"
                     @click.prevent="updateCartItemQty('add', item)"

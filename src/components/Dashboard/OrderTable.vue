@@ -219,10 +219,10 @@
                           >
                             <p>確定</p>
                             <span
-                              class="ml-1"
+                              class="ml-1 font-xxs"
                               v-if="spinner.id === item.id && spinner.action === 'ship'"
                             >
-                              <font-awesome-icon :icon="['fas', 'spinner']" size="xs" spin />
+                              <font-awesome-icon :icon="['fas', 'spinner']" spin />
                             </span>
                           </button>
                         </div>

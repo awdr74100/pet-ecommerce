@@ -131,7 +131,7 @@
               </div>
               <div class="d-flex align-items-center text-secondary mb-2">
                 <button
-                  class="btn product-detail__btn left"
+                  class="btn btn--lg product-detail__btn left mr-0"
                   :disabled="qty <= 1"
                   @click.prevent="qty -= 1"
                 >
@@ -139,14 +139,14 @@
                 </button>
                 <input
                   type="number"
-                  class="product-detail__input"
+                  class="product-detail__input mx-0"
                   :ref="product.id"
                   :disabled="product.stock === 0"
                   @input="filterQty"
                   :value="qty"
                 />
                 <button
-                  class="btn product-detail__btn right"
+                  class="btn btn--lg product-detail__btn right ml-0"
                   :disabled="qty >= product.stock"
                   @click.prevent="qty += 1"
                 >
