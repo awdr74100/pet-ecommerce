@@ -23,7 +23,7 @@
         <template v-else>
           <div class="d-flex align-items-center justify-content-end py-3">
             <p class="info__message text-info d-md-inline d-none mr-4">
-              慶祝開幕，輸入折扣碼「ALCRE88045」，即享有全館商品 95 折優惠
+              慶祝開幕，輸入折扣碼「ALCRE88045」，即享有全館商品 9 折優惠
             </p>
             <div class="d-flex align-items-center info__group">
               <input
@@ -73,7 +73,7 @@
                 <label for="selectAll" class="pl-2 cursor-pointer">全選</label>
               </div>
               <div class="d-flex align-items-center ml-auto">
-                <p class="d-md-inline d-none">已選擇 {{ selected.length }} 件商品</p>
+                <p>已選擇 {{ selected.length }} 件商品</p>
                 <button
                   class="btn btn--primary btn--sm ml-3 d-flex align-items-center"
                   @click="removeFromCart"

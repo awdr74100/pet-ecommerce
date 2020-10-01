@@ -385,17 +385,15 @@
                     <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
                   </div>
                 </ValidationProvider>
-                <label class="modal__label mb-1" for="couponPercent">折扣額度 (百分比)</label>
+                <label class="modal__label mb-1" for="couponPercent">折扣額度 (%)</label>
                 <ValidationProvider rules="required" v-slot="{ errors, failed }" slim>
                   <div class="modal__group">
-                    <input
-                      class="modal__input"
-                      type="number"
-                      id="couponPercent"
-                      placeholder="請輸入"
-                      :class="{ 'modal__input--error': failed }"
-                      v-model.number="coupon.percent"
-                    />
+                    <vue-slider
+                      v-model="coupon.percent"
+                      :tooltip="'always'"
+                      :tooltip-placement="'bottom'"
+                    ></vue-slider>
+                    <input type="text" v-model="coupon.percent" v-show="false" />
                     <small class="modal__error" v-if="failed">{{ errors[0] }}</small>
                   </div>
                 </ValidationProvider>
@@ -404,9 +402,10 @@
                   <date-picker
                     type="date"
                     value-type="timestamp"
-                    v-model="couponRange"
-                    @clear="datePickerClear"
                     :range="true"
+                    :editable="false"
+                    @clear="datePickerClear"
+                    v-model="couponRange"
                   />
                 </div>
                 <div class="d-flex align-items-center">
@@ -577,7 +576,7 @@
       name="lucky-wheel-modal"
       height="auto"
       :adaptive="true"
-      :shiftY="0.2"
+      :shiftY="0.4"
       :width="340"
       :maxWidth="maxWidth"
       @before-open="beforeOpen"
@@ -669,12 +668,11 @@ export default {
     // 開啟前處理
     beforeOpen({ name }) {
       this.maxWidth = window.innerWidth - 30;
-      if (this.role === 'admin') {
-        this[name.split('-')[2]] = { ...this.cache }; // product or coupon
-        if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
-        if (this.cache.effective_date) {
-          this.couponRange = [this.cache.effective_date, this.cache.due_date];
-        }
+      if (this.role !== 'admin') return;
+      this[name.split('-')[2]] = { ...this.cache }; // product or coupon
+      if (this.cache.imgUrl) this.$store.commit('image/URLSAVE', this.cache.imgUrl);
+      if (this.cache.effective_date) {
+        this.couponRange = [this.cache.effective_date, this.cache.due_date];
       }
     },
     // 關閉前處理

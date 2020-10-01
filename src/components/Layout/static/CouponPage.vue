@@ -7,7 +7,7 @@
           <span class="percent mt-3 mb-4">SAVE 10%*</span>
           <div class="position-relative">
             <div class="icon d-md-block d-none"></div>
-            <p class="title text-center">慶祝「毛孩百貨」正式開幕，95 折優惠碼等你來領取！</p>
+            <p class="title text-center">慶祝「毛孩百貨」正式開幕，9 折優惠卷等你來領取！</p>
           </div>
           <div class="hr my-4"></div>
           <template v-if="!showCoupon">

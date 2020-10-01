@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <div class="account-form-layout">
-      <AccountForm />
+    <div class="account-form-layout d-flex align-items-center mx-auto">
+      <main class="w-100 mb-6">
+        <AccountForm />
+      </main>
     </div>
   </div>
 </template>

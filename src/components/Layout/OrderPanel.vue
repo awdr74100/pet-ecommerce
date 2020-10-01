@@ -33,9 +33,10 @@
             <date-picker
               type="date"
               value-type="timestamp"
-              v-model="searchDateRange"
-              @clear="datePickerClear"
               :range="true"
+              :editable="false"
+              @clear="datePickerClear"
+              v-model="searchDateRange"
             />
           </div>
         </div>
