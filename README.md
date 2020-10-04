@@ -5,7 +5,7 @@
    <h2>Pet eCommerce 寵物電商網站</h2>
 </div>
 
-Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成的電子商務網站，支援 PWA 及 RWD，UI 皆以 SCSS 並遵循 OOCSS 手刻而成，強調樣式的模組化及可重用性，平台使用者主要可分為管理員 (admin)、會員 (member) 兩種身分，管理員可依造主題快速擴展商店，會員為顧客透過註冊而成的身分，可進行消費等動作。
+Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成的電子商務網站，支援 PWA 及 RWD，UI 皆以 SCSS 並遵循 OOCSS 手刻而成，強調樣式的模組化及可重用性，平台使用者主要可分為管理員 (admin)、會員 (member) 兩種身分，管理員可依造主題快速擴展商店，會員可透過前台購物功能進行消費等操作。
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a3ffdf45-d9e5-4988-bbd4-15a943128e16/deploy-status)](https://app.netlify.com/sites/pet-ecommerce/deploys)
 
@@ -21,15 +21,16 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
 
 ## 設計說明
 
-此專案為 [PetStore](https://github.com/awdr74100/petStore) 的重製版本，主要改善一些重大錯誤及導入 Vuex 管理狀態等，包含 UI、UX 也全部打掉重練，這次嘗試從後端的建立到部屬都自己來完成，學習建構一個完整的全端專案。此專案支援 RWD、SPA、PWA，意即在手機上使用也不會有體驗低落的問題。
+此專案為 [PetStore](https://github.com/awdr74100/petStore) 的重製版本，主要改善一些重大錯誤及導入 Vuex 管理狀態等，包含 UI、UX 也全部打掉重練，這次嘗試從後端的建立與部署到前端的介面與串接全部自己搞定，學習建構一個完整的全端專案。此專案支援 RWD、SPA、PWA，意即在手機上使用也不會有體驗低落的問題。
 
 - 管理員後台功能 (商品管理、優惠卷管理、訂單管理) ✔
 - 會員前台購物功能 (購物車、訂單管理、結帳付款、轉盤遊戲) ✔
 - 優化後台圖片上傳 (改使用 Base64 預覽圖片) ✔
 - 將 icon 改為 SVG 格式並使用 mask-image 改變顏色 ✔
-- 使用 Prerender SPA 預渲染應用 (預計未來改使用 Nuxt.js 建構應用) ✔
-- 聯絡表單 (預計使用 Nodemailer 完成)
-- 串接金流
+- 使用 Prerender SPA 預渲染應用 ✔
+- 單元測試 (習得後完成)
+- 串接金流 (習得後完成)
+- 更新為 Vue 3.0
 
 ## 專案功能
 
