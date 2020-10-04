@@ -30,7 +30,7 @@ module.exports = {
       config.plugins.push(
         new PrerenderSPAPlugin({
           staticDir: path.join(__dirname, 'dist'),
-          routes: ['/', '/about', '/news', '/coupon', '/adopt', '/contact'],
+          routes: ['/', '/about', '/news', '/coupon', '/adopt', '/contact', '/signin'],
           minify: {
             collapseBooleanAttributes: true,
             collapseWhitespace: true,
