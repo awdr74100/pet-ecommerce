@@ -1,3 +1,8 @@
+const path = require('path');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
+
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+
 module.exports = {
   pages: {
     index: {
@@ -20,12 +25,29 @@ module.exports = {
       },
     },
   },
-  configureWebpack: {
-    resolve: {
-      alias: {
-        '@img': '@/assets/img',
-      },
-    },
+  configureWebpack: (config) => {
+    if (process.env.NODE_ENV === 'production') {
+      config.plugins.push(
+        new PrerenderSPAPlugin({
+          staticDir: path.join(__dirname, 'dist'),
+          routes: ['/', '/about', '/news', '/coupon', '/adopt', '/contact'],
+          minify: {
+            collapseBooleanAttributes: true,
+            collapseWhitespace: true,
+            decodeEntities: true,
+            keepClosingSlash: true,
+            sortAttributes: true,
+            minifyCSS: true,
+          },
+          renderer: new Renderer({
+            renderAfterDocumentEvent: 'render-event',
+            headless: true,
+          }),
+        }),
+      );
+    }
+    // eslint-disable-next-line no-param-reassign
+    config.resolve.alias['@img'] = '@/assets/img';
   },
   pwa: {
     name: 'PetShop',
