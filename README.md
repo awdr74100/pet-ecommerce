@@ -12,7 +12,7 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
 ## 線上演示
 
 - Demo：https://pet-ecommerce.netlify.app/
-- API Doc：https://github.com/awdr74100/pet-ecommerce-api/wiki
+- API Doc：https://github.com/awdr74100/pet-ecommerce-api
 
 ## 更新日誌
 
