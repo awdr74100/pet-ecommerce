@@ -219,6 +219,7 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
 ## 圖片引用來源
 
 - [東森寵物雲](https://www.etpet.com.tw/)
+- [汪喵星球](https://www.dogcatstar.com/)
 
 ## 聲明
 
