@@ -590,9 +590,13 @@
                 <div class="celebrate-img mt-3"></div>
                 <p class="mt-4 font-l font-weight-semi-bold">恭喜獲得</p>
                 <span class="mt-2">{{ cache.discount }} 折優惠卷一張</span>
-                <div class="bg-danger text-white px-4 py-2 mt-2">
-                  <span>{{ cache.code }}</span>
-                </div>
+                <button
+                  class="btn btn--danger btn--lg text-white d-flex align-items-center mt-2"
+                  @click="doCopy(cache.code)"
+                >
+                  <p>{{ cache.code }}</p>
+                  <span class="ml-5"><font-awesome-icon :icon="['far', 'copy']"/></span>
+                </button>
               </div>
             </div>
           </div>
@@ -805,6 +809,16 @@ export default {
       await this.$store.dispatch('cart/getCart');
       this.spinner = { id: '', action: '' };
       this.closeModal(modal);
+    },
+    // 複製文字
+    async doCopy(copyText) {
+      try {
+        await this.$copyText(copyText);
+        const message = '複製成功';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+      } catch ({ message }) {
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
+      }
     },
   },
   computed: {

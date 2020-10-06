@@ -137,6 +137,7 @@ export default {
       this.spinner.action = 'apply';
       await this.$store.dispatch('coupons/applyCoupon', { code: this.code });
       await this.$store.dispatch('cart/getCart');
+      this.code = '';
       this.spinner.action = '';
     },
     putSelected(id) {

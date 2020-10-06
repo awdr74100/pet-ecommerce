@@ -9,19 +9,10 @@
         <swiper-slide>
           <div class="banner banner--img2"></div>
         </swiper-slide>
-        <swiper-slide>
-          <div class="banner banner--img3"></div>
-        </swiper-slide>
         <div class="swiper-pagination" slot="pagination"></div>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
+        <div class="swiper-button-prev d-md-flex d-none" slot="button-prev"></div>
+        <div class="swiper-button-next d-md-flex d-none" slot="button-next"></div>
       </swiper>
-      <div class="message text-center p-md-5 p-3">
-        <span class="message__text d-block white-nowrap text-primary">嚴選商品 x 效率服務</span>
-        <span class="message__text d-block white-nowrap text-secondary mt-3"
-          >提供最精緻、最溫暖的服務，滿足飼主與毛孩</span
-        >
-      </div>
     </div>
     <!-- news -->
     <section class="position-relative">
@@ -114,8 +105,6 @@
               </div>
             </swiper-slide>
           </template>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
     </section>
@@ -143,8 +132,6 @@
               </div>
             </swiper-slide>
           </template>
-          <div class="swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
     </section>
@@ -157,7 +144,7 @@
             <p>快來訂閱「毛孩百貨」吧！</p>
           </div>
         </div>
-        <div class="col-md-6 pt-md-4 pb-4 pt-0">
+        <div class="col-md-6 pt-md-4 pt-0 pb-4">
           <div class="mx-md-6 mx-0 px-md-5 px-3 h-100 d-flex align-items-center">
             <ValidationObserver ref="subscribe-form" slim>
               <form class="d-flex align-items-cneter w-100" @submit.prevent="subscribe">
@@ -229,10 +216,6 @@ export default {
       productsSwiperOptions: {
         slidesPerView: 1,
         spaceBetween: 20,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
         breakpoints: {
           768: {
             slidesPerView: 4,

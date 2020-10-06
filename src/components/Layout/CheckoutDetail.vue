@@ -277,24 +277,39 @@
               </h2>
               <div class="p-3 window__body">
                 <div class="d-flex align-items-center justify-content-center">
-                  <button
-                    class="btn btn--primary px-5 d-flex align-items-center"
+                  <a
+                    href="#"
+                    class="btn btn--primary btn--lg px-md-5 px-4 d-flex align-items-center"
                     @click.prevent="payment"
                   >
-                    <p>確認並付款</p>
+                    <p>確認付款</p>
                     <span class="ml-2" v-if="spinner.action === 'payment'">
                       <font-awesome-icon :icon="['fas', 'spinner']" spin />
                     </span>
-                  </button>
-                  <button
-                    class="btn btn--danger px-5 ml-3 d-flex align-items-center"
+                  </a>
+                  <a
+                    href="#"
+                    class="btn btn--danger btn--lg px-md-5 px-4 ml-3 d-flex align-items-center"
                     @click.prevent="cancelOrder"
                   >
                     <p>取消訂單</p>
                     <span class="ml-2" v-if="spinner.action === 'cancel'">
                       <font-awesome-icon :icon="['fas', 'spinner']" spin />
                     </span>
-                  </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div
+              class="window text-secondary mt-5"
+              v-if="step === 'cancelled' || step === 'paid' || step === 'toship'"
+            >
+              <h2 class="bg-primary window__header text-white p-3">下一步</h2>
+              <div class="p-3 window__body">
+                <div class="d-flex align-items-center justify-content-center">
+                  <router-link to="/category/全部商品" class="btn btn--primary btn--lg px-md-5 px-4"
+                    >繼續購物</router-link
+                  >
                 </div>
               </div>
             </div>
@@ -330,7 +345,7 @@
         </div>
       </div>
     </div>
-    <!-- next step button -->
+    <!-- create order button -->
     <div class="mb-3" v-if="step === 'write'">
       <div class="d-flex flex-column align-items-center justify-content-center">
         <button

@@ -9,7 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import DatePicker from 'vue2-datepicker';
 import LuckDraw from 'vue-luck-draw';
 import VueMeta from 'vue-meta';
+import VueClipboard from 'vue-clipboard2';
 import VueSlider from 'vue-slider-component';
+import VueScrollTo from 'vue-scrollto';
 import { ValidationObserver, ValidationProvider } from 'vee-validate';
 import 'vue2-datepicker/locale/zh-cn';
 // Core
@@ -32,6 +34,8 @@ Vue.use(Skeleton);
 Vue.use(VueProgressBar, { color: '#4bb36e', thickness: '3px' });
 Vue.use(LuckDraw);
 Vue.use(VueMeta);
+Vue.use(VueClipboard);
+Vue.use(VueScrollTo);
 
 Vue.filter('datetime', datetime);
 Vue.filter('currency', currency);

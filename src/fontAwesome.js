@@ -8,6 +8,7 @@ import {
   faTrashAlt,
   faCreditCard,
   faCalendarAlt,
+  faCopy,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faEnvelope,
@@ -97,6 +98,7 @@ const icons = [
   faExternalLinkAlt,
   faArrowCircleRight,
   faCartPlus,
+  faCopy,
 ];
 
 library.add(...icons);

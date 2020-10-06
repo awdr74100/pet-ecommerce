@@ -1,23 +1,41 @@
-$themeColor: theme-color('primary');
+$themeColor: theme-color('white');
 
 .swiper-container {
   width: 100%;
   height: 100%;
-  --swiper-navigation-size: 24px;
+  --swiper-navigation-size: 14px;
+
+  &:hover .swiper-button-prev {
+    opacity: 1;
+    left: 16px !important;
+  }
+  &:hover .swiper-button-next {
+    opacity: 1;
+    right: 16px !important;
+  }
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  padding: 20px 16px;
-  border-radius: 4px;
-  color: theme-color('white') !important;
-  background-color: rgba(theme-color('gray'), 0.3);
+  opacity: 0;
+  padding: 16px 16px;
+  overflow: hidden;
+  font-weight: 600;
+  border-radius: 50%;
+  color: darken(theme-color('white'), 2%) !important;
+  border: 2px solid darken(theme-color('white'), 2%);
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: theme-color('secondary');
+    background-color: theme-color('secondary');
+  }
 }
 .swiper-button-prev {
-  left: 16px !important;
+  left: 24px !important;
 }
 .swiper-button-next {
-  right: 16px !important;
+  right: 24px !important;
 }
 
 @import '~swiper/components/pagination/pagination.scss';

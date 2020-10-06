@@ -88,6 +88,8 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
    - vue-loading-skeleton
    - vue-slider-component
    - vue-progressbar
+   - vue-clipboard2
+   - vue-scrollto
    - vee-validate
    - vue2-datepicker
 

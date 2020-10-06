@@ -14,15 +14,21 @@
             <button
               class="btn btn--secondary btn--xl mb-1"
               @click.prevent="showCoupon = !showCoupon"
+              key="1"
             >
-              點我領取！
+              點我領取
             </button>
           </template>
           <template v-else>
             <span class="text">優惠代碼</span>
-            <div class="px-5 py-2 bg-white mt-3">
-              <p class="text-secondary">ALCRE88045</p>
-            </div>
+            <button
+              class="btn btn--white btn--lg text-secondary d-flex align-items-center mt-2"
+              @click.prevent="doCopy('ALCRE88045')"
+              key="2"
+            >
+              <p>ALCRE88045</p>
+              <span class="ml-5"><font-awesome-icon :icon="['far', 'copy']"/></span>
+            </button>
           </template>
         </li>
       </ul>
@@ -119,6 +125,15 @@ export default {
           discount: (this.coupon.percent / 10).toString().replace('.', ''),
         };
         this.$store.commit('modal/OPENMODAL', { modal: 'lucky-wheel-modal', cache });
+      }
+    },
+    async doCopy(copyText) {
+      try {
+        await this.$copyText(copyText);
+        const message = '複製成功';
+        this.$store.dispatch('notification/updateMessage', { message, status: 'success' });
+      } catch ({ message }) {
+        this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
       }
     },
   },
