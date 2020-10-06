@@ -102,7 +102,7 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
 
 - 前台購物 - 首頁
 
-![前台購物(首頁)](https://i.imgur.com/QdSFyEn.png)
+![前台購物(首頁)](https://i.imgur.com/OHwAUJy.png)
 
 - 前台購物 - 關於我們
 
@@ -138,7 +138,7 @@ Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成�
 
 - 會員功能 - 最近加入商品
 
-![會員功能(最近加入商品)](https://i.imgur.com/HbIxdv9.png)
+![會員功能(最近加入商品)](https://i.imgur.com/YJ5L5zf.png)
 
 - 會員功能 - 購物車
 

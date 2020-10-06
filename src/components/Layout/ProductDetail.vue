@@ -203,6 +203,11 @@ export default {
     };
   },
   methods: {
+    async initProduct() {
+      const { id } = this.$route.params;
+      await this.$store.dispatch('products/getProduct', { productId: id });
+      if (this.product.stock === 0) this.qty = 0;
+    },
     dropdownToggle() {
       this.dropdownActive = !this.dropdownActive;
     },
@@ -226,12 +231,14 @@ export default {
       await this.$store.dispatch('user/check');
       // 檢查是否登入
       if (!this.isSignin) {
+        this.spinner.action = '';
         this.$router.push({ path: '/signin' });
         return;
       }
       // 檢查是否庫存不足
-      if (this.qty > this.product.stock) {
+      if (this.qty > this.product.stock || this.qty === 0) {
         const message = '庫存不足';
+        this.spinner.action = '';
         this.$store.dispatch('notification/updateMessage', { message, status: 'danger' });
         return;
       }
@@ -276,8 +283,7 @@ export default {
     ...mapState(['skeletonTarget']),
   },
   created() {
-    const { id } = this.$route.params;
-    this.$store.dispatch('products/getProduct', { productId: id });
+    this.initProduct();
   },
 };
 </script>
