@@ -5,7 +5,7 @@
    <h2>Pet eCommerce 寵物電商網站</h2>
 </div>
 
-Pet eCommerce 是一個基於 Vue.js、Express.js、Firebase、JWT 建構而成的電子商務網站，支援 PWA 及 RWD，UI 皆以 SCSS 並遵循 OOCSS 手刻而成，強調樣式的模組化及可重用性，平台使用者主要可分為管理員 (admin)、會員 (member) 兩種身分，管理員可依造主題快速擴展商店，會員可透過前台購物功能進行消費等行為。
+Pet eCommerce 是一個基於 Vue.js + Express.js + Firebase + JWT 建構而成的電子商務網站，支援 PWA 及 RWD，UI 皆以 SCSS 並遵循 OOCSS 手刻而成，強調樣式的模組化及可重用性，平台使用者主要可分為管理員 (admin)、會員 (member) 兩種身分，管理員可依造主題快速擴展商店，會員可透過前台購物功能進行消費等行為。
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a3ffdf45-d9e5-4988-bbd4-15a943128e16/deploy-status)](https://app.netlify.com/sites/pet-ecommerce/deploys)
 
