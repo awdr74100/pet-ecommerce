@@ -7,6 +7,10 @@
     border: 1px solid lighten(theme-color('gray'), 30%);
     border-radius: 4px;
 
+    .table {
+      width: 100%;
+      font-size: 14px;
+    }
     .thead {
       background-color: lighten(theme-color('gray'), 37%);
       color: theme-color('gray');
@@ -27,6 +31,11 @@
     border: 1px solid lighten(theme-color('gray'), 30%);
     border-radius: 4px;
 
+    .table {
+      width: 100%;
+      font-size: 14px;
+      min-height: 293px;
+    }
     .thead {
       background-color: lighten(theme-color('gray'), 37%);
     }
@@ -43,11 +52,11 @@
     border-radius: 4px;
     border: 1px solid lighten(theme-color('gray'), 30%);
   }
-  .table {
-    width: 100%;
-    font-size: 14px;
-    min-height: 293px;
-  }
+  // .table {
+  //   width: 100%;
+  //   font-size: 14px;
+  //   min-height: 293px;
+  // }
   .avatar {
     font-size: 22px;
     color: darken(theme-color('gray'), 16%);
